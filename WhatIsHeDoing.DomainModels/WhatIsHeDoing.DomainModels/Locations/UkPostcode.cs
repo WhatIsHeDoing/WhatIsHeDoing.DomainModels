@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,6 +12,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
     /// <example>W1A 0NY</example>
     /// <remarks>Will only validate, not verify!</remarks>
     /// </summary>
+    [DebuggerDisplay("{_value}")]
     public class UKPostcode
     {
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using WhatIsHeDoing.Core.Extensions;
     
@@ -7,6 +8,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     /// <summary>
     /// International Standard Book Number.
     /// </summary>
+    [DebuggerDisplay("{_value}")]
     public class ISBN : IBarcode
     {
         private static readonly CultureInfo _culture
