@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -25,49 +25,33 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         /// Creates an ISBN from a barcode.
         /// </summary>
         /// <param name="barcode">To use</param>
-        public EAN(string barcode)
-        {
-            if (!IsValid(barcode))
-            {
-                throw new ArgumentException("Invalid barcode", "barcode");
-            }
-
-            _value = long.Parse(barcode, _culture);
-        }
+        public EAN(string barcode) => _value = IsValid(barcode)
+            ? long.Parse(barcode, _culture)
+            : throw new ArgumentException(nameof(barcode));
 
         /// <summary>
         /// Gets the string representation of this EAN.
         /// </summary>
         /// <returns>String</returns>
-        public override string ToString()
-        {
-            return _value.ToString(_culture);
-        }
+        public override string ToString() => _value.ToString(_culture);
 
         /// <summary>
         /// Implicit string operator.
         /// </summary>
         /// <param name="ean">To coerce</param>
         /// <returns>String or null if the EAN is null</returns>
-        public static implicit operator string(EAN ean)
-        {
-            return (ean != null) ? ean.ToString() : null;
-        }
+        public static implicit operator string(EAN ean) => ean?.ToString();
 
         /// <summary>
         /// Determines whether a barcode is a valid EAN.
         /// </summary>
         /// <param name="barcode">To test</param>
         /// <returns>Success</returns>
-        public static bool IsValid(string barcode)
-        {
-            long value;
-
-            return !String.IsNullOrWhiteSpace(barcode) &&
-                long.TryParse(barcode, out value) &&
-                _validLengths.Contains(barcode.Length) &&
-                HasValidChecksum(barcode);
-        }
+        public static bool IsValid(string barcode) =>
+            !String.IsNullOrWhiteSpace(barcode) &&
+            long.TryParse(barcode, out long value) &&
+            _validLengths.Contains(barcode.Length) &&
+            HasValidChecksum(barcode);
 
         /// <summary>
         /// Converts a barcode to an EAN.
@@ -96,7 +80,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         public static bool HasValidChecksum(string barcode)
         {
             // Ignore an empty barcode.
-            if (String.IsNullOrWhiteSpace(barcode))
+            if (string.IsNullOrWhiteSpace(barcode))
             {
                 return false;
             }

@@ -1,16 +1,18 @@
 # WhatIsHeDoing.DomainModels
 
-A library of domain models for .Net.
+[![Build status](https://ci.appveyor.com/api/projects/status/v0hhv0e1ebcw6ffi?svg=true)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels)
+
+A library of domain models for .NET.
 
 ## NuGet
 
-This package is available for use via [NuGet][1].
+This package is available for use via [NuGet][nuget].
 
 ## Introduction
 
-As the Wikipedia [article][2] explains:
+As the Wikipedia [article][wiki] explains:
 
-> A domain model is a system of abstractions that describes select aspects of a sphere of knowledge, influence, or activity (a domain [3]). 
+> A domain model is a system of abstractions that describes select aspects of a sphere of knowledge, influence, or activity (a domain [3]).
 
-[1]: https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/
-[2]: https://en.wikipedia.org/wiki/Domain_model
+[nuget]: https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/
+[wiki]: https://en.wikipedia.org/wiki/Domain_model

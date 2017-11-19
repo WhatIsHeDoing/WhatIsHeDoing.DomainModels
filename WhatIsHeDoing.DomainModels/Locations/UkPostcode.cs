@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -92,14 +91,14 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </exception>
         public UKPostcode(string ukPostcode)
         {
-            if (String.IsNullOrWhiteSpace(ukPostcode))
+            if (string.IsNullOrWhiteSpace(ukPostcode))
             {
-                throw new ArgumentNullException("ukPostcode");
+                throw new ArgumentNullException(nameof(ukPostcode));
             }
 
             // Trim whitespace, remove the separator and convert to uppercase.
             ukPostcode = ukPostcode.Trim().Replace
-                (OutwardInwardCodesSeparator, String.Empty).ToUpper();
+                (OutwardInwardCodesSeparator, string.Empty).ToUpper();
 
             // Bomb out if this is not valid.
             if (!IsValid(ukPostcode))
@@ -113,7 +112,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
             // Set the individual elements of the postcode.
             OutwardCode = ukPostcode.Substring(0, outwardCodeLength);
 
-            PostcodeArea = String.Concat
+            PostcodeArea = string.Concat
                 (OutwardCode.ToCharArray().Where(char.IsLetter));
 
             PostcodeDistrict = OutwardCode.Substring(PostcodeArea.Length);
@@ -133,10 +132,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </summary>
         /// <param name="postcode">To validate</param>
         /// <returns>Success</returns>
-        public static bool IsValid(string postcode)
-        {
-            return ValidationRegex.IsMatch(postcode);
-        }
+        public static bool IsValid(string postcode) => ValidationRegex.IsMatch(postcode);
 
         /// <summary>
         /// Attempts to parse a postcode
@@ -164,16 +160,10 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </summary>
         /// <param name="ukPostcode">To convert</param>
         /// <returns>String</returns>
-        [SuppressMessage("Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "0",
-            Justification = "It is validated!")]
-        public static implicit operator string(UKPostcode ukPostcode)
-        {
-            return String.IsNullOrWhiteSpace(ukPostcode)
-                ? ukPostcode
-                : ukPostcode.ToString();
-        }
+        public static implicit operator string(UKPostcode ukPostcode) =>
+            ukPostcode != null
+            ? ukPostcode.ToString()
+            : throw new ArgumentNullException(nameof(ukPostcode));
 
         /// <summary>
         /// Determines whether this postcode is identical to another.
@@ -191,18 +181,12 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </summary>
         /// <returns>Postcode</returns>
         /// <example>W1A 0NY</example>
-        public override string ToString()
-        {
-            return _value;
-        }
+        public override string ToString() => _value;
 
         /// <summary>
         /// Gets the hash code of this postcode value.
         /// </summary>
         /// <returns>Hash</returns>
-        public override int GetHashCode()
-        {
-            return _value.GetHashCode();
-        }
+        public override int GetHashCode() => _value.GetHashCode();
     }
 }

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>WhatIsHeDoing.DomainModels </PackageId>
+    <PackageVersion>1.1.0</PackageVersion>
+    <Authors>WhatIsHeDoing</Authors>
+    <Description>A library of domain models for .NET.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Upgrading to .NET Standard 2.0</PackageReleaseNotes>
+    <Copyright></Copyright>
+    <PackageTags>core domain models</PackageTags>
+    <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
+    <PackageProjectUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels</PackageProjectUrl>
+    <Version>1.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Condition="!Exists('C:\Program Files\dotnet\sdk\2.0.3\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll')" Include="Microsoft.Net.Compilers" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WhatIsHeDoing.Core" Version="1.2.0" />
+  </ItemGroup>
+</Project>

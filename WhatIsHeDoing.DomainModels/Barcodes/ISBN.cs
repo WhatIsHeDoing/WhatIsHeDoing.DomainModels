@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using WhatIsHeDoing.Core.Extensions;
-    
 namespace WhatIsHeDoing.DomainModels.Barcodes
 {
+    using Core.Extensions;
+    using System;
+    using System.Diagnostics;
+    using System.Globalization;
+
     /// <summary>
     /// International Standard Book Number.
     /// </summary>
@@ -20,15 +20,9 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         /// Creates an ISBN from a barcode.
         /// </summary>
         /// <param name="barcode">To use</param>
-        public ISBN(string barcode)
-        {
-            if (!IsValid(barcode))
-            {
-                throw new ArgumentException("Invalid barcode", "barcode");
-            }
-
-            _value = long.Parse(barcode, _culture);
-        }
+        public ISBN(string barcode) => _value = IsValid(barcode)
+            ? long.Parse(barcode, _culture)
+            : throw new ArgumentException(nameof(barcode));
 
         /// <summary>
         /// Determines whether a barcode is a valid ISBN.
@@ -43,9 +37,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
                 return false;
             }
 
-            long value;
-
-            if (!long.TryParse(barcode, out value))
+            if (!long.TryParse(barcode, out long value))
             {
                 return false;
             }
@@ -59,9 +51,6 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         /// Gets the string representation of this ISBN.
         /// </summary>
         /// <returns>String</returns>
-        public override string ToString()
-        {
-            return _value.ToString(_culture);
-        }
+        public override string ToString() => _value.ToString(_culture);
     }
 }
