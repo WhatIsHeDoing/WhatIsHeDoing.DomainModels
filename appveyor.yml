@@ -20,4 +20,4 @@ build_script:
 test_script:
 - ps: dotnet test --configuration Release .\WhatIsHeDoing.DomainModels.Tests\WhatIsHeDoing.DomainModels.Tests.csproj
 deploy_script:
-- ps: nuget push WhatIsHeDoing.Core\bin\Release\WhatIsHeDoing.DomainModels.*.nupkg -ApiKey $env:ApiKey -Source https://www.nuget.org/api/v2/package
+- ps: nuget push WhatIsHeDoing.DomainModels\bin\Release\WhatIsHeDoing.DomainModels.*.nupkg -ApiKey $env:ApiKey -Source https://www.nuget.org/api/v2/package
