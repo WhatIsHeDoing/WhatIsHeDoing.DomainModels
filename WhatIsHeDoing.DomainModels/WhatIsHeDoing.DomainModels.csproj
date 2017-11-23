@@ -1,18 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
     <PackageVersion>1.1.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Upgrading to .NET Standard 2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Targeting multiple frameworks.</PackageReleaseNotes>
     <Copyright></Copyright>
     <PackageTags>core domain models</PackageTags>
     <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
-    <PackageProjectUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels</PackageProjectUrl>
+    <PackageProjectUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels/wiki/Home</PackageProjectUrl>
     <Version>1.1.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company />
+    <RepositoryUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels</RepositoryUrl>
+    <PackageIconUrl>https://darren.hickling.is/favicon/favicon-60x60.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -30,6 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="WhatIsHeDoing.Core" Version="1.2.0" />
+    <PackageReference Include="WhatIsHeDoing.Core" Version="1.3.0" />
   </ItemGroup>
 </Project>

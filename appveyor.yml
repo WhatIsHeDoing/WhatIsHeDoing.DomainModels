@@ -1,14 +1,6 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 platform: Any CPU
-dotnet_csproj:
-  patch: true
-  file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
 environment:
   ApiKey:
     secure: 0vvD9xkaKen4fUz/3PIi0hbKx6Nyggnvlv8/EOyMtzG/t9T4h/3pdJQJQGa9Tf1z
