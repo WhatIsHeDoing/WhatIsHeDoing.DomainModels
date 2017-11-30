@@ -1,12 +1,11 @@
 # WhatIsHeDoing.DomainModels
 
+[![NuGet](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
+[![NuGet](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
 [![Build status](https://ci.appveyor.com/api/projects/status/v0hhv0e1ebcw6ffi?svg=true)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels)
+[![Tests passing](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels.svg)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels)
 
 A library of domain models for .NET.
-
-## NuGet
-
-This package is available for use via [NuGet][nuget].
 
 ## Introduction
 

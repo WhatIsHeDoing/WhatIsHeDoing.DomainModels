@@ -8,38 +8,12 @@ namespace WhatIsHeDoing.DomainModels.Locations
     /// <summary>
     /// Models a UK postcode and its constituent parts.
     /// <seealso cref="http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom"/>
-    /// <example>W1A 0NY</example>
+    /// <example>W1A ONY</example>
     /// <remarks>Will only validate, not verify!</remarks>
     /// </summary>
-    [DebuggerDisplay("{_value}")]
-    public class UKPostcode
+    [DebuggerDisplay("{Value}")]
+    public class UKPostcode : IDomainModel<string>
     {
-        /// <summary>
-        /// Regex used to validate a postcode.
-        /// </summary>
-        public const string ValidationRegexPattern =
-            "(GIR\\s?0AA)|" +
-            "((([A-Z-[QVX]][0-9][0-9]?)|" +
-            "(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|" +
-            "(([A-Z-[QVX‌​]][0-9][A-HJKSTUW])|" +
-            "([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))" +
-            "\\s?[0-9][A-Z-[C‌​IKMOV]]{2})";
-
-        /// <summary>
-        /// Regex used to validate a postcode.
-        /// </summary>
-        private static Regex ValidationRegex = new Regex(ValidationRegexPattern);
-
-        /// <summary>
-        /// Length of the inward code.
-        /// </summary>
-        public const int InwardCodeLength = 3;
-
-        /// <summary>
-        /// Separator of the inward and outward codes.
-        /// </summary>
-        public const string OutwardInwardCodesSeparator = " ";
-
         /// <summary>
         /// Part of the postcode before the separator in the middle.
         /// </summary>
@@ -80,7 +54,15 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <example>NY</example>
         public string PostcodeUnit { get; private set; }
 
-        private readonly string _value;
+        /// <summary>
+        /// The underlying value used to store the postcode.
+        /// </summary>
+        public string Value { get; private set; }
+
+        /// <summary>
+        /// Parameterless constructor required for serialisation.
+        /// </summary>
+        public UKPostcode() { }
 
         /// <summary>
         /// Constructor that creates a UK postcode object from data.
@@ -89,50 +71,110 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <exception cref="ArgumentException">
         /// Thrown when a postcode is invalid.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when an empty value is supplied.
+        /// </exception>
         public UKPostcode(string ukPostcode)
         {
+            // Bomb out if this is not valid.
             if (string.IsNullOrWhiteSpace(ukPostcode))
             {
                 throw new ArgumentNullException(nameof(ukPostcode));
             }
 
-            // Trim whitespace, remove the separator and convert to uppercase.
-            ukPostcode = ukPostcode.Trim().Replace
-                (OutwardInwardCodesSeparator, string.Empty).ToUpper();
+            ukPostcode = _clean(ukPostcode);
 
-            // Bomb out if this is not valid.
             if (!IsValid(ukPostcode))
             {
-                throw new ArgumentException("postcode");
+                throw new ArgumentException(nameof(ukPostcode));
             }
 
             // Calculate and cache the outward code length.
-            var outwardCodeLength = ukPostcode.Length - InwardCodeLength;
+            var outwardCodeLength = ukPostcode.Length - INWARD_CODE_LENGTH;
 
             // Set the individual elements of the postcode.
             OutwardCode = ukPostcode.Substring(0, outwardCodeLength);
-
-            PostcodeArea = string.Concat
-                (OutwardCode.ToCharArray().Where(char.IsLetter));
-
+            PostcodeArea = _numberRegex.Split(OutwardCode).First();
             PostcodeDistrict = OutwardCode.Substring(PostcodeArea.Length);
             InwardCode = ukPostcode.Substring(outwardCodeLength);
 
             PostcodeSector = OutwardCode +
-                    OutwardInwardCodesSeparator + InwardCode.Substring(0, 1);
+                    OUTWARD_INWARD_CODES_SEPARATOR + InwardCode.Substring(0, 1);
 
             PostcodeUnit = InwardCode.Substring(1, 2);
 
             // Store the entire postcode too.
-            _value = OutwardCode + OutwardInwardCodesSeparator + InwardCode;
+            Value = OutwardCode + OUTWARD_INWARD_CODES_SEPARATOR + InwardCode;
         }
 
         /// <summary>
-        /// Determines whether a postcode is valid.
+        /// Assigns the value from another postcode. Used in deserialisation.
         /// </summary>
-        /// <param name="postcode">To validate</param>
-        /// <returns>Success</returns>
-        public static bool IsValid(string postcode) => ValidationRegex.IsMatch(postcode);
+        /// <param name="value">From which to assign</param>
+        /// <returns>This model</returns>
+        public IDomainModel<string> AssignFrom(object value)
+        {
+            var assigner = new UKPostcode(Convert.ToString(value));
+            Value = assigner.Value;
+            return this;
+        }
+
+        /// <summary>
+        /// Determines whether this postcode is identical to another.
+        /// </summary>
+        /// <param name="obj">To compare</param>
+        /// <returns><c>true</c> if both values are identical</returns>
+        public override bool Equals(object obj)
+        {
+            var other = obj as UKPostcode;
+            return (other == null) ? base.Equals(obj) : Value == other.Value;
+        }
+
+        /// <summary>
+        /// Gets the hash code of this postcode value.
+        /// </summary>
+        /// <returns>Hash</returns>
+        public override int GetHashCode() => Value.GetHashCode();
+
+        /// <summary>
+        /// Determines whether a string is a valid postcode.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Validity</returns>
+        public static bool IsValid(string value) => _validationRegex.IsMatch(_clean(value));
+
+        /// <summary>
+        /// Generates the string representation of this postcode.
+        /// </summary>
+        /// <returns>Postcode</returns>
+        public override string ToString() => Value;
+
+        /// <summary>
+        /// Non-throwing validation of a postcode.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Validity</returns>
+        public bool TryValidate(string value) => IsValid(value);
+
+        /// <summary>
+        /// Validates and returns a postcode model or throws an error if it is not valid.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Model</returns>
+        /// <exception cref="ArgumentException">If not valid</exception>
+        public IDomainModel<string> Validate(string value) =>  IsValid(value)
+            ? new UKPostcode(value)
+            : throw new ArgumentException(nameof(value));
+        
+        /// <summary>
+        /// Operator that converts a postcode to a string.
+        /// </summary>
+        /// <param name="ukPostcode">To convert</param>
+        /// <returns>String</returns>
+        public static implicit operator string(UKPostcode ukPostcode) =>
+            ukPostcode != null
+            ? ukPostcode.ToString()
+            : throw new ArgumentNullException(nameof(ukPostcode));
 
         /// <summary>
         /// Attempts to parse a postcode
@@ -141,8 +183,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <param name="data">To parse</param>
         /// <param name="ukPostCode">To set; will be null on failure</param>
         /// <returns>Success</returns>
-        public static bool TryParse
-            (string data, out UKPostcode ukPostcode)
+        public static bool TryParse(string data, out UKPostcode ukPostcode)
         {
             ukPostcode = null;
 
@@ -155,38 +196,22 @@ namespace WhatIsHeDoing.DomainModels.Locations
             return true;
         }
 
-        /// <summary>
-        /// Operator that converts a postcode to a string.
-        /// </summary>
-        /// <param name="ukPostcode">To convert</param>
-        /// <returns>String</returns>
-        public static implicit operator string(UKPostcode ukPostcode) =>
-            ukPostcode != null
-            ? ukPostcode.ToString()
-            : throw new ArgumentNullException(nameof(ukPostcode));
+        private const int INWARD_CODE_LENGTH = 3;
+        private const string OUTWARD_INWARD_CODES_SEPARATOR = " ";
 
-        /// <summary>
-        /// Determines whether this postcode is identical to another.
-        /// </summary>
-        /// <param name="obj">To compare</param>
-        /// <returns><c>true</c> if both values are identical</returns>
-        public override bool Equals(object obj)
-        {
-            var other = obj as UKPostcode;
-            return (other == null) ? base.Equals(obj) : _value == other._value;
-        }
+        private static readonly Regex _numberRegex = new Regex(@"\d");
 
-        /// <summary>
-        /// Generates the string representation of this postcode.
-        /// </summary>
-        /// <returns>Postcode</returns>
-        /// <example>W1A 0NY</example>
-        public override string ToString() => _value;
+        private static readonly Regex _validationRegex = new Regex(
+            "(GIR\\s?0AA)|" +
+            "((([A-Z-[QVX]][0-9][0-9]?)|" +
+            "(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|" +
+            "(([A-Z-[QVX‌​]][0-9][A-HJKSTUW])|" +
+            "([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))" +
+            "\\s?[0-9][A-Z-[C‌​IKMOV]]{2})");
 
-        /// <summary>
-        /// Gets the hash code of this postcode value.
-        /// </summary>
-        /// <returns>Hash</returns>
-        public override int GetHashCode() => _value.GetHashCode();
+        private static string _clean(string value) => value
+            .Trim()
+            .Replace(OUTWARD_INWARD_CODES_SEPARATOR, string.Empty)
+            .ToUpper();
     }
 }

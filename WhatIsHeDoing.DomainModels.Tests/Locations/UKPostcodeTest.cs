@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using WhatIsHeDoing.DomainModels.Locations;
 using Xunit;
@@ -9,16 +10,55 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
         public class Constructor
         {
             [Fact]
-            public void Valid()
+            public void ValidFiveCharacters()
             {
-                var ukPostcode = new UKPostcode("BH13 6HB");
+                var ukPostcode = new UKPostcode("S2 4SU");
 
-                Assert.Equal("BH13", ukPostcode.OutwardCode);
-                Assert.Equal("BH", ukPostcode.PostcodeArea);
-                Assert.Equal("13", ukPostcode.PostcodeDistrict);
-                Assert.Equal("BH13 6", ukPostcode.PostcodeSector);
-                Assert.Equal("6HB", ukPostcode.InwardCode);
-                Assert.Equal("HB", ukPostcode.PostcodeUnit);
+                Assert.Equal("S2", ukPostcode.OutwardCode);
+                Assert.Equal("S", ukPostcode.PostcodeArea);
+                Assert.Equal("2", ukPostcode.PostcodeDistrict);
+                Assert.Equal("S2 4", ukPostcode.PostcodeSector);
+                Assert.Equal("4SU", ukPostcode.InwardCode);
+                Assert.Equal("SU", ukPostcode.PostcodeUnit);
+            }
+
+            [Fact]
+            public void ValidSixCharacters()
+            {
+                var ukPostcode = new UKPostcode("BX1 1LT");
+
+                Assert.Equal("BX1", ukPostcode.OutwardCode);
+                Assert.Equal("BX", ukPostcode.PostcodeArea);
+                Assert.Equal("1", ukPostcode.PostcodeDistrict);
+                Assert.Equal("BX1 1", ukPostcode.PostcodeSector);
+                Assert.Equal("1LT", ukPostcode.InwardCode);
+                Assert.Equal("LT", ukPostcode.PostcodeUnit);
+            }
+
+            [Fact]
+            public void ValidSevenCharacters()
+            {
+                var ukPostcode = new UKPostcode("SW1A 1AA");
+
+                Assert.Equal("SW1A", ukPostcode.OutwardCode);
+                Assert.Equal("SW", ukPostcode.PostcodeArea);
+                Assert.Equal("1A", ukPostcode.PostcodeDistrict);
+                Assert.Equal("SW1A 1", ukPostcode.PostcodeSector);
+                Assert.Equal("1AA", ukPostcode.InwardCode);
+                Assert.Equal("AA", ukPostcode.PostcodeUnit);
+            }
+
+            [Fact]
+            public void ValidOne()
+            {
+                var ukPostcode = new UKPostcode("SW1A 1AA");
+
+                Assert.Equal("SW1A", ukPostcode.OutwardCode);
+                Assert.Equal("SW", ukPostcode.PostcodeArea);
+                Assert.Equal("1A", ukPostcode.PostcodeDistrict);
+                Assert.Equal("SW1A 1", ukPostcode.PostcodeSector);
+                Assert.Equal("1AA", ukPostcode.InwardCode);
+                Assert.Equal("AA", ukPostcode.PostcodeUnit);
             }
 
             [Fact]
@@ -31,12 +71,13 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             [Theory]
             [InlineData("GIR0AA")]
             [InlineData("GIR 0AA")]
+            [InlineData("GIR  0AA")]
             public void True(string postcode) =>
                 Assert.True(UKPostcode.IsValid(postcode));
 
             [Theory]
             [InlineData("oops")]
-            [InlineData("GIR  0AA")]
+            [InlineData("GIR 0A")]
             public void False(string postcode) =>
                 Assert.False(UKPostcode.IsValid(postcode));
         }
@@ -46,40 +87,34 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             [Fact]
             public void True()
             {
-                var ukPostcodeOne = new UKPostcode("BH136HB");
-                var ukPostcodeTwo = new UKPostcode("BH13 6HB");
-
-                Assert.Equal
-                    (ukPostcodeOne, ukPostcodeTwo);
+                var ukPostcodeOne = new UKPostcode("SW1A 1AA");
+                var ukPostcodeTwo = new UKPostcode("SW1A1AA");
+                Assert.Equal(ukPostcodeOne, ukPostcodeTwo);
             }
 
             [Fact]
             public void False()
             {
-                var ukPostcodeOne = new UKPostcode("BH136HB");
-                var ukPostcodeTwo = new UKPostcode("BH13 6HD");
-
-                Assert.NotEqual
-                    (ukPostcodeOne, ukPostcodeTwo);
+                var ukPostcodeOne = new UKPostcode("SW1A 1AA");
+                var ukPostcodeTwo = new UKPostcode("SW1A 2AA");
+                Assert.NotEqual(ukPostcodeOne, ukPostcodeTwo);
             }
         }
 
         [Fact]
         public void ImplicitStringOperator()
         {
-            const string expected = "BH13 6HB";
+            const string expected = "SW1A 1AA";
             var postcode = new UKPostcode(expected);
             var actual = (string)postcode;
-
             Assert.Equal(actual, expected);
         }
 
         [Fact]
         public void ToStringTests()
         {
-            const string expected = "BH13 6HB";
-            var actual = new UKPostcode("BH13 6HB").ToString();
-
+            const string expected = "SW1A 1AA";
+            var actual = new UKPostcode("SW1A 1AA").ToString();
             Assert.Equal(expected, actual);
         }
 
@@ -88,8 +123,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             [Fact]
             public void Equal()
             {
-                var ukPostcodeOne = new UKPostcode("BH136HB");
-                var ukPostcodeTwo = new UKPostcode("BH13 6HB");
+                var ukPostcodeOne = new UKPostcode("SW1A 1AA");
+                var ukPostcodeTwo = new UKPostcode("SW1A 1AA");
 
                 Assert.Equal
                     (ukPostcodeOne.GetHashCode(), ukPostcodeTwo.GetHashCode());
@@ -98,11 +133,52 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             [Fact]
             public void NotEqual()
             {
-                var ukPostcodeOne = new UKPostcode("BH13 6HB");
-                var ukPostcodeTwo = new UKPostcode("BH13 6HD");
+                var ukPostcodeOne = new UKPostcode("SW1A 1AA");
+                var ukPostcodeTwo = new UKPostcode("SW1A 2AA");
 
                 Assert.NotEqual
                     (ukPostcodeOne.GetHashCode(), ukPostcodeTwo.GetHashCode());
+            }
+        }
+
+        public class Serialisation
+        {
+            public class Address
+            {
+                public string Country { get; set; }
+
+                [JsonConverter(typeof(DomainModelConverter<UKPostcode, string>))]
+                public UKPostcode UKPostcode { get; set; }
+            }
+
+            [Fact]
+            public void SerialiseAndDeserialise()
+            {
+                var address = new Address
+                {
+                    Country = "England",
+                    UKPostcode = new UKPostcode("SW1 1AA")
+                };
+
+                var serialised = JsonConvert.SerializeObject(address);
+                var deserialised = JsonConvert.DeserializeObject<Address>(serialised);
+
+                Assert.NotNull(deserialised);
+                Assert.Equal(address.Country, deserialised.Country);
+                Assert.Equal(address.UKPostcode, deserialised.UKPostcode);
+            }
+
+            [Fact]
+            public void DeserialiseFail()
+            {
+                const string serialised = @"
+{
+    ""Country"": ""England"",
+    ""UkPostcode"": ""oops""
+}";
+
+                Assert.Throws<ArgumentException>
+                    (() => JsonConvert.DeserializeObject<Address>(serialised));
             }
         }
     }

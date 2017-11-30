@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <PackageReference Condition="!Exists('C:\Program Files\dotnet\sdk\2.0.3\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll')" Include="Microsoft.Net.Compilers" Version="2.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
