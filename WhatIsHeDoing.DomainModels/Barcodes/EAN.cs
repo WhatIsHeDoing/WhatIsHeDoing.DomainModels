@@ -1,99 +1,74 @@
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-
 namespace WhatIsHeDoing.DomainModels.Barcodes
 {
+    using Core.Extensions;
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// International Article Number.
     /// </summary>
+    /// <seealso cref="https://en.wikipedia.org/wiki/International_Article_Number"/>
+    /// <example>4006381333937</example>
     /// <remarks>Originally European Article Number</remarks>
-    [DebuggerDisplay("{_value}")]
-    public class EAN : IBarcode
+    public class EAN : DomainModelBase<ulong>, IBarcode
     {
-        private readonly long _value;
-
-        private static readonly CultureInfo _culture
-            = CultureInfo.CurrentCulture;
-
-        private static readonly int[] _validLengths =
-            new[] { 8, 12, 13, 14, 18 };
-
+        /// <summary>
+        /// Parameterless constructor required for serialisation.
+        /// </summary>
+        public EAN() { }
 
         /// <summary>
         /// Creates an ISBN from a barcode.
         /// </summary>
         /// <param name="barcode">To use</param>
-        public EAN(string barcode) => _value = IsValid(barcode)
-            ? long.Parse(barcode, _culture)
+        public EAN(ulong barcode) => Value = IsValid(barcode)
+            ? barcode
             : throw new ArgumentException(nameof(barcode));
 
         /// <summary>
-        /// Gets the string representation of this EAN.
+        /// Assigns the value from another ISBN. Used in deserialisation.
         /// </summary>
-        /// <returns>String</returns>
-        public override string ToString() => _value.ToString(_culture);
-
-        /// <summary>
-        /// Implicit string operator.
-        /// </summary>
-        /// <param name="ean">To coerce</param>
-        /// <returns>String or null if the EAN is null</returns>
-        public static implicit operator string(EAN ean) => ean?.ToString();
-
-        /// <summary>
-        /// Determines whether a barcode is a valid EAN.
-        /// </summary>
-        /// <param name="barcode">To test</param>
-        /// <returns>Success</returns>
-        public static bool IsValid(string barcode) =>
-            !String.IsNullOrWhiteSpace(barcode) &&
-            long.TryParse(barcode, out long value) &&
-            _validLengths.Contains(barcode.Length) &&
-            HasValidChecksum(barcode);
-
-        /// <summary>
-        /// Converts a barcode to an EAN.
-        /// </summary>
-        /// <param name="barcode">To convert</param>
-        /// <param name="ean">EAN; null on failure</param>
-        /// <returns>Success</returns>
-        public static bool TryParse(string barcode, out EAN ean)
+        /// <param name="value">From which to assign</param>
+        /// <returns>This model</returns>
+        public override IDomainModel<ulong> AssignFrom(object value)
         {
-            ean = null;
-
-            if (!IsValid(barcode))
-            {
-                return false;
-            }
-
-            ean = new EAN(barcode);
-            return true;
+            var assigner = new EAN(Convert.ToUInt64(value));
+            Value = assigner.Value;
+            return this;
         }
+        
+        /// <summary>
+        /// Non-throwing validation of an EAN.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Validity</returns>
+        public override bool TryValidate(ulong value) => IsValid(value);
+
+        /// <summary>
+        /// Validates and returns an EAN model or throws an error if it is not valid.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Model</returns>
+        /// <exception cref="ArgumentException">If not valid</exception>
+        public override IDomainModel<ulong> Validate(ulong value) => IsValid(value)
+            ? new EAN(value)
+            : throw new ArgumentException(nameof(value));
 
         /// <summary>
         /// Determines whether an EAN has a valid checksum.
         /// </summary>
         /// <param name="barcode">To test</param>
         /// <returns>Validity</returns>
-        public static bool HasValidChecksum(string barcode)
+        public static bool HasValidChecksum(ulong barcode)
         {
-            // Ignore an empty barcode.
-            if (string.IsNullOrWhiteSpace(barcode))
-            {
-                return false;
-            }
-
             // Create an array of all digits.
             var barcodeInts = barcode
-                .ToCharArray()
-                .Select(c => Convert.ToInt32
-                    (Convert.ToString(c, _culture), _culture));
+                .ToString()
+                .Select(c => Convert.ToInt32(Convert.ToString(c)));
 
             // Take all but the checksum.
             var barcodeIntsNoChecksum = barcodeInts
-                .Take(barcode.Length - 1)
+                .Take(Convert.ToInt32(barcode.Length()) - 1)
                 .ToList();
 
             // Insert a leading zero if the length of the barcode is odd.
@@ -115,14 +90,42 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
                 .Select(i => i * 3)
                 .Sum();
 
-            // Sum the evens and odds and calculate the difference
-            // with that value rounded to the nearest ten.
+            // Sum the evens and odds, calculate the difference
+            // with that value rounded to the nearest ten,
+            // and compare this to the actual checksum.
             var total = odds + evens;
-            var totalToNearestTen = ((int)Math.Ceiling(total / 10.0)) * 10;
-            var totalDifference = totalToNearestTen - total;
-
-            // Finally, compare this to the actual checksum!
-            return totalDifference == barcodeInts.Last();
+            return (total.ToNearestCeiling(10) - total) == barcodeInts.Last();
         }
+
+        /// <summary>
+        /// Determines whether a barcode is a valid EAN.
+        /// </summary>
+        /// <param name="barcode">To test</param>
+        /// <returns>Success</returns>
+        public static bool IsValid(ulong barcode) =>
+            _validLengths.Contains(barcode.Length()) &&
+            HasValidChecksum(barcode);
+
+        /// <summary>
+        /// Attempts to parse an EAN
+        /// and sets it as the out parameter on success.
+        /// </summary>
+        /// <param name="source">To parse</param>
+        /// <param name="model">To set; will be null on failure</param>
+        /// <returns>Success</returns>
+        public static bool TryParse(ulong source, out EAN model)
+        {
+            if (!IsValid(source))
+            {
+                model = null;
+                return false;
+            }
+
+            model = new EAN(source);
+            return true;
+        }
+
+        private static readonly ulong[] _validLengths =
+            new[] { 8UL, 12UL, 13UL, 14UL, 18UL };
     }
 }

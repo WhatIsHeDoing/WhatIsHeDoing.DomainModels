@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -11,8 +10,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
     /// <example>W1A ONY</example>
     /// <remarks>Will only validate, not verify!</remarks>
     /// </summary>
-    [DebuggerDisplay("{Value}")]
-    public class UKPostcode : IDomainModel<string>
+    public class UKPostcode : DomainModelBase<string>
     {
         /// <summary>
         /// Part of the postcode before the separator in the middle.
@@ -53,11 +51,6 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </summary>
         /// <example>NY</example>
         public string PostcodeUnit { get; private set; }
-
-        /// <summary>
-        /// The underlying value used to store the postcode.
-        /// </summary>
-        public string Value { get; private set; }
 
         /// <summary>
         /// Parameterless constructor required for serialisation.
@@ -112,36 +105,12 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </summary>
         /// <param name="value">From which to assign</param>
         /// <returns>This model</returns>
-        public IDomainModel<string> AssignFrom(object value)
+        public override IDomainModel<string> AssignFrom(object value)
         {
             var assigner = new UKPostcode(Convert.ToString(value));
             Value = assigner.Value;
             return this;
         }
-
-        /// <summary>
-        /// Determines whether this postcode is identical to another.
-        /// </summary>
-        /// <param name="obj">To compare</param>
-        /// <returns><c>true</c> if both values are identical</returns>
-        public override bool Equals(object obj)
-        {
-            var other = obj as UKPostcode;
-            return (other == null) ? base.Equals(obj) : Value == other.Value;
-        }
-
-        /// <summary>
-        /// Gets the hash code of this postcode value.
-        /// </summary>
-        /// <returns>Hash</returns>
-        public override int GetHashCode() => Value.GetHashCode();
-
-        /// <summary>
-        /// Determines whether a string is a valid postcode.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Validity</returns>
-        public static bool IsValid(string value) => _validationRegex.IsMatch(_clean(value));
 
         /// <summary>
         /// Generates the string representation of this postcode.
@@ -154,7 +123,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// </summary>
         /// <param name="value">To test</param>
         /// <returns>Validity</returns>
-        public bool TryValidate(string value) => IsValid(value);
+        public override bool TryValidate(string value) => IsValid(value);
 
         /// <summary>
         /// Validates and returns a postcode model or throws an error if it is not valid.
@@ -162,37 +131,34 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <param name="value">To test</param>
         /// <returns>Model</returns>
         /// <exception cref="ArgumentException">If not valid</exception>
-        public IDomainModel<string> Validate(string value) =>  IsValid(value)
+        public override IDomainModel<string> Validate(string value) => IsValid(value)
             ? new UKPostcode(value)
             : throw new ArgumentException(nameof(value));
-        
+
         /// <summary>
-        /// Operator that converts a postcode to a string.
+        /// Determines whether a string is a valid postcode.
         /// </summary>
-        /// <param name="ukPostcode">To convert</param>
-        /// <returns>String</returns>
-        public static implicit operator string(UKPostcode ukPostcode) =>
-            ukPostcode != null
-            ? ukPostcode.ToString()
-            : throw new ArgumentNullException(nameof(ukPostcode));
+        /// <param name="value">To test</param>
+        /// <returns>Validity</returns>
+        public static bool IsValid(string value) =>
+            _validationRegex.IsMatch(_clean(value));
 
         /// <summary>
         /// Attempts to parse a postcode
         /// and sets it as the out parameter on success.
         /// </summary>
-        /// <param name="data">To parse</param>
-        /// <param name="ukPostCode">To set; will be null on failure</param>
+        /// <param name="source">To parse</param>
+        /// <param name="model">To set; will be null on failure</param>
         /// <returns>Success</returns>
-        public static bool TryParse(string data, out UKPostcode ukPostcode)
+        public static bool TryParse(string source, out UKPostcode model)
         {
-            ukPostcode = null;
-
-            if (!IsValid(data))
+            if (!IsValid(source))
             {
+                model = null;
                 return false;
             }
 
-            ukPostcode = new UKPostcode(data);
+            model = new UKPostcode(source);
             return true;
         }
 
