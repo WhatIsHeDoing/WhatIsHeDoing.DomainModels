@@ -69,8 +69,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// Thrown when an empty value is supplied.
         /// </exception>
         public UKPostcode(string ukPostcode) => _construct(ukPostcode);
-
-
+        
         /// <summary>
         /// Assigns the value from another postcode. Used in deserialisation.
         /// </summary>
@@ -109,7 +108,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
             ? new UKPostcode(value)
             : throw new ArgumentException(nameof(value));
 
-        private UKPostcode _construct(string ukPostcode)
+        private IDomainModel<string> _construct(string ukPostcode)
         {
             // Bomb out if this is not valid.
             if (string.IsNullOrWhiteSpace(ukPostcode))

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace WhatIsHeDoing.DomainModels.Tests.Locations
 {
-    public class UkPostcodeTest
+    public class UKPostcodeTest
     {
         public class Address
         {
@@ -175,7 +175,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                 const string serialised = @"
 {
     ""Country"": ""England"",
-    ""UkPostcode"": ""SW1 1AA""
+    ""UKPostcode"": ""SW1 1AA""
 }";
 
                 var deserialised = JsonConvert.DeserializeObject<Address>(serialised);
@@ -195,7 +195,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                 const string serialised = @"
 {
     ""Country"": ""England"",
-    ""UkPostcode"": ""oops""
+    ""UKPostcode"": ""oops""
 }";
 
                 Assert.Throws<ArgumentException>
