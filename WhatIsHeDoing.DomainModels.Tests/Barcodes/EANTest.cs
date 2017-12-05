@@ -28,7 +28,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
             [Fact]
             public void InvalidBarcode() =>
-                Assert.Throws<ArgumentException>(() => new EAN(7351353UL));
+                Assert.Throws<InvalidOperationException>(() => new EAN(7351353UL));
         }
 
         public class JSONSerialisation
@@ -87,7 +87,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""EAN"": ""1234""
 }";
 
-                Assert.Throws<ArgumentException>
+                Assert.Throws<InvalidOperationException>
                     (() => JsonConvert.DeserializeObject<Product>(serialised));
             }
         }

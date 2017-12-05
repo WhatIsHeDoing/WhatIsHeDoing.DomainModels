@@ -53,62 +53,20 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <example>NY</example>
         public string PostcodeUnit { get; private set; }
 
-        /// <summary>
+        /// <remarks>
         /// Parameterless constructor required for serialisation.
-        /// </summary>
+        /// </remarks>
         public UKPostcode() { }
 
-        /// <summary>
-        /// Constructor that creates a UK postcode object from data.
-        /// </summary>
-        /// <param name="ukPostCode">To inspect</param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when a postcode is invalid.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when an empty value is supplied.
-        /// </exception>
-        public UKPostcode(string ukPostcode) => _construct(ukPostcode);
+        public UKPostcode(string value) : base(value) { }
         
-        /// <summary>
-        /// Assigns the value from another postcode. Used in deserialisation.
-        /// </summary>
-        /// <param name="value">From which to assign</param>
-        /// <returns>This model</returns>
-        public override IDomainModel<string> AssignFrom(object value) =>
-            _construct(Convert.ToString(value));
+        public override IDomainModel<string> Construct(object value) =>
+            Construct(Convert.ToString(value));
 
-        /// <summary>
-        /// Read and assign a value from XML.
-        /// </summary>
-        /// <param name="reader">XML reader</param>
         public override void ReadXml(XmlReader reader) =>
-            _construct(reader.ReadElementContentAsString());
+            Construct(reader.ReadElementContentAsString());
 
-        /// <summary>
-        /// Generates the string representation of this postcode.
-        /// </summary>
-        /// <returns>Postcode</returns>
-        public override string ToString() => Value;
-
-        /// <summary>
-        /// Non-throwing validation of a postcode.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Validity</returns>
-        public override bool TryValidate(string value) => IsValid(value);
-
-        /// <summary>
-        /// Validates and returns a postcode model or throws an error if it is not valid.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Model</returns>
-        /// <exception cref="ArgumentException">If not valid</exception>
-        public override IDomainModel<string> Validate(string value) => IsValid(value)
-            ? new UKPostcode(value)
-            : throw new ArgumentException(nameof(value));
-
-        private IDomainModel<string> _construct(string ukPostcode)
+        public override IDomainModel<string> Construct(string ukPostcode)
         {
             // Bomb out if this is not valid.
             if (string.IsNullOrWhiteSpace(ukPostcode))
@@ -143,21 +101,11 @@ namespace WhatIsHeDoing.DomainModels.Locations
             return this;
         }
 
-        /// <summary>
-        /// Determines whether a string is a valid postcode.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Validity</returns>
+        public override string ToString() => Value;
+
         public static bool IsValid(string value) =>
             _validationRegex.IsMatch(_clean(value));
 
-        /// <summary>
-        /// Attempts to parse a postcode
-        /// and sets it as the out parameter on success.
-        /// </summary>
-        /// <param name="source">To parse</param>
-        /// <param name="model">To set; will be null on failure</param>
-        /// <returns>Success</returns>
         public static bool TryParse(string source, out UKPostcode model)
         {
             if (!IsValid(source))

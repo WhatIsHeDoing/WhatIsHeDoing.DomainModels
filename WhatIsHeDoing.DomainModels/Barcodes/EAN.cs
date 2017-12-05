@@ -13,69 +13,30 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     /// <remarks>Originally European Article Number</remarks>
     public class EAN : DomainModelBase<ulong>, IBarcode
     {
-        /// <summary>
+        /// <remarks>
         /// Parameterless constructor required for serialisation.
-        /// </summary>
+        /// </remarks>
         public EAN() { }
 
-        /// <summary>
-        /// Creates an ISBN from a barcode.
-        /// </summary>
-        /// <param name="barcode">To use</param>
-        public EAN(ulong barcode) => Value = IsValid(barcode)
-            ? barcode
-            : throw new ArgumentException(nameof(barcode));
-
-        /// <summary>
-        /// Assigns the value from another ISBN. Used in deserialisation.
-        /// </summary>
-        /// <param name="value">From which to assign</param>
-        /// <returns>This model</returns>
-        public override IDomainModel<ulong> AssignFrom(object value)
-        {
-            var assigner = new EAN(Convert.ToUInt64(value));
-            Value = assigner.Value;
-            return this;
-        }
+        public EAN(ulong value) : base(value) { }
         
-        /// <summary>
-        /// Read and assign a value from XML.
-        /// </summary>
-        /// <param name="reader">XML reader</param>
-        public override void ReadXml(XmlReader reader)
-        {
-            var barcode = Convert.ToUInt64(reader.ReadElementContentAsString());
+        public override IDomainModel<ulong> Construct(object value)
+            => Construct(Convert.ToUInt64(value));
 
-            if (!IsValid(barcode))
+        public override IDomainModel<ulong> Construct(ulong source)
+        {
+            if (!IsValid(source))
             {
                 throw new InvalidOperationException();
             }
 
-            Value = barcode;
+            Value = source;
+            return this;
         }
 
-        /// <summary>
-        /// Non-throwing validation of an EAN.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Validity</returns>
-        public override bool TryValidate(ulong value) => IsValid(value);
+        public override void ReadXml(XmlReader reader) =>
+            Construct(Convert.ToUInt64(reader.ReadElementContentAsString()));
 
-        /// <summary>
-        /// Validates and returns an EAN model or throws an error if it is not valid.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Model</returns>
-        /// <exception cref="ArgumentException">If not valid</exception>
-        public override IDomainModel<ulong> Validate(ulong value) => IsValid(value)
-            ? new EAN(value)
-            : throw new ArgumentException(nameof(value));
-
-        /// <summary>
-        /// Determines whether an EAN has a valid checksum.
-        /// </summary>
-        /// <param name="barcode">To test</param>
-        /// <returns>Validity</returns>
         public static bool HasValidChecksum(ulong barcode)
         {
             // Create an array of all digits.
@@ -114,22 +75,10 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return (total.ToNearestCeiling(10) - total) == barcodeInts.Last();
         }
 
-        /// <summary>
-        /// Determines whether a barcode is a valid EAN.
-        /// </summary>
-        /// <param name="barcode">To test</param>
-        /// <returns>Success</returns>
         public static bool IsValid(ulong barcode) =>
             _validLengths.Contains(barcode.Length()) &&
             HasValidChecksum(barcode);
 
-        /// <summary>
-        /// Attempts to parse an EAN
-        /// and sets it as the out parameter on success.
-        /// </summary>
-        /// <param name="source">To parse</param>
-        /// <param name="model">To set; will be null on failure</param>
-        /// <returns>Success</returns>
         public static bool TryParse(ulong source, out EAN model)
         {
             if (!IsValid(source))

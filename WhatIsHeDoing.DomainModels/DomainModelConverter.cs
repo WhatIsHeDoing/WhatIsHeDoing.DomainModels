@@ -31,7 +31,7 @@ namespace WhatIsHeDoing.DomainModels
             object existingValue, JsonSerializer serializer) =>
                 reader == null
                 ? throw new ArgumentNullException(nameof(existingValue))
-                : new TDomainModel().AssignFrom(reader.Value);
+                : new TDomainModel().Construct(reader.Value);
 
         /// <summary>
         /// Writes the domain model to JSON.

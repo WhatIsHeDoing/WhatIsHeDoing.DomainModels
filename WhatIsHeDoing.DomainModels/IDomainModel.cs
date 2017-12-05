@@ -14,30 +14,23 @@ namespace WhatIsHeDoing.DomainModels
         T Value { get; }
 
         /// <summary>
-        /// Assigns the value from an object to this one.
+        /// Constructs this model from a value.
         /// </summary>
-        /// <param name="value">To inspect and assign</param>
+        /// <param name="value">From which to validate and construct</param>
         /// <returns>This</returns>
-        IDomainModel<T> AssignFrom(object value);
+        IDomainModel<T> Construct(object value);
+
+        /// <summary>
+        /// Constructs this model from a value.
+        /// </summary>
+        /// <param name="value">From which to validate and construct</param>
+        /// <returns>This</returns>
+        IDomainModel<T> Construct(T value);
 
         /// <summary>
         /// Converts the model to string.
         /// </summary>
         /// <returns>String respresentation</returns>
         string ToString();
-
-        /// <summary>
-        /// Determines if a model is valid.
-        /// </summary>
-        /// <param name="value">To validate</param>
-        /// <returns>Validity</returns>
-        bool TryValidate(T value);
-
-        /// <summary>
-        /// Throws if a value is invalid.
-        /// </summary>
-        /// <param name="value">To validate</param>
-        /// <returns>Domain model</returns>
-        IDomainModel<T> Validate(T value);
     }
 }

@@ -2,16 +2,19 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452;net462</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Targeting multiple frameworks.</PackageReleaseNotes>
+    <PackageReleaseNotes>* Adding the Country Code model
+* Adding JSON and XML de/serialisation
+* Improving the domain model contracts
+* Adding .NET 4.6.2 target</PackageReleaseNotes>
     <Copyright></Copyright>
     <PackageTags>core domain models</PackageTags>
     <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
     <PackageProjectUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels/wiki/Home</PackageProjectUrl>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels</RepositoryUrl>

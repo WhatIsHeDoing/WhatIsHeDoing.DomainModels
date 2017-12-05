@@ -13,11 +13,26 @@ namespace WhatIsHeDoing.DomainModels
     [DebuggerDisplay("{Value}")]
     public abstract class DomainModelBase<T> : IDomainModel<T>
     {
+        /// <summary>
+        /// Underlying value of the model.
+        /// </summary>
         public T Value { get; protected set; }
 
-        public abstract IDomainModel<T> AssignFrom(object value);
+        /// <remarks>
+        /// Parameterless constructor required for serialisation.
+        /// </remarks>
+        public DomainModelBase() { }
 
-        // <summary>
+        /// <summary>
+        /// Constructor that creates a domain model from data.
+        /// </summary>
+        /// <param name="value">From which to validate and construct</param>
+        public DomainModelBase(T value) => Construct(value);
+
+        public abstract IDomainModel<T> Construct(object value);
+        public abstract IDomainModel<T> Construct(T value);
+
+        /// <summary>
         /// Determines whether this domain model is identical to another.
         /// </summary>
         /// <param name="obj">To compare</param>
@@ -34,16 +49,7 @@ namespace WhatIsHeDoing.DomainModels
         /// <returns>Hash</returns>
         public override int GetHashCode() => BitConverter.ToInt32
             (MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
-
-        /// <summary>
-        /// Gets the string representation of this domain model.
-        /// </summary>
-        /// <returns>String</returns>
-        public override string ToString() => Value.ToString();
-
-        public abstract bool TryValidate(T value);
-        public abstract IDomainModel<T> Validate(T value);
-
+        
         /// <summary>
         /// Warning: not used!
         /// </summary>
@@ -51,6 +57,12 @@ namespace WhatIsHeDoing.DomainModels
         public XmlSchema GetSchema() => null;
 
         public abstract void ReadXml(XmlReader reader);
+
+        /// <summary>
+        /// Gets the string representation of this domain model.
+        /// </summary>
+        /// <returns>String</returns>
+        public override string ToString() => Value.ToString();
 
         /// <summary>
         /// Serialises the domain model value to XML.
