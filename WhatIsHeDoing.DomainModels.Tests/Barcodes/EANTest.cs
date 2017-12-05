@@ -1,5 +1,8 @@
 using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using WhatIsHeDoing.DomainModels.Barcodes;
 using Xunit;
 
@@ -7,6 +10,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 {
     public static class EANTest
     {
+        public class Product
+        {
+            public string Name { get; set; }
+
+            [JsonConverter(typeof(DomainModelConverter<EAN, ulong>))]
+            public EAN EAN { get; set; }
+        }
+
         public class Constructor
         {
             [Theory]
@@ -20,31 +31,38 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                 Assert.Throws<ArgumentException>(() => new EAN(7351353UL));
         }
 
-        public class Serialisation
+        public class JSONSerialisation
         {
-            public class Product
-            {
-                public string Name { get; set; }
-
-                [JsonConverter(typeof(DomainModelConverter<EAN, ulong>))]
-                public EAN EAN { get; set; }
-            }
-
             [Fact]
-            public void SerialiseAndDeserialise()
+            public void CanSerialise()
             {
-                var address = new Product
+                var product = new Product
                 {
                     Name = "Yummy Food",
                     EAN = new EAN(4006381333931UL)
                 };
 
-                var serialised = JsonConvert.SerializeObject(address);
-                var deserialised = JsonConvert.DeserializeObject<Product>(serialised);
+                var serialised = JsonConvert.SerializeObject(product);
+                Assert.NotNull(serialised);
+                Assert.Contains(@"""EAN"":""4006381333931""", serialised);
+            }
 
-                Assert.NotNull(deserialised);
-                Assert.Equal(address.Name, deserialised.Name);
-                Assert.Equal(address.EAN, deserialised.EAN);
+            [Fact]
+            public void CanDeserialise()
+            {
+                const string serialised = @"
+{
+    ""Name"": ""Yummy Food"",
+    ""EAN"": ""4006381333931""
+}";
+
+                var product = JsonConvert.DeserializeObject<Product>(serialised);
+                Assert.NotNull(product);
+                Assert.Equal("Yummy Food", product.Name);
+
+                var barcode = product.EAN;
+                Assert.NotNull(barcode);
+                Assert.Equal(4006381333931UL, barcode.Value);
             }
 
             [Fact]
@@ -61,7 +79,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             }
 
             [Fact]
-            public void DeserialiseLongFail()
+            public void DeserialiseUnsignedLongFail()
             {
                 const string serialised = @"
 {
@@ -71,6 +89,100 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 Assert.Throws<ArgumentException>
                     (() => JsonConvert.DeserializeObject<Product>(serialised));
+            }
+        }
+
+        public class XMLSerialisation
+        {
+            [Fact]
+            public void CanSerialise()
+            {
+                var product = new Product
+                {
+                    Name = "Yummy Food",
+                    EAN = new EAN(4006381333931UL)
+                };
+
+                var serialiser = new XmlSerializer(typeof(Product));
+
+                using (var stringWriter = new StringWriter())
+                {
+                    using (var writer = XmlWriter.Create(stringWriter))
+                    {
+                        serialiser.Serialize(writer, product);
+                        var xml = stringWriter.ToString();
+                        Assert.NotNull(xml);
+                        Assert.Contains("<EAN>4006381333931</EAN>", xml);
+                    }
+                }
+            }
+
+            [Fact]
+            public void CanDeserialise()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Product 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <EAN>4006381333931</EAN>
+    <Name>Yummy Food</Name>
+</Product>
+";
+
+                var deserializer = new XmlSerializer(typeof(Product));
+
+                using (var reader = new StringReader(xml))
+                {
+                    var product = deserializer.Deserialize(reader) as Product;
+                    Assert.NotNull(product);
+                    Assert.Equal("Yummy Food", product.Name);
+
+                    var barcode = product.EAN;
+                    Assert.NotNull(barcode);
+                    Assert.Equal(4006381333931UL, barcode.Value);
+                }
+            }
+
+            [Fact]
+            public void DeserialiseStringFail()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Product 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <EAN>oops</EAN>
+    <Name>Yummy Food</Name>
+</Product>
+";
+
+                var deserializer = new XmlSerializer(typeof(Product));
+
+                using (var reader = new StringReader(xml))
+                {
+                    Assert.Throws<InvalidOperationException>
+                        (() => deserializer.Deserialize(reader));
+                }
+            }
+
+            [Fact]
+            public void DeserialiseUnsignedLongFail()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Product 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <EAN>123</EAN>
+    <Name>Yummy Food</Name>
+</Product>
+";
+
+                var deserializer = new XmlSerializer(typeof(Product));
+
+                using (var reader = new StringReader(xml))
+                {
+                    Assert.Throws<InvalidOperationException>
+                        (() => deserializer.Deserialize(reader));
+                }
             }
         }
     }

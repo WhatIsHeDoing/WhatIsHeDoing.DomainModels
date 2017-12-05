@@ -4,6 +4,8 @@ namespace WhatIsHeDoing.DomainModels
     using System.Diagnostics;
     using System.Security.Cryptography;
     using System.Text;
+    using System.Xml;
+    using System.Xml.Schema;
 
     /// <summary>
     /// Domain model base contract.
@@ -41,6 +43,20 @@ namespace WhatIsHeDoing.DomainModels
 
         public abstract bool TryValidate(T value);
         public abstract IDomainModel<T> Validate(T value);
+
+        /// <summary>
+        /// Warning: not used!
+        /// </summary>
+        /// <returns>null</returns>
+        public XmlSchema GetSchema() => null;
+
+        public abstract void ReadXml(XmlReader reader);
+
+        /// <summary>
+        /// Serialises the domain model value to XML.
+        /// </summary>
+        /// <param name="writer">XML writer</param>
+        public void WriteXml(XmlWriter writer) => writer.WriteValue(Value);
 
         /// <summary>
         /// Operator that converts a domain model to a string.

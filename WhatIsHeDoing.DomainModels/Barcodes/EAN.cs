@@ -3,6 +3,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     using Core.Extensions;
     using System;
     using System.Linq;
+    using System.Xml;
 
     /// <summary>
     /// International Article Number.
@@ -37,6 +38,22 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return this;
         }
         
+        /// <summary>
+        /// Read and assign a value from XML.
+        /// </summary>
+        /// <param name="reader">XML reader</param>
+        public override void ReadXml(XmlReader reader)
+        {
+            var barcode = Convert.ToUInt64(reader.ReadElementContentAsString());
+
+            if (!IsValid(barcode))
+            {
+                throw new InvalidOperationException();
+            }
+
+            Value = barcode;
+        }
+
         /// <summary>
         /// Non-throwing validation of an EAN.
         /// </summary>

@@ -1,5 +1,8 @@
 using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using WhatIsHeDoing.DomainModels.Locations;
 using Xunit;
 
@@ -7,6 +10,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
 {
     public class UkPostcodeTest
     {
+        public class Address
+        {
+            public string Country { get; set; }
+
+            [JsonConverter(typeof(DomainModelConverter<UKPostcode, string>))]
+            public UKPostcode UKPostcode { get; set; }
+        }
+
         public class Constructor
         {
             [Fact]
@@ -141,18 +152,10 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             }
         }
 
-        public class Serialisation
+        public class JSONSerialisation
         {
-            public class Address
-            {
-                public string Country { get; set; }
-
-                [JsonConverter(typeof(DomainModelConverter<UKPostcode, string>))]
-                public UKPostcode UKPostcode { get; set; }
-            }
-
             [Fact]
-            public void SerialiseAndDeserialise()
+            public void CanSerialise()
             {
                 var address = new Address
                 {
@@ -161,11 +164,29 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                 };
 
                 var serialised = JsonConvert.SerializeObject(address);
+
+                Assert.NotNull(serialised);
+                Assert.Contains(@"""UKPostcode"":""SW1 1AA""", serialised);
+            }
+
+            [Fact]
+            public void CanDeserialise()
+            {
+                const string serialised = @"
+{
+    ""Country"": ""England"",
+    ""UkPostcode"": ""SW1 1AA""
+}";
+
                 var deserialised = JsonConvert.DeserializeObject<Address>(serialised);
 
                 Assert.NotNull(deserialised);
-                Assert.Equal(address.Country, deserialised.Country);
-                Assert.Equal(address.UKPostcode, deserialised.UKPostcode);
+                Assert.Equal("England", deserialised.Country);
+
+                var postcode = deserialised.UKPostcode;
+                Assert.NotNull(postcode);
+                Assert.Equal("SW1 1AA", postcode.Value);
+                Assert.Equal("SW1", postcode.OutwardCode);
             }
 
             [Fact]
@@ -179,6 +200,80 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
 
                 Assert.Throws<ArgumentException>
                     (() => JsonConvert.DeserializeObject<Address>(serialised));
+            }
+        }
+
+        public class XMLSerialisation
+        {
+            [Fact]
+            public void CanSerialise()
+            {
+                var address = new Address
+                {
+                    Country = "England",
+                    UKPostcode = new UKPostcode("SW1A 1AA")
+                };
+
+                var serialiser = new XmlSerializer(typeof(Address));
+
+                using (var stringWriter = new StringWriter())
+                {
+                    using (var writer = XmlWriter.Create(stringWriter))
+                    {
+                        serialiser.Serialize(writer, address);
+                        var xml = stringWriter.ToString();
+                        Assert.NotNull(xml);
+                        Assert.Contains("<UKPostcode>SW1A 1AA</UKPostcode>", xml);
+                    }
+                }
+            }
+
+            [Fact]
+            public void CanDeserialise()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Address 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <Country>England</Country>
+    <UKPostcode>SW1A 1AA</UKPostcode>
+</Address>
+";
+
+                var deserializer = new XmlSerializer(typeof(Address));
+
+                using (var reader = new StringReader(xml))
+                {
+                    var address = deserializer.Deserialize(reader) as Address;
+                    Assert.NotNull(address);
+                    Assert.Equal("England", address.Country);
+
+                    var postcode = address.UKPostcode;
+                    Assert.NotNull(postcode);
+                    Assert.Equal("SW1A 1AA", postcode.Value);
+                    Assert.Equal("SW1A", postcode.OutwardCode);
+                }
+            }
+
+            [Fact]
+            public void DeserialiseFail()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Address 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <Country>England</Country>
+    <UKPostcode>oops</UKPostcode>
+</Address>
+";
+
+                var deserializer = new XmlSerializer(typeof(Address));
+
+                using (var reader = new StringReader(xml))
+                {
+                    Assert.Throws<InvalidOperationException>
+                        (() => deserializer.Deserialize(reader));
+                }
             }
         }
     }

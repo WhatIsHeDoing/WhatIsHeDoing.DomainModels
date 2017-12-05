@@ -3,13 +3,14 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     using Core.Extensions;
     using System;
     using System.Collections.Generic;
+    using System.Xml;
 
     /// <summary>
     /// International Standard Book Number.
     /// </summary>
     /// <seealso cref="https://en.wikipedia.org/wiki/International_Standard_Book_Number"/>
     /// <example>978-3-16-148410-0</example>
-     public class ISBN : DomainModelBase<ulong>, IBarcode
+    public class ISBN : DomainModelBase<ulong>, IBarcode
     {
         /// <summary>
         /// Parameterless constructor required for serialisation.
@@ -34,6 +35,22 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             var assigner = new ISBN(Convert.ToUInt64(value));
             Value = assigner.Value;
             return this;
+        }
+
+        /// <summary>
+        /// Read and assign a value from XML.
+        /// </summary>
+        /// <param name="reader">XML reader</param>
+        public override void ReadXml(XmlReader reader)
+        {
+            var barcode = Convert.ToUInt64(reader.ReadElementContentAsString());
+
+            if (!IsValid(barcode))
+            {
+                throw new InvalidOperationException();
+            }
+
+            Value = barcode;
         }
 
         /// <summary>

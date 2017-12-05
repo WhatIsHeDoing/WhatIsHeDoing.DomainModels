@@ -1,9 +1,12 @@
 namespace WhatIsHeDoing.DomainModels
 {
+    using System.Xml.Serialization;
+
     /// <summary>
-    /// Domain model contract.
+    /// Domain model contract, used to enforce useful
+    /// common features and de/serialisation from JSON and XML.
     /// </summary>
-    public interface IDomainModel<T>
+    public interface IDomainModel<T> : IXmlSerializable
     {
         /// <summary>
         /// Raw value.

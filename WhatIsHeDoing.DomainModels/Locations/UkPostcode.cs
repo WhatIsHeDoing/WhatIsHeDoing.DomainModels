@@ -1,9 +1,10 @@
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-
 namespace WhatIsHeDoing.DomainModels.Locations
 {
+    using System;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Xml;
+
     /// <summary>
     /// Models a UK postcode and its constituent parts.
     /// <seealso cref="http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom"/>
@@ -67,7 +68,48 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <exception cref="ArgumentNullException">
         /// Thrown when an empty value is supplied.
         /// </exception>
-        public UKPostcode(string ukPostcode)
+        public UKPostcode(string ukPostcode) => _construct(ukPostcode);
+
+
+        /// <summary>
+        /// Assigns the value from another postcode. Used in deserialisation.
+        /// </summary>
+        /// <param name="value">From which to assign</param>
+        /// <returns>This model</returns>
+        public override IDomainModel<string> AssignFrom(object value) =>
+            _construct(Convert.ToString(value));
+
+        /// <summary>
+        /// Read and assign a value from XML.
+        /// </summary>
+        /// <param name="reader">XML reader</param>
+        public override void ReadXml(XmlReader reader) =>
+            _construct(reader.ReadElementContentAsString());
+
+        /// <summary>
+        /// Generates the string representation of this postcode.
+        /// </summary>
+        /// <returns>Postcode</returns>
+        public override string ToString() => Value;
+
+        /// <summary>
+        /// Non-throwing validation of a postcode.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Validity</returns>
+        public override bool TryValidate(string value) => IsValid(value);
+
+        /// <summary>
+        /// Validates and returns a postcode model or throws an error if it is not valid.
+        /// </summary>
+        /// <param name="value">To test</param>
+        /// <returns>Model</returns>
+        /// <exception cref="ArgumentException">If not valid</exception>
+        public override IDomainModel<string> Validate(string value) => IsValid(value)
+            ? new UKPostcode(value)
+            : throw new ArgumentException(nameof(value));
+
+        private UKPostcode _construct(string ukPostcode)
         {
             // Bomb out if this is not valid.
             if (string.IsNullOrWhiteSpace(ukPostcode))
@@ -98,42 +140,9 @@ namespace WhatIsHeDoing.DomainModels.Locations
 
             // Store the entire postcode too.
             Value = OutwardCode + OUTWARD_INWARD_CODES_SEPARATOR + InwardCode;
-        }
 
-        /// <summary>
-        /// Assigns the value from another postcode. Used in deserialisation.
-        /// </summary>
-        /// <param name="value">From which to assign</param>
-        /// <returns>This model</returns>
-        public override IDomainModel<string> AssignFrom(object value)
-        {
-            var assigner = new UKPostcode(Convert.ToString(value));
-            Value = assigner.Value;
             return this;
         }
-
-        /// <summary>
-        /// Generates the string representation of this postcode.
-        /// </summary>
-        /// <returns>Postcode</returns>
-        public override string ToString() => Value;
-
-        /// <summary>
-        /// Non-throwing validation of a postcode.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Validity</returns>
-        public override bool TryValidate(string value) => IsValid(value);
-
-        /// <summary>
-        /// Validates and returns a postcode model or throws an error if it is not valid.
-        /// </summary>
-        /// <param name="value">To test</param>
-        /// <returns>Model</returns>
-        /// <exception cref="ArgumentException">If not valid</exception>
-        public override IDomainModel<string> Validate(string value) => IsValid(value)
-            ? new UKPostcode(value)
-            : throw new ArgumentException(nameof(value));
 
         /// <summary>
         /// Determines whether a string is a valid postcode.

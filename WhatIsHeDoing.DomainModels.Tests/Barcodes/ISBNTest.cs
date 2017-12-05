@@ -1,5 +1,8 @@
 using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using WhatIsHeDoing.DomainModels.Barcodes;
 using Xunit;
 
@@ -7,6 +10,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 {
     public static class ISBNTest
     {
+        public class Book
+        {
+            [JsonConverter(typeof(DomainModelConverter<ISBN, ulong>))]
+            public ISBN ISBN { get; set; }
+
+            public string Title { get; set; }
+        }
+
         public class Constructor
         {
             [Fact]
@@ -21,18 +32,10 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                 (() => new ISBN(978316148410UL));
         }
 
-        public class Serialisation
+        public class JSONSerialisation
         {
-            public class Book
-            {
-                [JsonConverter(typeof(DomainModelConverter<ISBN, ulong>))]
-                public ISBN ISBN { get; set; }
-
-                public string Title { get; set; }
-            }
-
             [Fact]
-            public void SerialiseAndDeserialise()
+            public void CanSerialise()
             {
                 var book = new Book
                 {
@@ -41,11 +44,27 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                 };
 
                 var serialised = JsonConvert.SerializeObject(book);
-                var deserialised = JsonConvert.DeserializeObject<Book>(serialised);
 
-                Assert.NotNull(deserialised);
-                Assert.Equal(book.ISBN, deserialised.ISBN);
-                Assert.Equal(book.Title, deserialised.Title);
+                Assert.NotNull(serialised);
+                Assert.Contains(@"""ISBN"":""9783161484100"",", serialised);
+            }
+
+            [Fact]
+            public void CanDeserialise()
+            {
+                const string serialised = @"
+{
+    ""ISBN"": ""9783161484100"",
+    ""Title"": ""Read Me""
+}";
+
+                var book = JsonConvert.DeserializeObject<Book>(serialised);
+                Assert.NotNull(book);
+                Assert.Equal("Read Me", book.Title);
+
+                var barcode = book.ISBN;
+                Assert.NotNull(barcode);
+                Assert.Equal(9783161484100UL, barcode.Value);
             }
 
             [Fact]
@@ -62,7 +81,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             }
 
             [Fact]
-            public void DeserialiseLongFail()
+            public void DeserialiseUnsignedLongFail()
             {
                 const string serialised = @"
 {
@@ -72,6 +91,100 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 Assert.Throws<ArgumentException>
                     (() => JsonConvert.DeserializeObject<Book>(serialised));
+            }
+        }
+
+        public class XMLSerialisation
+        {
+            [Fact]
+            public void CanSerialise()
+            {
+                var book = new Book
+                {
+                    ISBN = new ISBN(9783161484100UL),
+                    Title = "Read Me"
+                };
+
+                var serialiser = new XmlSerializer(typeof(Book));
+
+                using (var stringWriter = new StringWriter())
+                {
+                    using (var writer = XmlWriter.Create(stringWriter))
+                    {
+                        serialiser.Serialize(writer, book);
+                        var xml = stringWriter.ToString();
+                        Assert.NotNull(xml);
+                        Assert.Contains("<ISBN>9783161484100</ISBN>", xml);
+                    }
+                }
+            }
+
+            [Fact]
+            public void CanDeserialise()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Book 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <ISBN>9783161484100</ISBN>
+    <Title>Read Me</Title>
+</Book>
+";
+
+                var deserializer = new XmlSerializer(typeof(Book));
+
+                using (var reader = new StringReader(xml))
+                {
+                    var book = deserializer.Deserialize(reader) as Book;
+                    Assert.NotNull(book);
+                    Assert.Equal("Read Me", book.Title);
+
+                    var barcode = book.ISBN;
+                    Assert.NotNull(barcode);
+                    Assert.Equal(9783161484100UL, barcode.Value);
+                }
+            }
+
+            [Fact]
+            public void DeserialiseStringFail()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Book 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <ISBN>oops</ISBN>
+    <Title>Read Me</Title>
+</Book>
+";
+
+                var deserializer = new XmlSerializer(typeof(Book));
+
+                using (var reader = new StringReader(xml))
+                {
+                    Assert.Throws<InvalidOperationException>
+                        (() => deserializer.Deserialize(reader));
+                }
+            }
+
+            [Fact]
+            public void DeserialiseUnsignedLongFail()
+            {
+                const string xml = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Book 
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" 
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+    <ISBN>123</ISBN>
+    <Title>Read Me</Title>
+</Book>
+";
+
+                var deserializer = new XmlSerializer(typeof(Book));
+
+                using (var reader = new StringReader(xml))
+                {
+                    Assert.Throws<InvalidOperationException>
+                        (() => deserializer.Deserialize(reader));
+                }
             }
         }
     }
