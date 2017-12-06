@@ -1,8 +1,10 @@
 namespace WhatIsHeDoing.DomainModels.Barcodes
 {
     using Core.Extensions;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Xml;
 
     /// <summary>
@@ -10,6 +12,8 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     /// </summary>
     /// <seealso cref="https://en.wikipedia.org/wiki/International_Standard_Book_Number"/>
     /// <example>978-3-16-148410-0</example>
+    [JsonConverter(typeof(DomainModelJSONConverter<ISBN, ulong>))]
+    [TypeConverter(typeof(DomainModelTypeConverter<ISBN, ulong>))]
     public class ISBN : DomainModelBase<ulong>, IBarcode
     {
         /// <remarks>

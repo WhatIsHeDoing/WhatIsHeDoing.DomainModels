@@ -1,6 +1,8 @@
 namespace WhatIsHeDoing.DomainModels.Locations
 {
+    using Newtonsoft.Json;
     using System;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml;
@@ -11,6 +13,8 @@ namespace WhatIsHeDoing.DomainModels.Locations
     /// <example>W1A ONY</example>
     /// <remarks>Will only validate, not verify!</remarks>
     /// </summary>
+    [JsonConverter(typeof(DomainModelJSONConverter<UKPostcode, string>))]
+    [TypeConverter(typeof(DomainModelTypeConverter<UKPostcode, string>))]
     public class UKPostcode : DomainModelBase<string>
     {
         /// <summary>

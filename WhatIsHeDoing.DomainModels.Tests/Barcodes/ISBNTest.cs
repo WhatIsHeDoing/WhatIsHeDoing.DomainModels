@@ -12,9 +12,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     {
         public class Book
         {
-            [JsonConverter(typeof(DomainModelConverter<ISBN, ulong>))]
             public ISBN ISBN { get; set; }
-
             public string Title { get; set; }
         }
 

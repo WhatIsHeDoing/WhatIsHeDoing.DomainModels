@@ -12,9 +12,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
     {
         public class Country
         {
-            [JsonConverter(typeof(DomainModelConverter<CountryCode, string>))]
             public CountryCode CountryCode { get; set; }
-
             public string Name { get; set; }
         }
 

@@ -13,8 +13,6 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
         public class Address
         {
             public string Country { get; set; }
-
-            [JsonConverter(typeof(DomainModelConverter<UKPostcode, string>))]
             public UKPostcode UKPostcode { get; set; }
         }
 

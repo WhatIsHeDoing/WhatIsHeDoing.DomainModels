@@ -1,7 +1,9 @@
 namespace WhatIsHeDoing.DomainModels.Barcodes
 {
     using Core.Extensions;
+    using Newtonsoft.Json;
     using System;
+    using System.ComponentModel;
     using System.Linq;
     using System.Xml;
 
@@ -9,8 +11,10 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     /// International Article Number.
     /// </summary>
     /// <seealso cref="https://en.wikipedia.org/wiki/International_Article_Number"/>
-    /// <example>4006381333937</example>
+    /// <example>73513537</example>
     /// <remarks>Originally European Article Number</remarks>
+    [JsonConverter(typeof(DomainModelJSONConverter<EAN, ulong>))]
+    [TypeConverter(typeof(DomainModelTypeConverter<EAN, ulong>))]
     public class EAN : DomainModelBase<ulong>, IBarcode
     {
         /// <remarks>

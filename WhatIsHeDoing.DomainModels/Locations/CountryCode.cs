@@ -1,6 +1,8 @@
 namespace WhatIsHeDoing.DomainModels.Locations
 {
+    using Newtonsoft.Json;
     using System;
+    using System.ComponentModel;
     using System.Text.RegularExpressions;
     using System.Xml;
 
@@ -12,6 +14,8 @@ namespace WhatIsHeDoing.DomainModels.Locations
     /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
     /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
     /// </seealso>
+    [JsonConverter(typeof(DomainModelJSONConverter<CountryCode, string>))]
+    [TypeConverter(typeof(DomainModelTypeConverter<CountryCode, string>))]
     public class CountryCode : DomainModelBase<string>
     {
         /// <remarks>

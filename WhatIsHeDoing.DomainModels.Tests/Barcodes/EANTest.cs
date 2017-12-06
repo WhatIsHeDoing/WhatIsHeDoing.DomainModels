@@ -13,8 +13,6 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
         public class Product
         {
             public string Name { get; set; }
-
-            [JsonConverter(typeof(DomainModelConverter<EAN, ulong>))]
             public EAN EAN { get; set; }
         }
 
