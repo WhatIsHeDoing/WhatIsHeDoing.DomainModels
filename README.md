@@ -2,8 +2,8 @@
 
 [![NuGet](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
 [![NuGet](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
-[![Build status](https://ci.appveyor.com/api/projects/status/v0hhv0e1ebcw6ffi?svg=true)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels)
-[![Tests passing](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels.svg)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels)
+[![Build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij)
+[![Tests passing](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels-j4bij.svg)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij)
 
 A library of domain models for .NET.
 
