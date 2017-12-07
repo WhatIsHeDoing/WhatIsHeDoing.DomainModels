@@ -26,7 +26,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             }
 
             [Fact]
-            public void Invalid() => Assert.Throws<ArgumentException>
+            public void Invalid() => Assert.Throws<DomainValueException>
                 (() => new ISBN(978316148410UL));
         }
 
@@ -44,7 +44,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                 var serialised = JsonConvert.SerializeObject(book);
 
                 Assert.NotNull(serialised);
-                Assert.Contains(@"""ISBN"":""9783161484100"",", serialised);
+                Assert.Contains(@"""ISBN"":9783161484100,", serialised);
             }
 
             [Fact]
@@ -74,7 +74,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""Title"": ""Read Me""
 }";
 
-                Assert.Throws<FormatException>
+                Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Book>(serialised));
             }
 
@@ -87,7 +87,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""Title"": ""Read Me""
 }";
 
-                Assert.Throws<ArgumentException>
+                Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Book>(serialised));
             }
         }
@@ -180,8 +180,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 using (var reader = new StringReader(xml))
                 {
-                    Assert.Throws<InvalidOperationException>
-                        (() => deserializer.Deserialize(reader));
+                    try
+                    {
+                        deserializer.Deserialize(reader);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Assert.IsType<DomainValueException>(ex.InnerException);
+                    }
                 }
             }
         }

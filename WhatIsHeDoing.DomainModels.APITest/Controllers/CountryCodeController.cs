@@ -3,23 +3,66 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
     using Locations;
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using System.Net;
 
     [Route("api/[controller]")]
     public class CountryCodeController : Controller
     {
+        /// <summary>
+        /// Gets a country code.
+        /// </summary>
+        /// <returns>Country code</returns>
         [HttpGet]
-        public CountryCode Get() => new CountryCode("GB");
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        public IActionResult Get() => Ok(new CountryCode("GB"));
 
+        /// <summary>
+        /// Gets the raw value of a country code.
+        /// </summary>
+        /// <param name="countryCode">Country code</param>
+        /// <returns>Success</returns>
         [HttpGet("{countryCode}")]
-        public string Get(CountryCode countryCode) => countryCode.Value;
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Get(CountryCode countryCode) => ModelState.IsValid
+            ? Ok(countryCode.Value)
+            : (ActionResult)new BadRequestResult();
 
+        /// <summary>
+        /// Posts a country code from within an address model.
+        /// </summary>
+        /// <param name="address">Address</param>
+        /// <returns>Success</returns>
         [HttpPost]
-        public string Post([FromBody]Address address) => address.CountryCode.Value;
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Post([FromBody]Address address) => ModelState.IsValid
+            ? Ok(address.CountryCode.Value)
+            : (ActionResult)new BadRequestResult();
 
+        /// <summary>
+        /// Puts an address and ensures the country code can be returned within the address.
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="address">Address</param>
+        /// <returns>Success</returns>
         [HttpPut("{id}")]
-        public Address Put(int id, [FromBody]Address address) => address;
+        [ProducesResponseType(typeof(Address), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Put(int id, [FromBody]Address address) => ModelState.IsValid
+            ? Ok(address)
+            : (ActionResult)new BadRequestResult();
 
+        /// <summary>
+        /// Deletes a country code.
+        /// </summary>
+        /// <param name="countryCode">Country code</param>
+        /// <returns>Success</returns>
         [HttpDelete("{countryCode}")]
-        public void Delete(CountryCode countryCode) { }
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Delete(CountryCode countryCode) => ModelState.IsValid
+            ? Ok()
+            : (ActionResult)new BadRequestResult();
     }
 }

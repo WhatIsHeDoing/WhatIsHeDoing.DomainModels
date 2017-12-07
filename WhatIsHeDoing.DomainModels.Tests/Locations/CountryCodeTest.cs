@@ -91,7 +91,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
     ""Name"": ""Great Britain""
 }";
 
-                Assert.Throws<ArgumentException>
+                Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Country>(serialised));
             }
         }
@@ -163,8 +163,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
 
                 using (var reader = new StringReader(xml))
                 {
-                    Assert.Throws<InvalidOperationException>
-                        (() => deserializer.Deserialize(reader));
+                    try
+                    {
+                        deserializer.Deserialize(reader);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Assert.IsType<DomainValueException>(ex.InnerException);
+                    }
                 }
             }
         }

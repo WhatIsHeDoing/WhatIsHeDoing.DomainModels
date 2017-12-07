@@ -11,6 +11,8 @@ namespace WhatIsHeDoing.DomainModels
     public class DomainModelJSONConverter<TDomainModel, TValue> :
         JsonConverter where TDomainModel : IDomainModel<TValue>, new()
     {
+        public DomainModelJSONConverter() : base() { }
+
         /// <remarks>Always assume the value can be used.</remarks>
         public override bool CanConvert(Type objectType) => true;
 
@@ -18,13 +20,13 @@ namespace WhatIsHeDoing.DomainModels
             JsonReader reader, Type objectType,
             object existingValue, JsonSerializer serializer) =>
                 reader == null
-                ? throw new ArgumentNullException(nameof(existingValue))
+                ? throw new DomainValueException(nameof(existingValue))
                 : new TDomainModel().Construct(reader.Value);
 
         public override void WriteJson
             (JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue(value.ToString());
+            writer.WriteValue((value as IDomainModel<TValue>).Value);
             writer.Flush();
         }
     }

@@ -23,23 +23,37 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         public EAN() { }
 
         public EAN(ulong value) : base(value) { }
-        
-        public override IDomainModel<ulong> Construct(object value)
-            => Construct(Convert.ToUInt64(value));
+
+        public override IDomainModel<ulong> Construct(object source)
+        {
+            if (!ulong.TryParse(source as string, out ulong value))
+            {
+                throw new DomainValueException();
+            }
+
+            return Construct(value);
+        }
 
         public override IDomainModel<ulong> Construct(ulong source)
         {
             if (!IsValid(source))
             {
-                throw new InvalidOperationException();
+                throw new DomainValueException(nameof(source));
             }
 
             Value = source;
             return this;
         }
 
-        public override void ReadXml(XmlReader reader) =>
-            Construct(Convert.ToUInt64(reader.ReadElementContentAsString()));
+        public override void ReadXml(XmlReader reader)
+        {
+            if (!ulong.TryParse(reader.ReadElementContentAsString(), out ulong value))
+            {
+                throw new DomainValueException();
+            }
+
+            Construct(value);
+        }
 
         public static bool HasValidChecksum(ulong barcode)
         {

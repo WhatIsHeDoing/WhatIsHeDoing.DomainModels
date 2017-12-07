@@ -32,7 +32,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         {
             if (!IsValid(source))
             {
-                throw new ArgumentException(nameof(source));
+                throw new DomainValueException(nameof(source));
             }
 
             Value = source.ToUpper();

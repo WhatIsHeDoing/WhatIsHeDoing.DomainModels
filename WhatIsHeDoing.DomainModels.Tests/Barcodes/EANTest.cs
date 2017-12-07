@@ -26,7 +26,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
             [Fact]
             public void InvalidBarcode() =>
-                Assert.Throws<InvalidOperationException>(() => new EAN(7351353UL));
+                Assert.Throws<DomainValueException>(() => new EAN(7351353UL));
         }
 
         public class JSONSerialisation
@@ -42,7 +42,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 var serialised = JsonConvert.SerializeObject(product);
                 Assert.NotNull(serialised);
-                Assert.Contains(@"""EAN"":""4006381333931""", serialised);
+                Assert.Contains(@"""EAN"":4006381333931", serialised);
             }
 
             [Fact]
@@ -72,7 +72,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""EAN"": ""oops""
 }";
 
-                Assert.Throws<FormatException>
+                Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Product>(serialised));
             }
 
@@ -85,7 +85,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""EAN"": ""1234""
 }";
 
-                Assert.Throws<InvalidOperationException>
+                Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Product>(serialised));
             }
         }
@@ -157,8 +157,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 using (var reader = new StringReader(xml))
                 {
-                    Assert.Throws<InvalidOperationException>
-                        (() => deserializer.Deserialize(reader));
+                    try
+                    {
+                        deserializer.Deserialize(reader);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Assert.IsType<DomainValueException>(ex.InnerException);
+                    }
                 }
             }
 
@@ -178,8 +184,14 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 using (var reader = new StringReader(xml))
                 {
-                    Assert.Throws<InvalidOperationException>
-                        (() => deserializer.Deserialize(reader));
+                    try
+                    {
+                        deserializer.Deserialize(reader);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Assert.IsType<DomainValueException>(ex.InnerException);
+                    }
                 }
             }
         }

@@ -2,7 +2,6 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
 {
     using Core.Extensions;
     using Newtonsoft.Json;
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Xml;
@@ -23,21 +22,35 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
 
         public ISBN(ulong value) : base(value) { }
 
-        public override IDomainModel<ulong> Construct(object value) =>
-            Construct(Convert.ToUInt64(value));
+        public override IDomainModel<ulong> Construct(object source)
+        {
+            if (!ulong.TryParse(source as string, out ulong value))
+            {
+                throw new DomainValueException();
+            }
 
-        public override void ReadXml(XmlReader reader) =>
-            Construct(Convert.ToUInt64(reader.ReadElementContentAsString()));
-
+            return Construct(value);
+        }
+        
         public override IDomainModel<ulong> Construct(ulong source)
         {
             if (!IsValid(source))
             {
-                throw new ArgumentException(nameof(source));
+                throw new DomainValueException(nameof(source));
             }
 
             Value = source;
             return this;
+        }
+
+        public override void ReadXml(XmlReader reader)
+        {
+            if (!ulong.TryParse(reader.ReadElementContentAsString(), out ulong value))
+            {
+                throw new DomainValueException();
+            }
+
+            Construct(value);
         }
 
         public static bool IsValid(ulong barcode) =>

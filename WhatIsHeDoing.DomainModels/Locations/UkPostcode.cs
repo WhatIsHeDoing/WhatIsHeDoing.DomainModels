@@ -75,14 +75,14 @@ namespace WhatIsHeDoing.DomainModels.Locations
             // Bomb out if this is not valid.
             if (string.IsNullOrWhiteSpace(ukPostcode))
             {
-                throw new ArgumentNullException(nameof(ukPostcode));
+                throw new DomainValueException(nameof(ukPostcode));
             }
 
             ukPostcode = _clean(ukPostcode);
 
             if (!IsValid(ukPostcode))
             {
-                throw new ArgumentException(nameof(ukPostcode));
+                throw new DomainValueException(nameof(ukPostcode));
             }
 
             // Calculate and cache the outward code length.
