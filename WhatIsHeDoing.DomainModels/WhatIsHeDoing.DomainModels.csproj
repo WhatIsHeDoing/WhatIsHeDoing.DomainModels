@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452;net462</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-    <PackageVersion>2.1.0</PackageVersion>
+    <PackageVersion>2.2.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
