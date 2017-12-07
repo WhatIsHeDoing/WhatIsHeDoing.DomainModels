@@ -1,9 +1,6 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 platform: Any CPU
-environment:
-  ApiKey:
-    secure: 0vvD9xkaKen4fUz/3PIi0hbKx6Nyggnvlv8/EOyMtzG/t9T4h/3pdJQJQGa9Tf1z
 build_script:
 - ps: >-
     dotnet restore

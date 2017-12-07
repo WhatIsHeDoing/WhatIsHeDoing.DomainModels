@@ -2,22 +2,19 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452;net462</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-    <PackageVersion>2.2.0</PackageVersion>
+    <PackageVersion>2.2.1</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>* Using a single, custom exception for all domain models, DomainValueException
-* Adding Swagger to the Web API test project
-* Fixing JSON serialisation to use the true type representation, rather than just string
-* Managing NuGet package artifacts in AppVeyor</PackageReleaseNotes>
+    <PackageReleaseNotes>Pointing to new home at Github</PackageReleaseNotes>
     <Copyright></Copyright>
     <PackageTags>core domain models</PackageTags>
     <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
-    <PackageProjectUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels/wiki/Home</PackageProjectUrl>
-    <Version>2.2.0</Version>
+    <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
+    <Version>2.2.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
-    <RepositoryUrl>https://bitbucket.org/WhatIsHeDoing/whatishedoing.domainmodels</RepositoryUrl>
+    <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
     <PackageIconUrl>https://darren.hickling.is/favicon/favicon-60x60.png</PackageIconUrl>
   </PropertyGroup>
 
