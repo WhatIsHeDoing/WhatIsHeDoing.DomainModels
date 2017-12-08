@@ -15,3 +15,8 @@ As the Wikipedia [article][wiki] explains:
 
 [nuget]: https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/
 [wiki]: https://en.wikipedia.org/wiki/Domain_model
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=beer-square)](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels)  [![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/make-wish.svg?style=flat-square)](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels?focus=wish)
