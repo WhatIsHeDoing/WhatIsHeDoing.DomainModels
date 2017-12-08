@@ -58,19 +58,6 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             }
 
             [Fact]
-            public void ValidOne()
-            {
-                var ukPostcode = new UKPostcode("SW1A 1AA");
-
-                Assert.Equal("SW1A", ukPostcode.OutwardCode);
-                Assert.Equal("SW", ukPostcode.PostcodeArea);
-                Assert.Equal("1A", ukPostcode.PostcodeDistrict);
-                Assert.Equal("SW1A 1", ukPostcode.PostcodeSector);
-                Assert.Equal("1AA", ukPostcode.InwardCode);
-                Assert.Equal("AA", ukPostcode.PostcodeUnit);
-            }
-
-            [Fact]
             public void Invalid() =>
                 Assert.Throws<DomainValueException>(() => new UKPostcode("oops"));
         }
@@ -110,13 +97,24 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             }
         }
 
-        [Fact]
-        public void ImplicitStringOperator()
+        public class ImplicitStringOperator
         {
-            const string expected = "SW1A 1AA";
-            var postcode = new UKPostcode(expected);
-            var actual = (string)postcode;
-            Assert.Equal(actual, expected);
+            [Fact]
+            public void Casting()
+            {
+                const string expected = "SW1A 1AA";
+                var postcode = new UKPostcode(expected);
+                var actual = (string)postcode;
+                Assert.Equal(actual, expected);
+            }
+
+            [Fact]
+            public void StringFormat()
+            {
+                var postcode = new UKPostcode("SW1 1AA");
+                var actual = $"Hello from {postcode}!";
+                Assert.Equal("Hello from SW1 1AA!", actual);
+            }
         }
 
         [Fact]
