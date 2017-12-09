@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net452;net462</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net452;net462;net471</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-    <PackageVersion>2.2.1</PackageVersion>
+    <PackageVersion>2.3.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Pointing to new home at Github</PackageReleaseNotes>
+    <PackageReleaseNotes>Adding .NET 4.7.1 target and using latest dependency versions</PackageReleaseNotes>
     <Copyright></Copyright>
     <PackageTags>core domain models</PackageTags>
     <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
-    <Version>2.2.1</Version>
+    <Version>2.3.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
@@ -29,11 +29,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Condition="!Exists('C:\Program Files\dotnet\sdk\2.0.3\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll')" Include="Microsoft.Net.Compilers" Version="2.4.0" />
+    <PackageReference Condition="!Exists('C:\Program Files\dotnet\sdk\2.0.3\Roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll')" Include="Microsoft.Net.Compilers" Version="2.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="WhatIsHeDoing.Core" Version="1.4.0" />
+    <PackageReference Include="WhatIsHeDoing.Core" Version="1.6.0" />
   </ItemGroup>
 </Project>
