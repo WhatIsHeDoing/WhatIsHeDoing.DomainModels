@@ -25,6 +25,13 @@ deserialised, in a consistent manner.
 can be in the correct format, but it might not exist! You may still need to use another means to verify them,
 such as calling a service. For example, the UK postcode `SE1 9XX` is valid, but it does not [exist][royalmail].
 
+## Live Demo
+
+See how the Swagger [demo site][demo], generated from the `WhatIsHeDoing.DomainModels.APITest` project,
+handles URL, JSON and XML domain model de/serialisation.
+
+![Web API](WhatIsHeDoing.DomainModels.APITest/swagger.png)
+
 ## Usage
 
 ### Installing
@@ -141,6 +148,7 @@ Thank you.
 [cc1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 [cc2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
 [contributing]: CONTRIBUTING.md
+[demo]: http://whatishedoingdomainmodels.azurewebsites.net/swagger/
 [EAN]: https://en.wikipedia.org/wiki/International_Article_Number
 [ISBN]: https://en.wikipedia.org/wiki/International_Standard_Book_Number
 [jsonnet]: https://www.newtonsoft.com/json
