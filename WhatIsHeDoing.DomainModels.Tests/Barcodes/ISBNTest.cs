@@ -8,7 +8,7 @@ using Xunit;
 
 namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 {
-    public static class ISBNTest
+    public class ISBNTest
     {
         public class Book
         {
@@ -89,6 +89,28 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Book>(serialised));
+            }
+        }
+
+        [Fact]
+        public void ToStringTests() =>
+            Assert.Equal("9783161484100", new ISBN(9783161484100UL).ToString());
+
+        public class TryParse
+        {
+            [Fact]
+            public void Success()
+            {
+                const ulong barcode = 9783161484100UL;
+                Assert.True(ISBN.TryParse(barcode, out var model));
+                Assert.Equal(barcode, model.Value);
+            }
+
+            [Fact]
+            public void BadValue()
+            {
+                Assert.False(ISBN.TryParse(123UL, out var model));
+                Assert.Null(model);
             }
         }
 

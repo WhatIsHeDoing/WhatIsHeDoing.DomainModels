@@ -42,13 +42,22 @@ namespace WhatIsHeDoing.DomainModels.Locations
         public override void ReadXml(XmlReader reader) =>
             Construct(reader.ReadElementContentAsString());
 
-        public override string ToString() => Value;
-
         private static readonly Regex _isoValidatationRegex =
             new Regex(@"^[a-zA-Z]{2,3}$");
 
         public static bool IsValid(string source) =>
             !string.IsNullOrWhiteSpace(source) && _isoValidatationRegex.IsMatch(source);
 
+        public static bool TryParse(string source, out CountryCode model)
+        {
+            if (!IsValid(source))
+            {
+                model = null;
+                return false;
+            }
+
+            model = new CountryCode(source);
+            return true;
+        }
     }
 }

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 {
-    public static class EANTest
+    public class EANTest
     {
         public class Product
         {
@@ -87,6 +87,28 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Product>(serialised));
+            }
+        }
+
+        [Fact]
+        public void ToStringTests() =>
+            Assert.Equal("4006381333931", new EAN(4006381333931UL).ToString());
+
+        public class TryParse
+        {
+            [Fact]
+            public void Success()
+            {
+                const ulong barcode = 4006381333931UL;
+                Assert.True(EAN.TryParse(barcode, out var model));
+                Assert.Equal(barcode, model.Value);
+            }
+
+            [Fact]
+            public void BadValue()
+            {
+                Assert.False(EAN.TryParse(123UL, out var model));
+                Assert.Null(model);
             }
         }
 

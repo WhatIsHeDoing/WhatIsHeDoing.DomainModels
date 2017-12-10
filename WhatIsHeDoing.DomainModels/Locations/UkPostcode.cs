@@ -73,11 +73,6 @@ namespace WhatIsHeDoing.DomainModels.Locations
         public override IDomainModel<string> Construct(string ukPostcode)
         {
             // Bomb out if this is not valid.
-            if (string.IsNullOrWhiteSpace(ukPostcode))
-            {
-                throw new DomainValueException(nameof(ukPostcode));
-            }
-
             ukPostcode = _clean(ukPostcode);
 
             if (!IsValid(ukPostcode))
@@ -104,8 +99,6 @@ namespace WhatIsHeDoing.DomainModels.Locations
 
             return this;
         }
-
-        public override string ToString() => Value;
 
         public static bool IsValid(string value) =>
             _validationRegex.IsMatch(_clean(value));
@@ -136,8 +129,8 @@ namespace WhatIsHeDoing.DomainModels.Locations
             "\\s?[0-9][A-Z-[C‌​IKMOV]]{2})");
 
         private static string _clean(string value) => value
-            .Trim()
-            .Replace(OUTWARD_INWARD_CODES_SEPARATOR, string.Empty)
-            .ToUpper();
+            ?.Trim()
+            ?.Replace(OUTWARD_INWARD_CODES_SEPARATOR, string.Empty)
+            ?.ToUpper();
     }
 }

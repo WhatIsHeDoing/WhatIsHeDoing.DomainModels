@@ -4,6 +4,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
 [![Build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij)
 [![Tests passing](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels-j4bij.svg)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij)
+[![codecov](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Dependency Status](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge)](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 

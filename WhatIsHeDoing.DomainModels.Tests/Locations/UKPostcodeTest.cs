@@ -148,6 +148,9 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             }
         }
 
+        [Fact]
+        public void GetSchema() => Assert.Null(new UKPostcode("SW1 1AA").GetSchema());
+
         public class JSONSerialisation
         {
             [Fact]
@@ -196,6 +199,24 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
 
                 Assert.Throws<DomainValueException>
                     (() => JsonConvert.DeserializeObject<Address>(serialised));
+            }
+        }
+
+        public class TryParse
+        {
+            [Fact]
+            public void Success()
+            {
+                const string postcode = "SW1 1AA";
+                Assert.True(UKPostcode.TryParse(postcode, out var model));
+                Assert.Equal(postcode, model);
+            }
+
+            [Fact]
+            public void BadValue()
+            {
+                Assert.False(UKPostcode.TryParse("oops", out var model));
+                Assert.Null(model);
             }
         }
 

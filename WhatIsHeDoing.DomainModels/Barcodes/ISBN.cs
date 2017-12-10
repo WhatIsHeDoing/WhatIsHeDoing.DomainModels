@@ -59,10 +59,9 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
 
         public static bool TryParse(ulong data, out ISBN source)
         {
-            source = null;
-
             if (!IsValid(data))
             {
+                source = null;
                 return false;
             }
 

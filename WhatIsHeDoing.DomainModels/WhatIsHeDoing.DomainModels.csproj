@@ -2,16 +2,16 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452;net462;net471</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-    <PackageVersion>2.3.0</PackageVersion>
+    <PackageVersion>2.4.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Adding .NET 4.7.1 target and using latest dependency versions</PackageReleaseNotes>
+    <PackageReleaseNotes>Removing unnecessary code, adding missed static functions and improving unit test coverage thanks to Codecov</PackageReleaseNotes>
     <Copyright></Copyright>
-    <PackageTags>core domain models</PackageTags>
+    <PackageTags>domain models</PackageTags>
     <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
-    <Version>2.3.0</Version>
+    <Version>2.4.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
@@ -26,6 +26,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>

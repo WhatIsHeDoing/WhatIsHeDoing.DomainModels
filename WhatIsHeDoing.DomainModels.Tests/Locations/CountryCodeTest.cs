@@ -96,6 +96,24 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             }
         }
 
+        public class TryParse
+        {
+            [Fact]
+            public void Success()
+            {
+                const string countryCode = "US";
+                Assert.True(CountryCode.TryParse(countryCode, out var model));
+                Assert.Equal(countryCode, model);
+            }
+
+            [Fact]
+            public void BadValue()
+            {
+                Assert.False(CountryCode.TryParse("oops", out var model));
+                Assert.Null(model);
+            }
+        }
+
         public class XMLSerialisation
         {
             [Fact]

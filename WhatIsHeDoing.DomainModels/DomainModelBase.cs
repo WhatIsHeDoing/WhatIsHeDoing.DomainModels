@@ -75,9 +75,7 @@ namespace WhatIsHeDoing.DomainModels
         /// </summary>
         /// <param name="source">To convert</param>
         /// <returns>String</returns>
-        public static implicit operator string(DomainModelBase<T> source) =>
-            source != null
-            ? source.ToString()
-            : throw new ArgumentNullException(nameof(source));
+        public static implicit operator string(DomainModelBase<T> source)
+            => source.ToString();
     }
 }
