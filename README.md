@@ -7,6 +7,7 @@
 [![codecov](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Dependency Status](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge)](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
+[![Codenvy badge](https://codenvy.io/factory/resources/codenvy-contribute.svg)](https://codenvy.io/f?name=nuget&user=whatishedoing 'Start development on Codenvy')
 
 A library of domain models for .NET.
 
@@ -133,7 +134,12 @@ public void StringFormat()
 
 ## Contributing
 
-All contributions are greatly welcomed! Please see the [guidelines][contributing].
+All contributions are greatly welcomed! Please see the [guidelines][contributing] for more information.
+
+If you are developing locally, pull down this repo and build within Visual Studio (any edition), or
+run `dotnet test` on any platform. Alternatively, simply create a new Codenvy workspace from my [factory][codenvy]!
+
+![Codenvy workspace](Codenvy-WhatIsHeDoing-NuGet.png)
 
 ## Authors
 
@@ -148,6 +154,7 @@ Thank you.
 
 [cc1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 [cc2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+[codenvy]: https://codenvy.io/f?name=nuget&user=whatishedoing
 [contributing]: CONTRIBUTING.md
 [demo]: http://whatishedoingdomainmodels.azurewebsites.net/swagger/
 [EAN]: https://en.wikipedia.org/wiki/International_Article_Number
