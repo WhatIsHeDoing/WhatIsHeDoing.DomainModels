@@ -1,15 +1,19 @@
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using WhatIsHeDoing.DomainModels.Barcodes;
-using Xunit;
-
 namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 {
+    using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using WhatIsHeDoing.DomainModels.Barcodes;
+    using Xunit;
+
     public class ISBNTest
     {
+        [Fact]
+        public void ToStringTests() =>
+            Assert.Equal("9783161484100", new ISBN(9783161484100UL).ToString());
+
         public class Book
         {
             public ISBN ISBN { get; set; }
@@ -26,8 +30,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             }
 
             [Fact]
-            public void Invalid() => Assert.Throws<DomainValueException>
-                (() => new ISBN(978316148410UL));
+            public void Invalid() => Assert.Throws<DomainValueException>(
+                () => new ISBN(978316148410UL));
         }
 
         public class JSONSerialisation
@@ -74,8 +78,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""Title"": ""Read Me""
 }";
 
-                Assert.Throws<DomainValueException>
-                    (() => JsonConvert.DeserializeObject<Book>(serialised));
+                Assert.Throws<DomainValueException>(
+                    () => JsonConvert.DeserializeObject<Book>(serialised));
             }
 
             [Fact]
@@ -87,14 +91,10 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""Title"": ""Read Me""
 }";
 
-                Assert.Throws<DomainValueException>
-                    (() => JsonConvert.DeserializeObject<Book>(serialised));
+                Assert.Throws<DomainValueException>(
+                    () => JsonConvert.DeserializeObject<Book>(serialised));
             }
         }
-
-        [Fact]
-        public void ToStringTests() =>
-            Assert.Equal("9783161484100", new ISBN(9783161484100UL).ToString());
 
         public class TryParse
         {
@@ -181,8 +181,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 using (var reader = new StringReader(xml))
                 {
-                    Assert.Throws<InvalidOperationException>
-                        (() => deserializer.Deserialize(reader));
+                    Assert.Throws<InvalidOperationException>(
+                        () => deserializer.Deserialize(reader));
                 }
             }
 

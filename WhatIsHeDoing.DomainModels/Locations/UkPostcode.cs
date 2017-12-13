@@ -17,6 +17,29 @@ namespace WhatIsHeDoing.DomainModels.Locations
     [TypeConverter(typeof(DomainModelTypeConverter<UKPostcode, string>))]
     public class UKPostcode : DomainModelBase<string>
     {
+        private const int InwardCodeLength = 3;
+        private const string OutwardInwardCodesSeparator = " ";
+
+        private static readonly Regex NumberRegex = new Regex(@"\d");
+
+        private static readonly Regex ValidationRegex = new Regex(
+            "(GIR\\s?0AA)|" +
+            "((([A-Z-[QVX]][0-9][0-9]?)|" +
+            "(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|" +
+            "(([A-Z-[QVX‌​]][0-9][A-HJKSTUW])|" +
+            "([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))" +
+            "\\s?[0-9][A-Z-[C‌​IKMOV]]{2})");
+
+        // Parameterless constructor required for serialisation.
+        public UKPostcode()
+        {
+        }
+
+        public UKPostcode(string value)
+            : base(value)
+        {
+        }
+
         /// <summary>
         /// Part of the postcode before the separator in the middle.
         /// </summary>
@@ -57,51 +80,8 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// <example>NY</example>
         public string PostcodeUnit { get; private set; }
 
-        /// <remarks>
-        /// Parameterless constructor required for serialisation.
-        /// </remarks>
-        public UKPostcode() { }
-
-        public UKPostcode(string value) : base(value) { }
-        
-        public override IDomainModel<string> Construct(object value) =>
-            Construct(Convert.ToString(value));
-
-        public override void ReadXml(XmlReader reader) =>
-            Construct(reader.ReadElementContentAsString());
-
-        public override IDomainModel<string> Construct(string ukPostcode)
-        {
-            // Bomb out if this is not valid.
-            ukPostcode = _clean(ukPostcode);
-
-            if (!IsValid(ukPostcode))
-            {
-                throw new DomainValueException(nameof(ukPostcode));
-            }
-
-            // Calculate and cache the outward code length.
-            var outwardCodeLength = ukPostcode.Length - INWARD_CODE_LENGTH;
-
-            // Set the individual elements of the postcode.
-            OutwardCode = ukPostcode.Substring(0, outwardCodeLength);
-            PostcodeArea = _numberRegex.Split(OutwardCode).First();
-            PostcodeDistrict = OutwardCode.Substring(PostcodeArea.Length);
-            InwardCode = ukPostcode.Substring(outwardCodeLength);
-
-            PostcodeSector = OutwardCode +
-                    OUTWARD_INWARD_CODES_SEPARATOR + InwardCode.Substring(0, 1);
-
-            PostcodeUnit = InwardCode.Substring(1, 2);
-
-            // Store the entire postcode too.
-            Value = OutwardCode + OUTWARD_INWARD_CODES_SEPARATOR + InwardCode;
-
-            return this;
-        }
-
         public static bool IsValid(string value) =>
-            _validationRegex.IsMatch(_clean(value));
+            ValidationRegex.IsMatch(Clean(value));
 
         public static bool TryParse(string source, out UKPostcode model)
         {
@@ -115,22 +95,45 @@ namespace WhatIsHeDoing.DomainModels.Locations
             return true;
         }
 
-        private const int INWARD_CODE_LENGTH = 3;
-        private const string OUTWARD_INWARD_CODES_SEPARATOR = " ";
+        public override IDomainModel<string> Construct(object value) =>
+            Construct(Convert.ToString(value));
 
-        private static readonly Regex _numberRegex = new Regex(@"\d");
+        public override void ReadXml(XmlReader reader) =>
+            Construct(reader.ReadElementContentAsString());
 
-        private static readonly Regex _validationRegex = new Regex(
-            "(GIR\\s?0AA)|" +
-            "((([A-Z-[QVX]][0-9][0-9]?)|" +
-            "(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|" +
-            "(([A-Z-[QVX‌​]][0-9][A-HJKSTUW])|" +
-            "([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))" +
-            "\\s?[0-9][A-Z-[C‌​IKMOV]]{2})");
+        public override IDomainModel<string> Construct(string ukPostcode)
+        {
+            // Bomb out if this is not valid.
+            ukPostcode = Clean(ukPostcode);
 
-        private static string _clean(string value) => value
+            if (!IsValid(ukPostcode))
+            {
+                throw new DomainValueException(nameof(ukPostcode));
+            }
+
+            // Calculate and cache the outward code length.
+            var outwardCodeLength = ukPostcode.Length - InwardCodeLength;
+
+            // Set the individual elements of the postcode.
+            OutwardCode = ukPostcode.Substring(0, outwardCodeLength);
+            PostcodeArea = NumberRegex.Split(OutwardCode).First();
+            PostcodeDistrict = OutwardCode.Substring(PostcodeArea.Length);
+            InwardCode = ukPostcode.Substring(outwardCodeLength);
+
+            PostcodeSector = OutwardCode +
+                    OutwardInwardCodesSeparator + InwardCode.Substring(0, 1);
+
+            PostcodeUnit = InwardCode.Substring(1, 2);
+
+            // Store the entire postcode too.
+            Value = OutwardCode + OutwardInwardCodesSeparator + InwardCode;
+
+            return this;
+        }
+
+        private static string Clean(string value) => value
             ?.Trim()
-            ?.Replace(OUTWARD_INWARD_CODES_SEPARATOR, string.Empty)
+            ?.Replace(OutwardInwardCodesSeparator, string.Empty)
             ?.ToUpper();
     }
 }

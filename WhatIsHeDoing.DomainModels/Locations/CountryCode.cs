@@ -18,16 +18,37 @@ namespace WhatIsHeDoing.DomainModels.Locations
     [TypeConverter(typeof(DomainModelTypeConverter<CountryCode, string>))]
     public class CountryCode : DomainModelBase<string>
     {
-        /// <remarks>
-        /// Parameterless constructor required for serialisation.
-        /// </remarks>
-        public CountryCode() { }
+        private static readonly Regex ISOValidatationRegex =
+            new Regex(@"^[a-zA-Z]{2,3}$");
 
-        public CountryCode(string value) : base(value) { }
+        // Parameterless constructor required for serialisation.
+        public CountryCode()
+        {
+        }
+
+        public CountryCode(string value)
+            : base(value)
+        {
+        }
+
+        public static bool IsValid(string source) =>
+            !string.IsNullOrWhiteSpace(source) && ISOValidatationRegex.IsMatch(source);
+
+        public static bool TryParse(string source, out CountryCode model)
+        {
+            if (!IsValid(source))
+            {
+                model = null;
+                return false;
+            }
+
+            model = new CountryCode(source);
+            return true;
+        }
 
         public override IDomainModel<string> Construct(object value) =>
             Construct(Convert.ToString(value));
-        
+
         public override IDomainModel<string> Construct(string source)
         {
             if (!IsValid(source))
@@ -41,23 +62,5 @@ namespace WhatIsHeDoing.DomainModels.Locations
 
         public override void ReadXml(XmlReader reader) =>
             Construct(reader.ReadElementContentAsString());
-
-        private static readonly Regex _isoValidatationRegex =
-            new Regex(@"^[a-zA-Z]{2,3}$");
-
-        public static bool IsValid(string source) =>
-            !string.IsNullOrWhiteSpace(source) && _isoValidatationRegex.IsMatch(source);
-
-        public static bool TryParse(string source, out CountryCode model)
-        {
-            if (!IsValid(source))
-            {
-                model = null;
-                return false;
-            }
-
-            model = new CountryCode(source);
-            return true;
-        }
     }
 }

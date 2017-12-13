@@ -10,24 +10,33 @@ namespace WhatIsHeDoing.DomainModels
     /// <summary>
     /// Domain model base contract.
     /// </summary>
+    /// <typeparam name="T">Underlying value type.</typeparam>
     [DebuggerDisplay("{Value}")]
     public abstract class DomainModelBase<T> : IDomainModel<T>
     {
-        /// <summary>
-        /// Underlying value of the model.
-        /// </summary>
-        public T Value { get; protected set; }
-
-        /// <remarks>
-        /// Parameterless constructor required for serialisation.
-        /// </remarks>
-        public DomainModelBase() { }
+        // Parameterless constructor required for serialisation.
+        public DomainModelBase()
+        {
+        }
 
         /// <summary>
         /// Constructor that creates a domain model from data.
         /// </summary>
         /// <param name="value">From which to validate and construct</param>
         public DomainModelBase(T value) => Construct(value);
+
+        /// <summary>
+        /// Underlying value of the model.
+        /// </summary>
+        public T Value { get; protected set; }
+
+        /// <summary>
+        /// Operator that converts a domain model to a string.
+        /// </summary>
+        /// <param name="source">To convert</param>
+        /// <returns>String</returns>
+        public static implicit operator string(DomainModelBase<T> source)
+            => source.ToString();
 
         public abstract IDomainModel<T> Construct(object value);
         public abstract IDomainModel<T> Construct(T value);
@@ -47,9 +56,9 @@ namespace WhatIsHeDoing.DomainModels
         /// Gets the hash code of this domain model value.
         /// </summary>
         /// <returns>Hash</returns>
-        public override int GetHashCode() => BitConverter.ToInt32
-            (MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
-        
+        public override int GetHashCode() => BitConverter.ToInt32(
+            MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
+
         /// <summary>
         /// Warning: not used!
         /// </summary>
@@ -69,13 +78,5 @@ namespace WhatIsHeDoing.DomainModels
         /// </summary>
         /// <param name="writer">XML writer</param>
         public void WriteXml(XmlWriter writer) => writer.WriteValue(Value);
-
-        /// <summary>
-        /// Operator that converts a domain model to a string.
-        /// </summary>
-        /// <param name="source">To convert</param>
-        /// <returns>String</returns>
-        public static implicit operator string(DomainModelBase<T> source)
-            => source.ToString();
     }
 }

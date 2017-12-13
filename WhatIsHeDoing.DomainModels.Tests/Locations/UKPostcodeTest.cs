@@ -1,15 +1,26 @@
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using WhatIsHeDoing.DomainModels.Locations;
-using Xunit;
-
 namespace WhatIsHeDoing.DomainModels.Tests.Locations
 {
+    using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using WhatIsHeDoing.DomainModels.Locations;
+    using Xunit;
+
     public class UKPostcodeTest
     {
+        [Fact]
+        public void GetSchema() => Assert.Null(new UKPostcode("SW1 1AA").GetSchema());
+
+        [Fact]
+        public void ToStringTests()
+        {
+            const string expected = "SW1A 1AA";
+            var actual = new UKPostcode("SW1A 1AA").ToString();
+            Assert.Equal(expected, actual);
+        }
+
         public class Address
         {
             public string Country { get; set; }
@@ -117,14 +128,6 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             }
         }
 
-        [Fact]
-        public void ToStringTests()
-        {
-            const string expected = "SW1A 1AA";
-            var actual = new UKPostcode("SW1A 1AA").ToString();
-            Assert.Equal(expected, actual);
-        }
-
         public class GetHashCodeTests
         {
             [Fact]
@@ -132,9 +135,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             {
                 var ukPostcodeOne = new UKPostcode("SW1A 1AA");
                 var ukPostcodeTwo = new UKPostcode("SW1A 1AA");
-
-                Assert.Equal
-                    (ukPostcodeOne.GetHashCode(), ukPostcodeTwo.GetHashCode());
+                Assert.Equal(ukPostcodeOne.GetHashCode(), ukPostcodeTwo.GetHashCode());
             }
 
             [Fact]
@@ -142,14 +143,9 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             {
                 var ukPostcodeOne = new UKPostcode("SW1A 1AA");
                 var ukPostcodeTwo = new UKPostcode("SW1A 2AA");
-
-                Assert.NotEqual
-                    (ukPostcodeOne.GetHashCode(), ukPostcodeTwo.GetHashCode());
+                Assert.NotEqual(ukPostcodeOne.GetHashCode(), ukPostcodeTwo.GetHashCode());
             }
         }
-
-        [Fact]
-        public void GetSchema() => Assert.Null(new UKPostcode("SW1 1AA").GetSchema());
 
         public class JSONSerialisation
         {
@@ -197,8 +193,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
     ""UKPostcode"": ""oops""
 }";
 
-                Assert.Throws<DomainValueException>
-                    (() => JsonConvert.DeserializeObject<Address>(serialised));
+                Assert.Throws<DomainValueException>(
+                    () => JsonConvert.DeserializeObject<Address>(serialised));
             }
         }
 

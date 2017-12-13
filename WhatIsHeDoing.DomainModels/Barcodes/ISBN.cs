@@ -15,12 +15,39 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     [TypeConverter(typeof(DomainModelTypeConverter<ISBN, ulong>))]
     public class ISBN : DomainModelBase<ulong>, IBarcode
     {
-        /// <remarks>
-        /// Parameterless constructor required for serialisation.
-        /// </remarks>
-        public ISBN() { }
+        private const ulong ValidLength = 13;
 
-        public ISBN(ulong value) : base(value) { }
+        private static readonly IList<ulong> ValidStartSequences = new[]
+        {
+            978UL,
+            979UL
+        };
+
+        // Parameterless constructor required for serialisation.
+        public ISBN()
+        {
+        }
+
+        public ISBN(ulong value)
+            : base(value)
+        {
+        }
+
+        public static bool IsValid(ulong barcode) =>
+            barcode.Length() == ValidLength &&
+            ValidStartSequences.Contains(barcode.StripDigits(10));
+
+        public static bool TryParse(ulong data, out ISBN source)
+        {
+            if (!IsValid(data))
+            {
+                source = null;
+                return false;
+            }
+
+            source = new ISBN(data);
+            return true;
+        }
 
         public override IDomainModel<ulong> Construct(object source)
         {
@@ -31,7 +58,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
 
             return Construct(value);
         }
-        
+
         public override IDomainModel<ulong> Construct(ulong source)
         {
             if (!IsValid(source))
@@ -52,29 +79,5 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
 
             Construct(value);
         }
-
-        public static bool IsValid(ulong barcode) =>
-            barcode.Length() == VALID_LENGTH &&
-            _validStartSequences.Contains(barcode.StripDigits(10));
-
-        public static bool TryParse(ulong data, out ISBN source)
-        {
-            if (!IsValid(data))
-            {
-                source = null;
-                return false;
-            }
-
-            source = new ISBN(data);
-            return true;
-        }
-
-        private const ulong VALID_LENGTH = 13;
-
-        private static readonly IList<ulong> _validStartSequences = new[]
-        {
-            978UL,
-            979UL
-        };
     }
 }

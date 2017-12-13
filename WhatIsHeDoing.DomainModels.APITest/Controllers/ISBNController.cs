@@ -19,13 +19,13 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
         /// <summary>
         /// Gets the raw value of an ISBN.
         /// </summary>
-        /// <param name="ISBN">ISBN</param>
+        /// <param name="barcode">ISBN</param>
         /// <returns>Success</returns>
-        [HttpGet("{ISBN}")]
+        [HttpGet("{barcode}")]
         [ProducesResponseType(typeof(ulong), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Get(ISBN ISBN) => ModelState.IsValid
-            ? Ok(ISBN.Value)
+        public IActionResult Get(ISBN barcode) => ModelState.IsValid
+            ? Ok(barcode.Value)
             : (ActionResult)new BadRequestResult();
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
         /// <summary>
         /// Deletes an ISBN.
         /// </summary>
-        /// <param name="ISBN">ISBN</param>
+        /// <param name="barcode">ISBN</param>
         /// <returns>Success</returns>
-        [HttpDelete("{ISBN}")]
+        [HttpDelete("{barcode}")]
         [ProducesResponseType(typeof(ulong), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Delete(ISBN ISBN) => ModelState.IsValid
+        public IActionResult Delete(ISBN barcode) => ModelState.IsValid
             ? Ok()
             : (ActionResult)new BadRequestResult();
     }

@@ -4,7 +4,13 @@ namespace WhatIsHeDoing.DomainModels
 
     public class DomainValueException : Exception
     {
-        public DomainValueException() { }
-        public DomainValueException(string message) : base(message) { }
+        public DomainValueException()
+        {
+        }
+
+        public DomainValueException(string message)
+            : base(message)
+        {
+        }
     }
 }

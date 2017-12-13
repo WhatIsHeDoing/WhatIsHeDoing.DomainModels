@@ -17,42 +17,17 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     [TypeConverter(typeof(DomainModelTypeConverter<EAN, ulong>))]
     public class EAN : DomainModelBase<ulong>, IBarcode
     {
-        /// <remarks>
-        /// Parameterless constructor required for serialisation.
-        /// </remarks>
-        public EAN() { }
+        private static readonly ulong[] ValidLengths =
+            new[] { 8UL, 12UL, 13UL, 14UL, 18UL };
 
-        public EAN(ulong value) : base(value) { }
-
-        public override IDomainModel<ulong> Construct(object source)
+        // Parameterless constructor required for serialisation.
+        public EAN()
         {
-            if (!ulong.TryParse(source as string, out ulong value))
-            {
-                throw new DomainValueException();
-            }
-
-            return Construct(value);
         }
 
-        public override IDomainModel<ulong> Construct(ulong source)
+        public EAN(ulong value)
+            : base(value)
         {
-            if (!IsValid(source))
-            {
-                throw new DomainValueException(nameof(source));
-            }
-
-            Value = source;
-            return this;
-        }
-
-        public override void ReadXml(XmlReader reader)
-        {
-            if (!ulong.TryParse(reader.ReadElementContentAsString(), out ulong value))
-            {
-                throw new DomainValueException();
-            }
-
-            Construct(value);
         }
 
         public static bool HasValidChecksum(ulong barcode)
@@ -94,7 +69,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         }
 
         public static bool IsValid(ulong barcode) =>
-            _validLengths.Contains(barcode.Length()) &&
+            ValidLengths.Contains(barcode.Length()) &&
             HasValidChecksum(barcode);
 
         public static bool TryParse(ulong source, out EAN model)
@@ -109,7 +84,35 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return true;
         }
 
-        private static readonly ulong[] _validLengths =
-            new[] { 8UL, 12UL, 13UL, 14UL, 18UL };
+        public override IDomainModel<ulong> Construct(object source)
+        {
+            if (!ulong.TryParse(source as string, out ulong value))
+            {
+                throw new DomainValueException();
+            }
+
+            return Construct(value);
+        }
+
+        public override IDomainModel<ulong> Construct(ulong source)
+        {
+            if (!IsValid(source))
+            {
+                throw new DomainValueException(nameof(source));
+            }
+
+            Value = source;
+            return this;
+        }
+
+        public override void ReadXml(XmlReader reader)
+        {
+            if (!ulong.TryParse(reader.ReadElementContentAsString(), out ulong value))
+            {
+                throw new DomainValueException();
+            }
+
+            Construct(value);
+        }
     }
 }

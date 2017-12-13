@@ -1,15 +1,19 @@
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using WhatIsHeDoing.DomainModels.Barcodes;
-using Xunit;
-
 namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 {
+    using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using WhatIsHeDoing.DomainModels.Barcodes;
+    using Xunit;
+
     public class EANTest
     {
+        [Fact]
+        public void ToStringTests() =>
+            Assert.Equal("4006381333931", new EAN(4006381333931UL).ToString());
+
         public class Product
         {
             public string Name { get; set; }
@@ -21,8 +25,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             [Theory]
             [InlineData(73513537UL)]
             [InlineData(4006381333931UL)]
-            public void Valid(ulong EAN) =>
-                Assert.Equal(EAN, new EAN(EAN).Value);
+            public void Valid(ulong barcode) =>
+                Assert.Equal(barcode, new EAN(barcode).Value);
 
             [Fact]
             public void InvalidBarcode() =>
@@ -72,8 +76,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""EAN"": ""oops""
 }";
 
-                Assert.Throws<DomainValueException>
-                    (() => JsonConvert.DeserializeObject<Product>(serialised));
+                Assert.Throws<DomainValueException>(
+                    () => JsonConvert.DeserializeObject<Product>(serialised));
             }
 
             [Fact]
@@ -85,14 +89,10 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
     ""EAN"": ""1234""
 }";
 
-                Assert.Throws<DomainValueException>
-                    (() => JsonConvert.DeserializeObject<Product>(serialised));
+                Assert.Throws<DomainValueException>(
+                    () => JsonConvert.DeserializeObject<Product>(serialised));
             }
         }
-
-        [Fact]
-        public void ToStringTests() =>
-            Assert.Equal("4006381333931", new EAN(4006381333931UL).ToString());
 
         public class TryParse
         {

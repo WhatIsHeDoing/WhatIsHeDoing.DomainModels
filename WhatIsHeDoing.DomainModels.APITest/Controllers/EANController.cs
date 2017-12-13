@@ -19,13 +19,13 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
         /// <summary>
         /// Gets the raw value of an EAN.
         /// </summary>
-        /// <param name="EAN">EAN</param>
+        /// <param name="barcode">EAN</param>
         /// <returns>Success</returns>
-        [HttpGet("{EAN}")]
+        [HttpGet("{barcode}")]
         [ProducesResponseType(typeof(ulong), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Get(EAN EAN) => ModelState.IsValid
-            ? Ok(EAN.Value)
+        public IActionResult Get(EAN barcode) => ModelState.IsValid
+            ? Ok(barcode.Value)
             : (ActionResult)new BadRequestResult();
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
         /// <summary>
         /// Deletes an EAN.
         /// </summary>
-        /// <param name="EAN">EAN</param>
+        /// <param name="barcode">EAN</param>
         /// <returns>Success</returns>
-        [HttpDelete("{EAN}")]
+        [HttpDelete("{barcode}")]
         [ProducesResponseType(typeof(ulong), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Delete(EAN EAN) => ModelState.IsValid
+        public IActionResult Delete(EAN barcode) => ModelState.IsValid
             ? Ok()
             : (ActionResult)new BadRequestResult();
     }

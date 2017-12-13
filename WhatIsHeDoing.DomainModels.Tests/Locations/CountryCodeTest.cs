@@ -1,15 +1,23 @@
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using WhatIsHeDoing.DomainModels.Locations;
-using Xunit;
-
 namespace WhatIsHeDoing.DomainModels.Tests.Locations
 {
+    using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using WhatIsHeDoing.DomainModels.Locations;
+    using Xunit;
+
     public class CountryCodeTest
     {
+        [Fact]
+        public void ValidModelUsedAsString()
+        {
+            var isoCode = new CountryCode("gb");
+            Assert.Equal("GB", isoCode.ToString());
+            Assert.Equal("GB", isoCode + string.Empty);
+        }
+
         public class Country
         {
             public CountryCode CountryCode { get; set; }
@@ -36,14 +44,6 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             [InlineData("123")]
             public void Fail(string isoCode) =>
                 Assert.False(CountryCode.IsValid(isoCode));
-        }
-
-        [Fact]
-        public void ValidModelUsedAsString()
-        {
-            var isoCode = new CountryCode("gb");
-            Assert.Equal("GB", isoCode.ToString());
-            Assert.Equal("GB", isoCode + "");
         }
 
         public class JSONSerialisation
@@ -91,8 +91,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
     ""Name"": ""Great Britain""
 }";
 
-                Assert.Throws<DomainValueException>
-                    (() => JsonConvert.DeserializeObject<Country>(serialised));
+                Assert.Throws<DomainValueException>(
+                    () => JsonConvert.DeserializeObject<Country>(serialised));
             }
         }
 

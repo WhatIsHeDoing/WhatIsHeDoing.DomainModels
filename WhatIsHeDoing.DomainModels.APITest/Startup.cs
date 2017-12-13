@@ -1,18 +1,18 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-
 namespace WhatIsHeDoing.DomainModels.APITest
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Swashbuckle.AspNetCore.Swagger;
+    using System;
+
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration) => Configuration = configuration;
+
+        public IConfiguration Configuration { get; }
 
         // Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -63,8 +63,8 @@ namespace WhatIsHeDoing.DomainModels.APITest
                 config.ShowJsonEditor();
                 config.ShowRequestHeaders();
 
-                config.SwaggerEndpoint
-                    ("/swagger/v1/swagger.json", "WhatIsHeDoing.DomainModels");
+                config.SwaggerEndpoint(
+                    "/swagger/v1/swagger.json", "WhatIsHeDoing.DomainModels");
             });
         }
     }
