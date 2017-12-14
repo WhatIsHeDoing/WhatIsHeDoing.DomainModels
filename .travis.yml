@@ -1,0 +1,9 @@
+language: csharp
+solution: WhatIsHeDoing.DomainModels.sln
+mono: none
+dotnet: 2.0.0
+install:
+  - dotnet restore
+script:
+  - dotnet build --configuration Release
+  - dotnet test WhatIsHeDoing.DomainModels.Tests/WhatIsHeDoing.DomainModels.Tests.csproj
