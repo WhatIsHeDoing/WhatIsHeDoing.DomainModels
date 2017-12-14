@@ -1,13 +1,14 @@
 # WhatIsHeDoing.DomainModels
 
-[![NuGet](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
-[![NuGet](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)](https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/)
-[![Build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij)
-[![Tests passing](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels-j4bij.svg)](https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij)
-[![codecov](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
-[![Dependency Status](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge)](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
-[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
-[![Codenvy badge](https://codenvy.io/factory/resources/codenvy-contribute.svg)](https://codenvy.io/f?name=nuget&user=whatishedoing 'Start development on Codenvy')
+[![NuGet package](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)][nuget]
+[![NuGet downloads](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)][nuget]
+[![AppVeyor Windows build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)][appveyor]
+[![Test status](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels-j4bij.svg)][appveyor]
+[![Codecov code coverage](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
+[![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][travis]
+[![Dependency status](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge)](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
+[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)][beerpay]
+[![Codenvy workspace](https://codenvy.io/factory/resources/codenvy-contribute.svg)][codenvy]
 
 A library of domain models for .NET.
 
@@ -137,7 +138,10 @@ public void StringFormat()
 All contributions are greatly welcomed! Please see the [guidelines][contributing] for more information.
 
 If you are developing locally, pull down this repo and build within Visual Studio (any edition), or
-run `dotnet test` on any platform. Alternatively, simply create a new Codenvy workspace from my [factory][codenvy]!
+run `dotnet test` on any platform; the `master` branch is continuously built on both [Windows][appveyor]
+and [Linux][travis]. Alternatively, simply create a new Codenvy workspace from my [factory][codenvy]!
+You can even run the API test project by simply using the `Run` :arrow_forward: feature; just add `/swagger` to the
+end of the dynamic URL it generates in the terminal.
 
 ![Codenvy workspace](Codenvy-WhatIsHeDoing-NuGet.png)
 
@@ -150,11 +154,14 @@ run `dotnet test` on any platform. Alternatively, simply create a new Codenvy wo
 I'm a huge fan of craft :beers:, so feel free to contribute to more that I can rate on [Untappd][untappd].
 Thank you.
 
-[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=beer-square)](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
+[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=beer-square)][beerpay]
 
+[appveyor]: https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij
+    "WhatIsHeDoing.DomainModels - AppVeyor [Windows build]"
+[beerpay]: https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels
 [cc1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 [cc2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
-[codenvy]: https://codenvy.io/f?name=nuget&user=whatishedoing
+[codenvy]: https://codenvy.io/f?name=nuget&user=whatishedoing "Start development on Codenvy"
 [contributing]: CONTRIBUTING.md
 [demo]: http://whatishedoingdomainmodels.azurewebsites.net/swagger/
 [EAN]: https://en.wikipedia.org/wiki/International_Article_Number
@@ -165,6 +172,8 @@ Thank you.
 [postcodes]: https://www.townscountiespostcodes.co.uk/postcodes-in-northern-ireland/
     "Postcodes in Northern Ireland | Northern Ireland Postcode Information, UK"
 [royalmail]: https://www.royalmail.com/find-a-postcode "Postcode Finder - Find an Address | Royal Mail Group Ltd"
+[travis]: https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels
+    "WhatIsHeDoing/WhatIsHeDoing.DomainModels - Travis CI [Linux build]"
 [untappd]: https://untappd.com/user/WhatIsHeDoing
 [whatisdazdoing]: https://twitter.com/WhatIsDazDoing "Darren Hickling (@WhatIsDazDoing) | Twitter"
 [wiki]: https://en.wikipedia.org/wiki/Domain_model
