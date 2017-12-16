@@ -57,7 +57,7 @@ namespace WhatIsHeDoing.DomainModels
         /// </summary>
         /// <returns>Hash</returns>
         public override int GetHashCode() => BitConverter.ToInt32(
-            MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
+            SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
 
         /// <summary>
         /// Warning: not used!
