@@ -6,7 +6,7 @@
   <PropertyGroup>
     <DocumentationFile>bin\netcoreapp2.0\WhatIsHeDoing.DomainModels.APITest.xml</DocumentationFile>
     <OutputPath>bin\</OutputPath>
-    <NoWarn>1591;1701;1702;1705;SG0016</NoWarn>
+    <NoWarn>1591;1701;1702;1705;AD0001;SG0016</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <CodeAnalysisRuleSet>..\WhatIsHeDoing.ruleset</CodeAnalysisRuleSet>
@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Desktop.Analyzers" Version="1.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
     <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.Net.Compilers" Version="2.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
