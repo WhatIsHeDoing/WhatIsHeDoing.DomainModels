@@ -6,7 +6,6 @@
 [![Test status](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels-j4bij.svg)][appveyor]
 [![Codecov code coverage](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][travis]
-[![Dependency status](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge)](https://dependencyci.com/github/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)][beerpay]
 [![Codenvy workspace](https://codenvy.io/factory/resources/codenvy-contribute.svg)][codenvy]
 
