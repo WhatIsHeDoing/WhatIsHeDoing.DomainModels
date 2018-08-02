@@ -139,8 +139,8 @@ All contributions are greatly welcomed! Please see the [guidelines][contributing
 If you are developing locally, pull down this repo and build within Visual Studio (any edition), or
 run `dotnet test` on any platform; the `master` branch is continuously built on both [Windows][appveyor]
 and [Linux][travis]. Alternatively, simply create a new Codenvy workspace from my [factory][codenvy]!
-You can even run the API test project by simply using the `Run` :arrow_forward: feature; just add `/swagger` to the
-end of the dynamic URL it generates in the terminal.
+You can even run the API test project by simply using the `Run` :arrow_forward: feature; just click the
+dynamic `preview` URL it generates in the terminal.
 
 ![Codenvy workspace](Codenvy-WhatIsHeDoing-NuGet.png)
 
