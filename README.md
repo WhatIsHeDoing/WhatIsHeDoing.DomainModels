@@ -162,7 +162,7 @@ Thank you.
 [cc2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
 [codenvy]: https://codenvy.io/f?name=nuget&user=whatishedoing "Start development on Codenvy"
 [contributing]: CONTRIBUTING.md
-[demo]: http://whatishedoingdomainmodels.azurewebsites.net/swagger/
+[demo]: http://whatishedoingdomainmodels.azurewebsites.net/
 [EAN]: https://en.wikipedia.org/wiki/International_Article_Number
 [ISBN]: https://en.wikipedia.org/wiki/International_Standard_Book_Number
 [jsonnet]: https://www.newtonsoft.com/json
