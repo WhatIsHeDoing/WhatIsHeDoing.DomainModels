@@ -34,7 +34,7 @@
     <PackageReference Include="Desktop.Analyzers" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
     <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.Net.Compilers" Version="2.6.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="WhatIsHeDoing.Core" Version="1.6.1" />
