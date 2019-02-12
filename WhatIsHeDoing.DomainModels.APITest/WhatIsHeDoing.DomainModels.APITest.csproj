@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
     <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.Net.Compilers" Version="2.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.2" />
     <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
