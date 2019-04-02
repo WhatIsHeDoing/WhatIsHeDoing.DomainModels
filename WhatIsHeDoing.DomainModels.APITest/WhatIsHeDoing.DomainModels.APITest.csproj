@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Desktop.Analyzers" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
-    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.Net.Compilers" Version="2.6.1" />
+    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.Net.Compilers" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
     <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
