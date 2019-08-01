@@ -1,7 +1,7 @@
 language: csharp
 solution: WhatIsHeDoing.DomainModels.sln
 mono: none
-dotnet: 2.0.0
+dotnet: 2.2.401
 install:
   - dotnet restore
 script:
