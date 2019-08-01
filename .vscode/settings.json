@@ -1,0 +1,4 @@
+{
+    "editor.formatOnSave": true,
+    "dotnet-test-explorer.testProjectPath": "WhatIsHeDoing.DomainModels.Tests"
+}

@@ -207,6 +207,3 @@ FakesAssemblies/
 
 # Open Cover report
 coverage.xml
-
-# VS Code.
-.vscode/
