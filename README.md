@@ -5,14 +5,13 @@
 [![AppVeyor Windows build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)][appveyor]
 [![Codecov code coverage](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][travis]
-[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)][beerpay]
-[![Codenvy workspace](https://codenvy.io/factory/resources/codenvy-contribute.svg)][codenvy]
+[![Codenvy workspace](https://codenvy.io/factory/resources/codenvy-contribute.svg)][factory]
 
 A library of domain models for .NET.
 
-## Introduction
+## 👋 Introduction
 
-As the [Wikipedia article][wiki] explains:
+As the [Wikipedia] article explains:
 
 > A domain model is a system of abstractions that describes select aspects of a sphere of knowledge, influence,
 > or activity (a domain). The model can then be used to solve problems related to that domain. The domain model
@@ -26,18 +25,18 @@ deserialised, in a consistent manner.
 can be in the correct format, but it might not exist! You may still need to use another means to verify them,
 such as calling a service. For example, the UK postcode `SE1 9XX` is valid, but it does not [exist][royalmail].
 
-## Live Demo
+## 📡 Demo
 
-See how the Swagger [demo site][demo], generated from the `WhatIsHeDoing.DomainModels.APITest` project,
+See how the Swagger demo site - use `dotnet run --project WhatIsHeDoing.DomainModels.APITest` -
 handles URL, JSON and XML domain model de/serialisation.
 
 ![Web API](WhatIsHeDoing.DomainModels.APITest/swagger.png)
 
-## Usage
+## 🦮 Usage
 
 ### Installing
 
-This package is available via [NuGet][nuget], and targets multiple .NET platforms.
+This package is available via [NuGet], and targets .NET Core 2.2 for cross-platform use.
 
 ### The Models
 
@@ -49,7 +48,7 @@ This package is available via [NuGet][nuget], and targets multiple .NET platform
 #### Locations
 
 * `CountryCode`: [two][cc1] and [three][cc2]-letter country codes.
-* `UKPostcode`: United Kingdom [postcode][postcode]
+* `UKPostcode`: United Kingdom [postcode]
 
 ## An Example
 
@@ -116,7 +115,7 @@ namespace Test
 }
 ```
 
-This works for both JSON (using [Json.NET][jsonnet]) and XML serialisation.
+This works for both JSON (using [Json.NET]) and XML serialisation.
 
 The underlying `Value` type is a `string`, and the model provides an implicit string operator override,
 as you can see from unit tests like this from the `WhatIsHeDoing.DomainModels.Test` project:
@@ -131,41 +130,33 @@ public void StringFormat()
 }
 ```
 
-## Contributing
+## 🆘 Contributing
 
-All contributions are greatly welcomed! Please see the [guidelines][contributing] for more information.
+All contributions are greatly welcomed! Please see the [contributing] guide for more information.
 
 If you are developing locally, pull down this repo and build within Visual Studio (any edition), or
 run `dotnet test` on any platform; the `master` branch is continuously built on both [Windows][appveyor]
-and [Linux][travis]. Alternatively, simply create a new Codenvy workspace from my [factory][codenvy]!
+and [Linux][travis]. Alternatively, simply create a new Codenvy workspace from my [factory]!
 You can even run the API test project by simply using the `Run` :arrow_forward: feature; just click the
 dynamic `preview` URL it generates in the terminal.
 
 ![Codenvy workspace](Codenvy-WhatIsHeDoing-NuGet.png)
 
-## Authors
+## 👱 Authors
 
-* **Darren Hickling**: https://darren.hickling.is/, [@WhatIsDazDoing][whatisdazdoing]
+* **Darren Hickling**: https://darrenhickling.com/, [@DarrenHickling]
 
-## And Finally...
-
-I'm a huge fan of craft :beers:, so feel free to contribute to more that I can rate on [Untappd][untappd].
-Thank you.
-
-[![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=beer-square)][beerpay]
-
+[@DarrenHickling]: https://twitter.com/DarrenHickling "Darren Hickling (@DarrenHickling) | Twitter"
 [appveyor]: https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij
     "WhatIsHeDoing.DomainModels - AppVeyor [Windows build]"
-[beerpay]: https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels
 [cc1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 [cc2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
-[codenvy]: https://codenvy.io/f?name=nuget&user=whatishedoing "Start development on Codenvy"
 [contributing]: CONTRIBUTING.md
-[demo]: http://whatishedoingdomainmodels.azurewebsites.net/
 [EAN]: https://en.wikipedia.org/wiki/International_Article_Number
+[factory]: https://codenvy.io/f?id=factorydoivwyk603gvrx9x "Start development on Codenvy"
 [ISBN]: https://en.wikipedia.org/wiki/International_Standard_Book_Number
-[jsonnet]: https://www.newtonsoft.com/json
-[nuget]: https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/
+[Json.NET]: https://www.newtonsoft.com/json
+[NuGet]: https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/
 [postcode]: http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom
 [postcodes]: https://www.townscountiespostcodes.co.uk/postcodes-in-northern-ireland/
     "Postcodes in Northern Ireland | Northern Ireland Postcode Information, UK"
@@ -173,5 +164,4 @@ Thank you.
 [travis]: https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels
     "WhatIsHeDoing/WhatIsHeDoing.DomainModels - Travis CI [Linux build]"
 [untappd]: https://untappd.com/user/WhatIsHeDoing
-[whatisdazdoing]: https://twitter.com/WhatIsDazDoing "Darren Hickling (@WhatIsDazDoing) | Twitter"
-[wiki]: https://en.wikipedia.org/wiki/Domain_model
+[Wikipedia]: https://en.wikipedia.org/wiki/Domain_model
