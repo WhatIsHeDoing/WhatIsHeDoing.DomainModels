@@ -17,11 +17,7 @@ namespace WhatIsHeDoing.DomainModels.APITest
         // Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.InputFormatters.Add(new XmlSerializerInputFormatter());
-                options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
-            });
+            services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddSwaggerGen(config =>
             {
