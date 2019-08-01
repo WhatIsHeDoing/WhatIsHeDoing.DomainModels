@@ -3,7 +3,6 @@
 [![NuGet package](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)][nuget]
 [![NuGet downloads](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)][nuget]
 [![AppVeyor Windows build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)][appveyor]
-[![Test status](https://img.shields.io/appveyor/tests/DarrenHickling/whatishedoing-domainmodels-j4bij.svg)][appveyor]
 [![Codecov code coverage](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
 [![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][travis]
 [![Beerpay](https://beerpay.io/WhatIsHeDoing/WhatIsHeDoing.DomainModels/badge.svg?style=flat)][beerpay]

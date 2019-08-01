@@ -56,9 +56,6 @@ namespace WhatIsHeDoing.DomainModels.APITest
 
             app.UseSwaggerUI(config =>
             {
-                config.ShowJsonEditor();
-                config.ShowRequestHeaders();
-
                 config.SwaggerEndpoint(
                     "/swagger/v1/swagger.json", "WhatIsHeDoing.DomainModels");
             });
