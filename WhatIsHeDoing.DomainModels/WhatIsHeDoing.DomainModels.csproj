@@ -1,18 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard2.0;</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netstandard2.0;net452;net462;net471</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-    <PackageVersion>2.4.0</PackageVersion>
+    <PackageVersion>3.0.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Removing unnecessary code, adding missed static functions and improving unit test coverage thanks to Codecov</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrading to .NET Core 2.2 only and upgrading several dependencies</PackageReleaseNotes>
     <Copyright></Copyright>
     <PackageTags>domain models</PackageTags>
     <PackageLicenseUrl>https://unlicense.org/</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
-    <Version>2.4.0</Version>
+    <Version>3.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
@@ -25,16 +24,14 @@
     <CodeAnalysisRuleSet>..\WhatIsHeDoing.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Desktop.Analyzers" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
-    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.Net.Compilers" Version="2.6.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="WhatIsHeDoing.Core" Version="1.6.1" />
