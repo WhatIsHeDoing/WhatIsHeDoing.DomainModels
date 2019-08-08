@@ -15,7 +15,6 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
-    <PackageIconUrl>https://darren.hickling.is/favicon/favicon-60x60.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -34,6 +33,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="WhatIsHeDoing.Core" Version="1.6.1" />
+    <PackageReference Include="WhatIsHeDoing.Core" Version="2.0.0" />
   </ItemGroup>
 </Project>

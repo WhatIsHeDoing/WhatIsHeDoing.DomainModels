@@ -163,5 +163,4 @@ dynamic `preview` URL it generates in the terminal.
 [royalmail]: https://www.royalmail.com/find-a-postcode "Postcode Finder - Find an Address | Royal Mail Group Ltd"
 [travis]: https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels
     "WhatIsHeDoing/WhatIsHeDoing.DomainModels - Travis CI [Linux build]"
-[untappd]: https://untappd.com/user/WhatIsHeDoing
 [Wikipedia]: https://en.wikipedia.org/wiki/Domain_model
