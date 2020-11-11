@@ -1,9 +1,6 @@
 version: 1.0.{build}
 image: Visual Studio 2019
 platform: Any CPU
-environment:
-  SNYK_KEY:
-    secure: 3Veu6SjQ3EG4CsnWwZC2/Tb5ckd2T9ym1wcCEzYnLcDiVO/4looeNn/pEMElOxbw
 before_build:
 - choco install opencover.portable
 - choco install codecov
@@ -11,11 +8,7 @@ build_script:
 - dotnet restore
 - dotnet build --configuration Release
 after_build:
-- npm install lodash snyk -g
-- snyk auth %SNYK_KEY%
 - cd WhatIsHeDoing.DomainModels
-#- snyk test
-#- snyk monitor
 test_script:
 - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[WhatIsHeDoing.DomainModels*]* -[WhatIsHeDoing.DomainModels.Tests]*" -output:coverage.xml -oldstyle
 - codecov -f coverage.xml
