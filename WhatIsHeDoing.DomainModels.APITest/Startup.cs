@@ -2,10 +2,9 @@ namespace WhatIsHeDoing.DomainModels.APITest
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Swashbuckle.AspNetCore.Swagger;
+    using Microsoft.OpenApi.Models;
     using System;
 
     public class Startup
@@ -17,25 +16,27 @@ namespace WhatIsHeDoing.DomainModels.APITest
         // Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddXmlSerializerFormatters();
+            services
+                .AddMvc(config => config.EnableEndpointRouting = false)
+                .AddXmlSerializerFormatters();
 
             services.AddSwaggerGen(config =>
             {
                 config.IncludeXmlComments(AppDomain.CurrentDomain.BaseDirectory +
                     @"WhatIsHeDoing.DomainModels.APITest.xml");
 
-                config.SwaggerDoc("v1", new Info
+                config.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Contact = new Contact
+                    Contact = new OpenApiContact
                     {
                         Name = "WhatIsHeDoing",
-                        Url = "https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/"
+                        Url = new Uri("https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/")
                     },
                     Description = "Tests the use of WhatIsHeDoing.DomainModels in Web API.",
-                    License = new License
+                    License = new OpenApiLicense
                     {
                         Name = "Unlicense",
-                        Url = "https://unlicense.org/"
+                        Url = new Uri("https://unlicense.org/")
                     },
                     Title = "WhatIsHeDoing.DomainModels",
                     Version = "v1",
@@ -44,14 +45,8 @@ namespace WhatIsHeDoing.DomainModels.APITest
         }
 
         // Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
             app.UseSwagger();
 
             app.UseSwaggerUI(config =>

@@ -5,7 +5,7 @@
     "recommendations": [
         "editorconfig.editorconfig",
         "formulahendry.dotnet-test-explorer",
-        "ms-vscode.csharp"
+        "ms-dotnettools.csharp"
     ],
     // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
     "unwantedRecommendations": []

@@ -1,10 +1,10 @@
 # WhatIsHeDoing.DomainModels
 
-[![NuGet package](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)][nuget]
-[![NuGet downloads](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)][nuget]
+[![NuGet package](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)][NuGet]
+[![NuGet downloads](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)][NuGet]
 [![AppVeyor Windows build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)][appveyor]
 [![Codecov code coverage](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
-[![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][travis]
+[![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][Travis]
 [![Codenvy workspace](https://codenvy.io/factory/resources/codenvy-contribute.svg)][factory]
 
 A library of domain models for .NET.
@@ -15,7 +15,7 @@ As the [Wikipedia] article explains:
 
 > A domain model is a system of abstractions that describes select aspects of a sphere of knowledge, influence,
 > or activity (a domain). The model can then be used to solve problems related to that domain. The domain model
-> is a representation of meaningful real-world concepts pertinent to the domain that need to be modeled in software.
+> is a representation of meaningful real-world concepts pertinent to the domain that need to be modelled in software.
 > The concepts include the data involved in the business and rules the business uses in relation to that data.
 
 The domain models in this library implement a contract that ensures they are validated, serialised and
@@ -23,7 +23,7 @@ deserialised, in a consistent manner.
 
 **Note**: these models only _validate_ their values, they do not _verify_ them. That is, a model value
 can be in the correct format, but it might not exist! You may still need to use another means to verify them,
-such as calling a service. For example, the UK postcode `SE1 9XX` is valid, but it does not [exist][royalmail].
+such as calling a service. For example, the UK postcode `SE1 9XX` is valid, but it does not [exist][Royal Mail].
 
 ## 📡 Demo
 
@@ -70,7 +70,7 @@ public class Address
 ### The Problems
 
 Whilst a postcode looks simple enough, it is comprised of multiple different components, and is validated by a
-suprisingly complex regular expression. If it is stored as a `string`, when is it validated, and where does
+surprisingly complex regular expression. If it is stored as a `string`, when is it validated, and where does
 that logic reside? If it is passed to a Web API, you could add a model annotation, but what about other scenarios,
 such as console and mobile apps? What happens when we need to access only parts of that postcode, such as
 the postcode area, which could be used to determine whether the user is based in [Northern Ireland][postcodes]?
@@ -136,7 +136,7 @@ All contributions are greatly welcomed! Please see the [contributing] guide for 
 
 If you are developing locally, pull down this repo and build within Visual Studio (any edition), or
 run `dotnet test` on any platform; the `master` branch is continuously built on both [Windows][appveyor]
-and [Linux][travis]. Alternatively, simply create a new Codenvy workspace from my [factory]!
+and [Linux][Travis]. Alternatively, simply create a new Codenvy workspace from my [factory]!
 You can even run the API test project by simply using the `Run` :arrow_forward: feature; just click the
 dynamic `preview` URL it generates in the terminal.
 
@@ -144,9 +144,8 @@ dynamic `preview` URL it generates in the terminal.
 
 ## 👱 Authors
 
-* **Darren Hickling**: https://darrenhickling.com/, [@DarrenHickling]
+* **Darren Hickling**: <https://darrenhickling.com/>
 
-[@DarrenHickling]: https://twitter.com/DarrenHickling "Darren Hickling (@DarrenHickling) | Twitter"
 [appveyor]: https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij
     "WhatIsHeDoing.DomainModels - AppVeyor [Windows build]"
 [cc1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
@@ -160,7 +159,7 @@ dynamic `preview` URL it generates in the terminal.
 [postcode]: http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom
 [postcodes]: https://www.townscountiespostcodes.co.uk/postcodes-in-northern-ireland/
     "Postcodes in Northern Ireland | Northern Ireland Postcode Information, UK"
-[royalmail]: https://www.royalmail.com/find-a-postcode "Postcode Finder - Find an Address | Royal Mail Group Ltd"
-[travis]: https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels
+[Royal Mail]: https://www.royalmail.com/find-a-postcode "Postcode Finder - Find an Address | Royal Mail Group Ltd"
+[Travis]: https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels
     "WhatIsHeDoing/WhatIsHeDoing.DomainModels - Travis CI [Linux build]"
 [Wikipedia]: https://en.wikipedia.org/wiki/Domain_model

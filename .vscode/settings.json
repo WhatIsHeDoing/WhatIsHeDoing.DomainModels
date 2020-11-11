@@ -1,4 +1,5 @@
 {
+    "dotnet-test-explorer.testProjectPath": "WhatIsHeDoing.DomainModels.Tests",
     "editor.formatOnSave": true,
-    "dotnet-test-explorer.testProjectPath": "WhatIsHeDoing.DomainModels.Tests"
+    "spellright.notificationClass": "warning"
 }
