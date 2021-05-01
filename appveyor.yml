@@ -2,15 +2,14 @@ version: 1.0.{build}
 image: Visual Studio 2019
 platform: Any CPU
 before_build:
-- choco install opencover.portable
-- choco install codecov
+- choco install codecov opencover.portable
 build_script:
 - dotnet restore
 - dotnet build --configuration Release
 after_build:
 - cd WhatIsHeDoing.DomainModels
 test_script:
-- OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[WhatIsHeDoing.DomainModels*]* -[WhatIsHeDoing.DomainModels.Tests]*" -output:coverage.xml -oldstyle
+- OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[WhatIsHeDoing.DomainModels*]* -[WhatIsHeDoing.DomainModels.Tests]*" -output:coverage.xml
 - codecov -f coverage.xml
 artifacts:
   - path: 'WhatIsHeDoing.DomainModels\bin\Release\WhatIsHeDoing.DomainModels.*.nupkg'
