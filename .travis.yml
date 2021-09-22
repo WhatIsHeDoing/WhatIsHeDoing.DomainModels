@@ -1,9 +1,9 @@
 language: csharp
 solution: WhatIsHeDoing.DomainModels.sln
 mono: none
-dotnet: 3.1.404
+dotnet: 5.0.100
 install:
   - dotnet restore
 script:
   - dotnet build --configuration Release
-  - dotnet test WhatIsHeDoing.DomainModels.Tests/WhatIsHeDoing.DomainModels.Tests.csproj
+  - dotnet test
