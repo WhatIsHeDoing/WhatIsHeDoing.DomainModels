@@ -2,16 +2,16 @@
     <PropertyGroup>
         <TargetFrameworks>net5.0</TargetFrameworks>
         <PackageId>WhatIsHeDoing.DomainModels </PackageId>
-        <PackageVersion>5.0.0</PackageVersion>
+        <PackageVersion>5.0.1</PackageVersion>
         <Authors>WhatIsHeDoing</Authors>
         <Description>A library of domain models for .NET.</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PackageReleaseNotes>Upgrading to .NET 5!</PackageReleaseNotes>
+        <PackageReleaseNotes>Upgrading latest Core package</PackageReleaseNotes>
         <Copyright></Copyright>
         <PackageTags>domain models</PackageTags>
         <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
-        <Version>4.1.0</Version>
+        <Version>5.0.1</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Company />
         <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
@@ -33,6 +33,6 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-        <PackageReference Include="WhatIsHeDoing.Core" Version="3.0.0" />
+        <PackageReference Include="WhatIsHeDoing.Core" Version="4.0.0" />
     </ItemGroup>
 </Project>
