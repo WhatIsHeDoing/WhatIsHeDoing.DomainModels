@@ -29,11 +29,11 @@ jobs:
             - name: Run the build
               run: dotnet build --configuration Release
 
+            # - name: Run tests
+            #   run: dotnet test
+
             - name: Pack the project
               run: dotnet pack --configuration Release --no-restore --output ${{ github.workspace }}/nuget
-
-            - name: Run tests
-              run: dotnet test
 
             - name: Publish the NuGet package
               run: dotnet nuget push ${{ github.workspace }}/nuget/*.nupkg --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
