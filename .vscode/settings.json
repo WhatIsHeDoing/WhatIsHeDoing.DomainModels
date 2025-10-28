@@ -1,5 +1,13 @@
 {
-    "dotnet-test-explorer.testProjectPath": "WhatIsHeDoing.DomainModels.Tests",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.markdownlint": "explicit",
+        "source.organizeImports": "explicit",
+        "source.removeUnusedImports": "explicit",
+        "source.sort.json": "explicit"
+    },
     "editor.formatOnSave": true,
-    "spellright.notificationClass": "warning"
+    "editor.rulers": [
+        120
+    ],
+    "search.useIgnoreFiles": true
 }

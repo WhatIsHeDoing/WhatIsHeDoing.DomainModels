@@ -1,0 +1,13 @@
+cache:
+    cacheFormat: universal
+    cacheStrategy: metadata
+    useCache: true
+failFast: true
+ignorePaths:
+    - cspell.yml
+ignoreWords:
+    - APIKEY
+    - Newtonsoft
+language: en-GB,en
+suggestionsTimeout: 100
+useGitignore: true

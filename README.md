@@ -2,10 +2,6 @@
 
 [![NuGet package](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)][NuGet]
 [![NuGet downloads](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)][NuGet]
-[![AppVeyor Windows build status](https://ci.appveyor.com/api/projects/status/52xl0ifv8cfgjj4a?svg=true)][appveyor]
-[![Codecov code coverage](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels/branch/master/graph/badge.svg)](https://codecov.io/gh/WhatIsHeDoing/WhatIsHeDoing.DomainModels)
-[![Travis CI Linux build Status](https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels.svg)][Travis]
-[![Codenvy workspace](https://codenvy.io/factory/resources/codenvy-contribute.svg)][factory]
 
 A library of domain models for .NET.
 
@@ -135,24 +131,16 @@ public void StringFormat()
 All contributions are greatly welcomed! Please see the [contributing] guide for more information.
 
 If you are developing locally, pull down this repo and build within Visual Studio (any edition), or
-run `dotnet test` on any platform; the `master` branch is continuously built on both [Windows][appveyor]
-and [Linux][Travis]. Alternatively, simply create a new Codenvy workspace from my [factory]!
-You can even run the API test project by simply using the `Run` :arrow_forward: feature; just click the
-dynamic `preview` URL it generates in the terminal.
-
-![Codenvy workspace](Codenvy-WhatIsHeDoing-NuGet.png)
+run `dotnet test` on any platform; the `live` branch is continuously built using the GitHub Action.
 
 ## 👱 Authors
 
 * **Darren Hickling**: <https://darrenhickling.com/>
 
-[appveyor]: https://ci.appveyor.com/project/DarrenHickling/whatishedoing-domainmodels-j4bij
-    "WhatIsHeDoing.DomainModels - AppVeyor [Windows build]"
 [cc1]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 [cc2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
 [contributing]: CONTRIBUTING.md
 [EAN]: https://en.wikipedia.org/wiki/International_Article_Number
-[factory]: https://codenvy.io/f?id=factorydoivwyk603gvrx9x "Start development on Codenvy"
 [ISBN]: https://en.wikipedia.org/wiki/International_Standard_Book_Number
 [Json.NET]: https://www.newtonsoft.com/json
 [NuGet]: https://www.nuget.org/packages/WhatIsHeDoing.DomainModels/
@@ -160,6 +148,4 @@ dynamic `preview` URL it generates in the terminal.
 [postcodes]: https://www.townscountiespostcodes.co.uk/postcodes-in-northern-ireland/
     "Postcodes in Northern Ireland | Northern Ireland Postcode Information, UK"
 [Royal Mail]: https://www.royalmail.com/find-a-postcode "Postcode Finder - Find an Address | Royal Mail Group Ltd"
-[Travis]: https://travis-ci.org/WhatIsHeDoing/WhatIsHeDoing.DomainModels
-    "WhatIsHeDoing/WhatIsHeDoing.DomainModels - Travis CI [Linux build]"
 [Wikipedia]: https://en.wikipedia.org/wiki/Domain_model
