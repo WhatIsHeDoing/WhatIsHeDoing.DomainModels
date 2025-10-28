@@ -15,7 +15,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Company />
         <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
-        <PackageReadmeFile>../README.md</PackageReadmeFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -35,5 +36,10 @@
         <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
         <PackageReference Include="WhatIsHeDoing.Core" Version="4.0.0" />
+    </ItemGroup>
+
+    <!-- https://devblogs.microsoft.com/dotnet/add-a-readme-to-your-nuget-package/ -->
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
