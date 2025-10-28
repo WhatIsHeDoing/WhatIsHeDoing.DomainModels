@@ -2,6 +2,7 @@
 
 [![NuGet package](https://img.shields.io/nuget/v/WhatIsHeDoing.DomainModels.svg)][NuGet]
 [![NuGet downloads](https://img.shields.io/nuget/dt/WhatIsHeDoing.DomainModels.svg)][NuGet]
+[![build](https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels/actions/workflows/build.yml/badge.svg)](https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels/actions/workflows/build.yml)
 
 A library of domain models for .NET.
 
@@ -23,8 +24,7 @@ such as calling a service. For example, the UK postcode `SE1 9XX` is valid, but 
 
 ## 📡 Demo
 
-See how the Swagger demo site - use `dotnet run --project WhatIsHeDoing.DomainModels.APITest` -
-handles URL, JSON and XML domain model de/serialisation.
+Run `just api` to see how the Swagger demo site handles URL, JSON and XML domain model de/serialisation.
 
 ![Web API](WhatIsHeDoing.DomainModels.APITest/swagger.png)
 
@@ -32,7 +32,7 @@ handles URL, JSON and XML domain model de/serialisation.
 
 ### Installing
 
-This package is available via [NuGet], and targets .NET Core 2.2 for cross-platform use.
+This package is available via [NuGet] and targets .NET 8 for cross-platform use.
 
 ### The Models
 

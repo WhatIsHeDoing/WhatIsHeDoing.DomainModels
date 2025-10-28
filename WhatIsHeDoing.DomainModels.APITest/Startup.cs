@@ -53,6 +53,8 @@ namespace WhatIsHeDoing.DomainModels.APITest
             {
                 config.SwaggerEndpoint(
                     "/swagger/v1/swagger.json", "WhatIsHeDoing.DomainModels");
+
+                config.RoutePrefix = string.Empty;
             });
         }
     }

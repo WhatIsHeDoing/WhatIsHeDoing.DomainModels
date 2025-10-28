@@ -6,9 +6,10 @@
         "ms-dotnettools.csdevkit",
         "ms-dotnettools.csharp",
         "ms-vscode.powershell",
+        "nefrob.vscode-just-syntax",
         "redhat.vscode-yaml",
         "streetsidesoftware.code-spell-checker",
-        "yzhang.markdown-all-in-one",
+        "yzhang.markdown-all-in-one"
     ],
     "unwantedRecommendations": []
 }
