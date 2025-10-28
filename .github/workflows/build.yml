@@ -26,7 +26,10 @@ jobs:
             - name: Restore dependencies
               run: dotnet restore
 
-            - name: Build and pack the project
+            - name: Run the build
+              run: dotnet build --configuration Release
+
+            - name: Pack the project
               run: dotnet pack --configuration Release --no-restore --output ${{ github.workspace }}/nuget
 
             - name: Run tests
