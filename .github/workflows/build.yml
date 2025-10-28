@@ -3,11 +3,11 @@ name: build
 on:
     push:
         branches:
-            - main
+            - live
 
     pull_request:
         branches:
-            - main
+            - live
 
     workflow_dispatch:
 
