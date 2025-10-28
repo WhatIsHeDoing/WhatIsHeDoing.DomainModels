@@ -1,9 +1,0 @@
-language: csharp
-solution: WhatIsHeDoing.DomainModels.sln
-mono: none
-dotnet: 5.0.100
-install:
-  - dotnet restore
-script:
-  - dotnet build --configuration Release
-  - dotnet test

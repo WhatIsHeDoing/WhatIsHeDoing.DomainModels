@@ -15,6 +15,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Company />
         <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
+        <PackageReadmeFile>../README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <PropertyGroup>
