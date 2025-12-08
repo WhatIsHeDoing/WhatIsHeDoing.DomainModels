@@ -36,7 +36,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-    <PackageReference Include="WhatIsHeDoing.Core" Version="4.0.0" />
+    <PackageReference Include="WhatIsHeDoing.Core" Version="8.0.0" />
   </ItemGroup>
   <!-- https://devblogs.microsoft.com/dotnet/add-a-readme-to-your-nuget-package/ -->
   <ItemGroup>
