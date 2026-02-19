@@ -10,6 +10,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\WhatIsHeDoing.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>CA1034</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>

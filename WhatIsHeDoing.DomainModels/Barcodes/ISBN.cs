@@ -2,6 +2,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
 {
     using Core.Extensions;
     using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Xml;
@@ -49,29 +50,31 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return true;
         }
 
-        public override IDomainModel<ulong> Construct(object source)
+        public override IDomainModel<ulong> Construct(object value)
         {
-            if (!ulong.TryParse(source as string, out ulong value))
+            if (!ulong.TryParse(value as string, out ulong parsed))
             {
                 throw new DomainValueException();
             }
 
-            return Construct(value);
+            return Construct(parsed);
         }
 
-        public override IDomainModel<ulong> Construct(ulong source)
+        public override IDomainModel<ulong> Construct(ulong value)
         {
-            if (!IsValid(source))
+            if (!IsValid(value))
             {
-                throw new DomainValueException(nameof(source));
+                throw new DomainValueException(nameof(value));
             }
 
-            Value = source;
+            Value = value;
             return this;
         }
 
         public override void ReadXml(XmlReader reader)
         {
+            ArgumentNullException.ThrowIfNull(reader);
+
             if (!ulong.TryParse(reader.ReadElementContentAsString(), out ulong value))
             {
                 throw new DomainValueException();

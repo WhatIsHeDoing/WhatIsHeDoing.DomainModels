@@ -1,9 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
-
-public class DefaultController : Controller
+namespace WhatIsHeDoing.DomainModels.APITest.Controllers
 {
-    [Route("")]
-    [HttpGet]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public RedirectResult RedirectToSwaggerUi() => Redirect("/swagger/");
+    using Microsoft.AspNetCore.Mvc;
+
+    public class DefaultController : Controller
+    {
+        [Route("")]
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public RedirectResult RedirectToSwaggerUi() => Redirect("/swagger/");
+    }
 }

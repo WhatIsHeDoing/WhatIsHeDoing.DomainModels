@@ -3,6 +3,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
     using Newtonsoft.Json;
     using System;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml;
@@ -96,10 +97,13 @@ namespace WhatIsHeDoing.DomainModels.Locations
         }
 
         public override IDomainModel<string> Construct(object value) =>
-            Construct(Convert.ToString(value));
+            Construct(Convert.ToString(value, CultureInfo.InvariantCulture));
 
-        public override void ReadXml(XmlReader reader) =>
+        public override void ReadXml(XmlReader reader)
+        {
+            ArgumentNullException.ThrowIfNull(reader);
             Construct(reader.ReadElementContentAsString());
+        }
 
         public override IDomainModel<string> Construct(string ukPostcode)
         {
@@ -133,7 +137,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
 
         private static string Clean(string value) => value
             ?.Trim()
-            ?.Replace(OutwardInwardCodesSeparator, string.Empty)
-            ?.ToUpper();
+            ?.Replace(OutwardInwardCodesSeparator, string.Empty, StringComparison.Ordinal)
+            ?.ToUpperInvariant();
     }
 }

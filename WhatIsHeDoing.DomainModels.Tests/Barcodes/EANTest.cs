@@ -46,7 +46,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
                 var serialised = JsonConvert.SerializeObject(product);
                 Assert.NotNull(serialised);
-                Assert.Contains(@"""EAN"":4006381333931", serialised);
+                Assert.Contains(@"""EAN"":4006381333931", serialised, StringComparison.Ordinal);
             }
 
             [Fact]
@@ -132,7 +132,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                         serialiser.Serialize(writer, product);
                         var xml = stringWriter.ToString();
                         Assert.NotNull(xml);
-                        Assert.Contains("<EAN>4006381333931</EAN>", xml);
+                        Assert.Contains("<EAN>4006381333931</EAN>", xml, StringComparison.Ordinal);
                     }
                 }
             }

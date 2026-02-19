@@ -48,7 +48,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                 var serialised = JsonConvert.SerializeObject(book);
 
                 Assert.NotNull(serialised);
-                Assert.Contains(@"""ISBN"":9783161484100,", serialised);
+                Assert.Contains(@"""ISBN"":9783161484100,", serialised, StringComparison.Ordinal);
             }
 
             [Fact]
@@ -134,7 +134,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
                         serialiser.Serialize(writer, book);
                         var xml = stringWriter.ToString();
                         Assert.NotNull(xml);
-                        Assert.Contains("<ISBN>9783161484100</ISBN>", xml);
+                        Assert.Contains("<ISBN>9783161484100</ISBN>", xml, StringComparison.Ordinal);
                     }
                 }
             }

@@ -161,7 +161,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                 var serialised = JsonConvert.SerializeObject(address);
 
                 Assert.NotNull(serialised);
-                Assert.Contains(@"""UKPostcode"":""SW1 1AA""", serialised);
+                Assert.Contains(@"""UKPostcode"":""SW1 1AA""", serialised, StringComparison.Ordinal);
             }
 
             [Fact]
@@ -236,7 +236,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                         serialiser.Serialize(writer, address);
                         var xml = stringWriter.ToString();
                         Assert.NotNull(xml);
-                        Assert.Contains("<UKPostcode>SW1A 1AA</UKPostcode>", xml);
+                        Assert.Contains("<UKPostcode>SW1A 1AA</UKPostcode>", xml, StringComparison.Ordinal);
                     }
                 }
             }

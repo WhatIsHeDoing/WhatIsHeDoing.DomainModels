@@ -15,7 +15,7 @@ namespace WhatIsHeDoing.DomainModels
     public abstract class DomainModelBase<T> : IDomainModel<T>
     {
         // Parameterless constructor required for serialisation.
-        public DomainModelBase()
+        protected DomainModelBase()
         {
         }
 
@@ -23,7 +23,7 @@ namespace WhatIsHeDoing.DomainModels
         /// Constructor that creates a domain model from data.
         /// </summary>
         /// <param name="value">From which to validate and construct</param>
-        public DomainModelBase(T value) => Construct(value);
+        protected DomainModelBase(T value) => Construct(value);
 
         /// <summary>
         /// Underlying value of the model.
@@ -36,7 +36,10 @@ namespace WhatIsHeDoing.DomainModels
         /// <param name="source">To convert</param>
         /// <returns>String</returns>
         public static implicit operator string(DomainModelBase<T> source)
-            => source.ToString();
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            return source.ToString();
+        }
 
         public abstract IDomainModel<T> Construct(object value);
         public abstract IDomainModel<T> Construct(T value);
@@ -56,8 +59,12 @@ namespace WhatIsHeDoing.DomainModels
         /// Gets the hash code of this domain model value.
         /// </summary>
         /// <returns>Hash</returns>
-        public override int GetHashCode() => BitConverter.ToInt32(
-            SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
+        public override int GetHashCode()
+        {
+            using var sha = SHA256.Create();
+            return BitConverter.ToInt32(
+                sha.ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
+        }
 
         /// <summary>
         /// Warning: not used!
@@ -77,6 +84,10 @@ namespace WhatIsHeDoing.DomainModels
         /// Serialises the domain model value to XML.
         /// </summary>
         /// <param name="writer">XML writer</param>
-        public void WriteXml(XmlWriter writer) => writer.WriteValue(Value);
+        public void WriteXml(XmlWriter writer)
+        {
+            ArgumentNullException.ThrowIfNull(writer);
+            writer.WriteValue(Value);
+        }
     }
 }

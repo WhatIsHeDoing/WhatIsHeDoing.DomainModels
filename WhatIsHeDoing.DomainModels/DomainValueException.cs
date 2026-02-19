@@ -12,5 +12,10 @@ namespace WhatIsHeDoing.DomainModels
             : base(message)
         {
         }
+
+        public DomainValueException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
     }
 }

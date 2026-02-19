@@ -4,6 +4,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
     using Newtonsoft.Json;
     using System;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Linq;
     using System.Xml;
 
@@ -34,8 +35,8 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
         {
             // Create an array of all digits.
             var barcodeInts = barcode
-                .ToString()
-                .Select(c => Convert.ToInt32(Convert.ToString(c)));
+                .ToString(CultureInfo.InvariantCulture)
+                .Select(c => c - '0');
 
             // Take all but the checksum.
             var barcodeIntsNoChecksum = barcodeInts
@@ -84,29 +85,31 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return true;
         }
 
-        public override IDomainModel<ulong> Construct(object source)
+        public override IDomainModel<ulong> Construct(object value)
         {
-            if (!ulong.TryParse(source as string, out ulong value))
+            if (!ulong.TryParse(value as string, out ulong parsed))
             {
                 throw new DomainValueException();
             }
 
-            return Construct(value);
+            return Construct(parsed);
         }
 
-        public override IDomainModel<ulong> Construct(ulong source)
+        public override IDomainModel<ulong> Construct(ulong value)
         {
-            if (!IsValid(source))
+            if (!IsValid(value))
             {
-                throw new DomainValueException(nameof(source));
+                throw new DomainValueException(nameof(value));
             }
 
-            Value = source;
+            Value = value;
             return this;
         }
 
         public override void ReadXml(XmlReader reader)
         {
+            ArgumentNullException.ThrowIfNull(reader);
+
             if (!ulong.TryParse(reader.ReadElementContentAsString(), out ulong value))
             {
                 throw new DomainValueException();

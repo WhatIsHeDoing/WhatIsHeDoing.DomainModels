@@ -28,6 +28,8 @@ namespace WhatIsHeDoing.DomainModels
         public override void WriteJson(
             JsonWriter writer, object value, JsonSerializer serializer)
         {
+            ArgumentNullException.ThrowIfNull(writer);
+            ArgumentNullException.ThrowIfNull(value);
             writer.WriteValue((value as IDomainModel<TValue>).Value);
             writer.Flush();
         }

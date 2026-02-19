@@ -3,6 +3,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
     using Newtonsoft.Json;
     using System;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Text.RegularExpressions;
     using System.Xml;
 
@@ -47,7 +48,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         }
 
         public override IDomainModel<string> Construct(object value) =>
-            Construct(Convert.ToString(value));
+            Construct(Convert.ToString(value, CultureInfo.InvariantCulture));
 
         public override IDomainModel<string> Construct(string source)
         {
@@ -56,11 +57,14 @@ namespace WhatIsHeDoing.DomainModels.Locations
                 throw new DomainValueException(nameof(source));
             }
 
-            Value = source.ToUpper();
+            Value = source.ToUpperInvariant();
             return this;
         }
 
-        public override void ReadXml(XmlReader reader) =>
+        public override void ReadXml(XmlReader reader)
+        {
+            ArgumentNullException.ThrowIfNull(reader);
             Construct(reader.ReadElementContentAsString());
+        }
     }
 }

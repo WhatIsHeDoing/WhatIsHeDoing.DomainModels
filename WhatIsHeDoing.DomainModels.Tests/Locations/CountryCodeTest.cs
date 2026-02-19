@@ -60,7 +60,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                 var serialised = JsonConvert.SerializeObject(country);
 
                 Assert.NotNull(serialised);
-                Assert.Contains(@"""CountryCode"":""GB""", serialised);
+                Assert.Contains(@"""CountryCode"":""GB""", serialised, StringComparison.Ordinal);
             }
 
             [Fact]
@@ -134,7 +134,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                         serialiser.Serialize(writer, country);
                         var xml = stringWriter.ToString();
                         Assert.NotNull(xml);
-                        Assert.Contains("<CountryCode>GB</CountryCode>", xml);
+                        Assert.Contains("<CountryCode>GB</CountryCode>", xml, StringComparison.Ordinal);
                     }
                 }
             }
