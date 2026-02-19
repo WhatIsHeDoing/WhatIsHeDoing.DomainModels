@@ -1,0 +1,64 @@
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#automatically-approving-a-pull-request
+env:
+    CI: 1
+
+jobs:
+    dependabot:
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        runs-on: ubuntu-24.04
+
+        steps:
+            - name: Fetch the Dependabot metadata
+              uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a
+              with:
+                  github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+            - name: Check out the repo
+              uses: actions/checkout@v5
+
+            - name: Set up .NET
+              uses: actions/setup-dotnet@v5
+              with:
+                  dotnet-version: "10.0.x"
+
+            - name: Cache NuGet packages
+              uses: actions/cache@v4
+              with:
+                  path: ~/.nuget/packages
+                  key: ${{ runner.os }}-nuget-${{ hashFiles('**/Directory.Packages.props', '**/*.csproj') }}
+                  restore-keys: ${{ runner.os }}-nuget-
+
+            - name: Restore dependencies
+              run: dotnet restore
+
+            - name: Run the build
+              run: dotnet build --configuration Release
+
+            - name: Run tests
+              run: dotnet test
+
+            - name: Pack the project
+              run: dotnet pack --configuration Release --no-restore --output ${{ github.workspace }}/nuget
+
+            - name: Install the documentation tool
+              run: dotnet tool update -g docfx
+
+            - name: Generate the docs
+              run: docfx docfx.json
+
+            - env:
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                  PR_URL: ${{github.event.pull_request.html_url}}
+              name: Approve the Dependabot PR
+              run: gh pr review --approve "$PR_URL"
+
+            - env:
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                  PR_URL: ${{github.event.pull_request.html_url}}
+              name: Merge and delete the branch
+              run: gh pr merge --squash --delete-branch "$PR_URL"
+
+name: Dependabot auto-approve
+on: pull_request
+permissions:
+    pull-requests: write

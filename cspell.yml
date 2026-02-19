@@ -11,6 +11,7 @@ ignoreWords:
     - APIKEY
     - appsettings
     - ASPNETCORE
+    - docfx
     - HJKSTUW
     - IKMOV
     - Newtonsoft
