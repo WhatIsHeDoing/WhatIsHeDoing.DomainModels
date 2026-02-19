@@ -7,7 +7,7 @@ ci: build_release test_release pack
 
 # 🛜 Installs dependencies.
 restore:
-    dotnet restore
+    dotnet restore && dotnet tool restore
 
 # 🔨 Builds the library in debug.
 [group("Debug")]
@@ -28,6 +28,11 @@ build_release:
 [group("Release")]
 test_release:
     dotnet test --configuration Release
+
+# 📊 Runs tests and collects code coverage.
+[group("Release")]
+coverage:
+    dotnet tool run dotnet-coverage collect "dotnet test" --output ./coverage.xml --output-format cobertura
 
 # 📦 Packages the project ready to publish to NuGet.
 [group("Release")]

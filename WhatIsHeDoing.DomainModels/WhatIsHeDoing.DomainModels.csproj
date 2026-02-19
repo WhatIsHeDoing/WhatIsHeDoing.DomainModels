@@ -1,23 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0</TargetFrameworks>
-    <PackageId>WhatIsHeDoing.DomainModels </PackageId>
+    <PackageId>WhatIsHeDoing.DomainModels</PackageId>
     <Authors>WhatIsHeDoing</Authors>
     <Description>A library of domain models for .NET.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Upgrading latest Core package</PackageReleaseNotes>
-    <Copyright>
-    </Copyright>
-    <PackageTags>domain models</PackageTags>
+    <Copyright>Copyright © WhatIsHeDoing</Copyright>
+    <PackageTags>domain-models ddd value-object dotnet csharp</PackageTags>
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IconUrl>https://darrenhickling.com/static/favicons/apple-touch-icon-60x60.png</IconUrl>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -30,6 +31,10 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="MinVer">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

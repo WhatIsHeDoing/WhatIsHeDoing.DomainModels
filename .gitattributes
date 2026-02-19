@@ -1,0 +1,31 @@
+# Set default behaviour to LF
+* text=auto eol=lf
+
+# Explicitly text files
+*.cs        text eol=lf
+*.csproj    text eol=lf
+*.props     text eol=lf
+*.targets   text eol=lf
+*.sln       text eol=lf
+*.json      text eol=lf
+*.md        text eol=lf
+*.yml       text eol=lf
+*.xml       text eol=lf
+*.txt       text eol=lf
+*.css       text eol=lf
+*.js        text eol=lf
+*.html      text eol=lf
+*.svg       text eol=lf
+*.editorconfig text eol=lf
+*.gitignore text eol=lf
+
+# Binary files — no line-ending conversion
+*.dll       binary
+*.exe       binary
+*.pdb       binary
+*.nupkg     binary
+*.png       binary
+*.ico       binary
+*.pdf       binary
+*.woff      binary
+*.woff2     binary

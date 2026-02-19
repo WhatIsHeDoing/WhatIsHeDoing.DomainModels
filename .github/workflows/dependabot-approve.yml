@@ -40,12 +40,6 @@ jobs:
             - name: Pack the project
               run: dotnet pack --configuration Release --no-restore --output ${{ github.workspace }}/nuget
 
-            - name: Install the documentation tool
-              run: dotnet tool update -g docfx
-
-            - name: Generate the docs
-              run: docfx docfx.json
-
             - env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
                   PR_URL: ${{github.event.pull_request.html_url}}

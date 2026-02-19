@@ -48,4 +48,13 @@ app.UseSwaggerUI(config =>
 });
 
 app.MapControllers();
+
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    foreach (var url in app.Urls)
+    {
+        Console.WriteLine($"🚀 API listening on: {url}");
+    }
+});
+
 app.Run();
