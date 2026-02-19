@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <PackageId>WhatIsHeDoing.DomainModels </PackageId>
     <PackageVersion>8.0.0</PackageVersion>
     <Authors>WhatIsHeDoing</Authors>
@@ -12,11 +12,12 @@
     <PackageTags>domain models</PackageTags>
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</PackageProjectUrl>
-    <Version>5.0.1</Version>
+    <Version>8.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <RepositoryUrl>https://github.com/WhatIsHeDoing/WhatIsHeDoing.DomainModels</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IconUrl>https://darrenhickling.com/static/favicons/apple-touch-icon-60x60.png</IconUrl>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <PropertyGroup>
@@ -29,14 +30,14 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="RoslynSecurityGuard" Version="2.3.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-    <PackageReference Include="WhatIsHeDoing.Core" Version="4.0.0" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="RoslynSecurityGuard" />
+    <PackageReference Include="StyleCop.Analyzers" />
+    <PackageReference Include="WhatIsHeDoing.Core" />
   </ItemGroup>
   <!-- https://devblogs.microsoft.com/dotnet/add-a-readme-to-your-nuget-package/ -->
   <ItemGroup>

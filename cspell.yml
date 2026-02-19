@@ -5,9 +5,23 @@ cache:
 failFast: true
 ignorePaths:
     - cspell.yml
+    - "**/*.csproj"
 ignoreWords:
+    - ABEHMNPRVWXY
     - APIKEY
+    - appsettings
+    - ASPNETCORE
+    - HJKSTUW
+    - IKMOV
     - Newtonsoft
+    - noopen
+    - nosniff
+    - Xunit
 language: en-GB,en
 suggestionsTimeout: 100
 useGitignore: true
+words:
+    - deserialise
+    - deserialised
+    - serialiser
+    - swashbuckle

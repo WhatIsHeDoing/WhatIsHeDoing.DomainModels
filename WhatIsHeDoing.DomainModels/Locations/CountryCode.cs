@@ -18,7 +18,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
     [TypeConverter(typeof(DomainModelTypeConverter<CountryCode, string>))]
     public class CountryCode : DomainModelBase<string>
     {
-        private static readonly Regex ISOValidatationRegex =
+        private static readonly Regex ISOValidationRegex =
             new Regex(@"^[a-zA-Z]{2,3}$");
 
         // Parameterless constructor required for serialisation.
@@ -32,7 +32,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
         }
 
         public static bool IsValid(string source) =>
-            !string.IsNullOrWhiteSpace(source) && ISOValidatationRegex.IsMatch(source);
+            !string.IsNullOrWhiteSpace(source) && ISOValidationRegex.IsMatch(source);
 
         public static bool TryParse(string source, out CountryCode model)
         {

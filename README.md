@@ -32,7 +32,7 @@ Run `just api` to see how the Swagger demo site handles URL, JSON and XML domain
 
 ### Installing
 
-This package is available via [NuGet] and targets .NET 8 for cross-platform use.
+This package is available via [NuGet] and targets .NET 10 for cross-platform use.
 
 ### The Models
 

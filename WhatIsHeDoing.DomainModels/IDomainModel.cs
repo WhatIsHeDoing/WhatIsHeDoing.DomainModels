@@ -30,7 +30,7 @@ namespace WhatIsHeDoing.DomainModels
         /// <summary>
         /// Converts the model to string.
         /// </summary>
-        /// <returns>String respresentation</returns>
+        /// <returns>String representation</returns>
         string ToString();
     }
 }
