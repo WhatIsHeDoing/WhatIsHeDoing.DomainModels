@@ -28,7 +28,7 @@ namespace WhatIsHeDoing.DomainModels
         /// <summary>
         /// Underlying value of the model.
         /// </summary>
-        public T Value { get; protected set; }
+        public T Value { get; protected set; } = default!;
 
         /// <summary>
         /// Operator that converts a domain model to a string.
@@ -41,7 +41,7 @@ namespace WhatIsHeDoing.DomainModels
             return source.ToString();
         }
 
-        public abstract IDomainModel<T> Construct(object value);
+        public abstract IDomainModel<T> Construct(object? value);
         public abstract IDomainModel<T> Construct(T value);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace WhatIsHeDoing.DomainModels
         /// </summary>
         /// <param name="obj">To compare</param>
         /// <returns><c>true</c> if both values are identical</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var other = obj as DomainModelBase<T>;
             return other == null ? base.Equals(obj) : GetHashCode() == other.GetHashCode();
@@ -63,14 +63,14 @@ namespace WhatIsHeDoing.DomainModels
         {
             using var sha = SHA256.Create();
             return BitConverter.ToInt32(
-                sha.ComputeHash(Encoding.UTF8.GetBytes(Value.ToString())), 0);
+                sha.ComputeHash(Encoding.UTF8.GetBytes(Value?.ToString() ?? string.Empty)), 0);
         }
 
         /// <summary>
         /// Warning: not used!
         /// </summary>
         /// <returns>null</returns>
-        public XmlSchema GetSchema() => null;
+        public XmlSchema? GetSchema() => null;
 
         public abstract void ReadXml(XmlReader reader);
 
@@ -78,7 +78,7 @@ namespace WhatIsHeDoing.DomainModels
         /// Gets the string representation of this domain model.
         /// </summary>
         /// <returns>String</returns>
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value?.ToString() ?? string.Empty;
 
         /// <summary>
         /// Serialises the domain model value to XML.
@@ -87,7 +87,7 @@ namespace WhatIsHeDoing.DomainModels
         public void WriteXml(XmlWriter writer)
         {
             ArgumentNullException.ThrowIfNull(writer);
-            writer.WriteValue(Value);
+            writer.WriteString(Value?.ToString() ?? string.Empty);
         }
     }
 }

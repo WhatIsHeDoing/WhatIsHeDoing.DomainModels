@@ -37,7 +37,7 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
         [ProducesResponseType(typeof(ulong), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public IActionResult Post([FromBody]Product product) => ModelState.IsValid
-            ? Ok(product.ISBN.Value)
+            ? Ok(product.ISBN?.Value)
             : (ActionResult)new BadRequestResult();
 
         /// <summary>

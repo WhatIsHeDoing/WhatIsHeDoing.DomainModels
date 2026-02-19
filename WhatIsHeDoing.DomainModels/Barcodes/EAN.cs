@@ -73,7 +73,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             ValidLengths.Contains(barcode.Length()) &&
             HasValidChecksum(barcode);
 
-        public static bool TryParse(ulong source, out EAN model)
+        public static bool TryParse(ulong source, out EAN? model)
         {
             if (!IsValid(source))
             {
@@ -85,7 +85,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return true;
         }
 
-        public override IDomainModel<ulong> Construct(object value)
+        public override IDomainModel<ulong> Construct(object? value)
         {
             if (!ulong.TryParse(value as string, out ulong parsed))
             {

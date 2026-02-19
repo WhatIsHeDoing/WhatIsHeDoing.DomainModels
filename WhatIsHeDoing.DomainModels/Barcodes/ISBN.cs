@@ -38,7 +38,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             barcode.Length() == ValidLength &&
             ValidStartSequences.Contains(barcode.StripDigits(10));
 
-        public static bool TryParse(ulong data, out ISBN source)
+        public static bool TryParse(ulong data, out ISBN? source)
         {
             if (!IsValid(data))
             {
@@ -50,7 +50,7 @@ namespace WhatIsHeDoing.DomainModels.Barcodes
             return true;
         }
 
-        public override IDomainModel<ulong> Construct(object value)
+        public override IDomainModel<ulong> Construct(object? value)
         {
             if (!ulong.TryParse(value as string, out ulong parsed))
             {

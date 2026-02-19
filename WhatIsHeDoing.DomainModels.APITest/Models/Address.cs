@@ -4,7 +4,7 @@ namespace WhatIsHeDoing.DomainModels.Models
 
     public class Address
     {
-        public CountryCode CountryCode { get; set; }
-        public UKPostcode Postcode { get; set; }
+        public CountryCode? CountryCode { get; set; }
+        public UKPostcode? Postcode { get; set; }
     }
 }

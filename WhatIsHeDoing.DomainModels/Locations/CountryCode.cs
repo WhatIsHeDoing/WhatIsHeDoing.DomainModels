@@ -32,10 +32,10 @@ namespace WhatIsHeDoing.DomainModels.Locations
         {
         }
 
-        public static bool IsValid(string source) =>
+        public static bool IsValid(string? source) =>
             !string.IsNullOrWhiteSpace(source) && ISOValidationRegex.IsMatch(source);
 
-        public static bool TryParse(string source, out CountryCode model)
+        public static bool TryParse(string source, out CountryCode? model)
         {
             if (!IsValid(source))
             {
@@ -47,8 +47,8 @@ namespace WhatIsHeDoing.DomainModels.Locations
             return true;
         }
 
-        public override IDomainModel<string> Construct(object value) =>
-            Construct(Convert.ToString(value, CultureInfo.InvariantCulture));
+        public override IDomainModel<string> Construct(object? value) =>
+            Construct(Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty);
 
         public override IDomainModel<string> Construct(string source)
         {

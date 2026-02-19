@@ -16,8 +16,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
         public class Product
         {
-            public string Name { get; set; }
-            public EAN EAN { get; set; }
+            public string? Name { get; set; }
+            public EAN? EAN { get; set; }
         }
 
         public class Constructor
@@ -101,7 +101,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             {
                 const ulong barcode = 4006381333931UL;
                 Assert.True(EAN.TryParse(barcode, out var model));
-                Assert.Equal(barcode, model.Value);
+                Assert.Equal(barcode, model!.Value);
             }
 
             [Fact]

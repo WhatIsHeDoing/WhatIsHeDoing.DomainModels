@@ -18,7 +18,7 @@ namespace WhatIsHeDoing.DomainModels
         /// </summary>
         /// <param name="value">From which to validate and construct</param>
         /// <returns>This</returns>
-        IDomainModel<T> Construct(object value);
+        IDomainModel<T> Construct(object? value);
 
         /// <summary>
         /// Constructs this model from a value.

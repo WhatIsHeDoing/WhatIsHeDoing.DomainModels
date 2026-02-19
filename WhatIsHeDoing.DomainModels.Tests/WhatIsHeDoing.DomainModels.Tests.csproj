@@ -7,10 +7,11 @@
     <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
     <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
     <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\WhatIsHeDoing.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>CA1034</NoWarn>
+    <NoWarn>CA1014;CA1034</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>

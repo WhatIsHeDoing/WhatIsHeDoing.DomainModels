@@ -9,10 +9,10 @@ namespace WhatIsHeDoing.DomainModels
     {
         // Always assume the value can be used.
         public override bool CanConvertFrom(
-            ITypeDescriptorContext context, Type sourceType) => true;
+            ITypeDescriptorContext? context, Type sourceType) => true;
 
-        public override object ConvertFrom(
-            ITypeDescriptorContext context, CultureInfo culture, object value) =>
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context, CultureInfo? culture, object? value) =>
                 new TDomainModel().Construct(value);
     }
 }

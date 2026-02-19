@@ -16,8 +16,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
 
         public class Book
         {
-            public ISBN ISBN { get; set; }
-            public string Title { get; set; }
+            public ISBN? ISBN { get; set; }
+            public string? Title { get; set; }
         }
 
         public class Constructor
@@ -103,7 +103,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Barcodes
             {
                 const ulong barcode = 9783161484100UL;
                 Assert.True(ISBN.TryParse(barcode, out var model));
-                Assert.Equal(barcode, model.Value);
+                Assert.Equal(barcode, model!.Value);
             }
 
             [Fact]

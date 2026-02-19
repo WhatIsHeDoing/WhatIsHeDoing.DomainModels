@@ -20,8 +20,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
 
         public class Country
         {
-            public CountryCode CountryCode { get; set; }
-            public string Name { get; set; }
+            public CountryCode? CountryCode { get; set; }
+            public string? Name { get; set; }
         }
 
         public class IsValid
@@ -42,7 +42,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             [InlineData("A!A")]
             [InlineData("AAA!")]
             [InlineData("123")]
-            public void Fail(string isoCode) =>
+            public void Fail(string? isoCode) =>
                 Assert.False(CountryCode.IsValid(isoCode));
         }
 
@@ -103,7 +103,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             {
                 const string countryCode = "US";
                 Assert.True(CountryCode.TryParse(countryCode, out var model));
-                Assert.Equal(countryCode, model);
+                Assert.Equal(countryCode, (string)model!);
             }
 
             [Fact]

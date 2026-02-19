@@ -45,20 +45,20 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// Part of the postcode before the separator in the middle.
         /// </summary>
         /// <example>W1A</example>
-        public string OutwardCode { get; private set; }
+        public string OutwardCode { get; private set; } = default!;
 
         /// <summary>
         /// Part of the postcode after the separator in the middle.
         /// </summary>
         /// <example>0NY</example>
-        public string InwardCode { get; private set; }
+        public string InwardCode { get; private set; } = default!;
 
         /// <summary>
         /// Part of the outward code. The postcode area is between
         /// one and two characters long and is all letters.
         /// </summary>
         /// <example>W</example>
-        public string PostcodeArea { get; private set; }
+        public string PostcodeArea { get; private set; } = default!;
 
         /// <summary>
         /// Part of the outward code. It is one or two digits
@@ -66,25 +66,25 @@ namespace WhatIsHeDoing.DomainModels.Locations
         /// to the end of the postcode area.
         /// </summary>
         /// <example>1A</example>
-        public string PostcodeDistrict { get; private set; }
+        public string PostcodeDistrict { get; private set; } = default!;
 
         /// <summary>
         /// Made up of the postcode district, the separator,
         /// and the first character of the inward code.
         /// </summary>
         /// <example>W1A 0</example>
-        public string PostcodeSector { get; private set; }
+        public string PostcodeSector { get; private set; } = default!;
 
         /// <summary>
         /// Two characters added to the end of the postcode sector.
         /// </summary>
         /// <example>NY</example>
-        public string PostcodeUnit { get; private set; }
+        public string PostcodeUnit { get; private set; } = default!;
 
-        public static bool IsValid(string value) =>
-            ValidationRegex.IsMatch(Clean(value));
+        public static bool IsValid(string? value) =>
+            Clean(value) is { } cleaned && ValidationRegex.IsMatch(cleaned);
 
-        public static bool TryParse(string source, out UKPostcode model)
+        public static bool TryParse(string source, out UKPostcode? model)
         {
             if (!IsValid(source))
             {
@@ -96,8 +96,8 @@ namespace WhatIsHeDoing.DomainModels.Locations
             return true;
         }
 
-        public override IDomainModel<string> Construct(object value) =>
-            Construct(Convert.ToString(value, CultureInfo.InvariantCulture));
+        public override IDomainModel<string> Construct(object? value) =>
+            Construct(Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty);
 
         public override void ReadXml(XmlReader reader)
         {
@@ -107,22 +107,21 @@ namespace WhatIsHeDoing.DomainModels.Locations
 
         public override IDomainModel<string> Construct(string ukPostcode)
         {
-            // Bomb out if this is not valid.
-            ukPostcode = Clean(ukPostcode);
+            var cleaned = Clean(ukPostcode);
 
-            if (!IsValid(ukPostcode))
+            if (cleaned is null || !IsValid(cleaned))
             {
                 throw new DomainValueException(nameof(ukPostcode));
             }
 
             // Calculate and cache the outward code length.
-            var outwardCodeLength = ukPostcode.Length - InwardCodeLength;
+            var outwardCodeLength = cleaned.Length - InwardCodeLength;
 
             // Set the individual elements of the postcode.
-            OutwardCode = ukPostcode.Substring(0, outwardCodeLength);
+            OutwardCode = cleaned.Substring(0, outwardCodeLength);
             PostcodeArea = NumberRegex.Split(OutwardCode).First();
             PostcodeDistrict = OutwardCode.Substring(PostcodeArea.Length);
-            InwardCode = ukPostcode.Substring(outwardCodeLength);
+            InwardCode = cleaned.Substring(outwardCodeLength);
 
             PostcodeSector = OutwardCode +
                     OutwardInwardCodesSeparator + InwardCode.Substring(0, 1);
@@ -135,7 +134,7 @@ namespace WhatIsHeDoing.DomainModels.Locations
             return this;
         }
 
-        private static string Clean(string value) => value
+        private static string? Clean(string? value) => value
             ?.Trim()
             ?.Replace(OutwardInwardCodesSeparator, string.Empty, StringComparison.Ordinal)
             ?.ToUpperInvariant();

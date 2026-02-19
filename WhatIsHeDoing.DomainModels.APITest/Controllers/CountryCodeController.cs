@@ -37,7 +37,7 @@ namespace WhatIsHeDoing.DomainModels.APITest.Controllers
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public IActionResult Post([FromBody]Address address) => ModelState.IsValid
-            ? Ok(address.CountryCode.Value)
+            ? Ok(address.CountryCode?.Value)
             : (ActionResult)new BadRequestResult();
 
         /// <summary>

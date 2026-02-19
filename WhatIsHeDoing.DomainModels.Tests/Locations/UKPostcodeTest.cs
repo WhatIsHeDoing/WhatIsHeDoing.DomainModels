@@ -23,8 +23,8 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
 
         public class Address
         {
-            public string Country { get; set; }
-            public UKPostcode UKPostcode { get; set; }
+            public string? Country { get; set; }
+            public UKPostcode? UKPostcode { get; set; }
         }
 
         public class Constructor
@@ -116,7 +116,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
                 const string expected = "SW1A 1AA";
                 var postcode = new UKPostcode(expected);
                 var actual = (string)postcode;
-                Assert.Equal(actual, expected);
+                Assert.Equal(expected, actual);
             }
 
             [Fact]
@@ -205,7 +205,7 @@ namespace WhatIsHeDoing.DomainModels.Tests.Locations
             {
                 const string postcode = "SW1 1AA";
                 Assert.True(UKPostcode.TryParse(postcode, out var model));
-                Assert.Equal(postcode, model);
+                Assert.Equal(postcode, (string)model!);
             }
 
             [Fact]

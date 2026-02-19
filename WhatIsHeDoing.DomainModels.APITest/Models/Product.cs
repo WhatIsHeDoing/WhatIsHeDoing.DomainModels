@@ -4,7 +4,7 @@ namespace WhatIsHeDoing.DomainModels.Models
 
     public class Product
     {
-        public EAN EAN { get; set; }
-        public ISBN ISBN { get; set; }
+        public EAN? EAN { get; set; }
+        public ISBN? ISBN { get; set; }
     }
 }
