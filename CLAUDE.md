@@ -9,7 +9,7 @@ Project context for Claude Code sessions.
 Three projects in the solution:
 
 | Project | Purpose |
-|---|---|
+| --- | --- |
 | `WhatIsHeDoing.DomainModels` | The library — this is what gets packed and published |
 | `WhatIsHeDoing.DomainModels.Tests` | xunit v3 unit tests |
 | `WhatIsHeDoing.DomainModels.APITest` | ASP.NET Core demo showing the models in a Web API |
@@ -18,7 +18,7 @@ Three projects in the solution:
 
 All day-to-day tasks are in the `justfile`. Run `just` (or `just --choose`) to pick interactively.
 
-```
+```text
 just restore      # dotnet restore + dotnet tool restore
 just build        # debug build
 just test         # run tests
@@ -66,6 +66,17 @@ just upgrade      # interactive framework upgrade via upgrade-assistant
 
 - **MinVer**: versions are derived from git tags (e.g. tag `v1.2.3` → package `1.2.3`; untagged → `1.2.3-alpha.0.N`)
 - **NuGet push**: only runs in CI when the triggering ref is a `v*` tag (`if: startsWith(github.ref, 'refs/tags/')`)
+
+### Release process
+
+1. Ensure CI is green on `live`
+2. Check the last tag: `git tag --sort=-version:refname | head -1`
+3. Create an **annotated** tag (not lightweight — MinVer requires this): `git tag -a v1.2.3 -m "v1.2.3"`
+4. Push the tag: `git push origin v1.2.3`
+5. CI builds, tests, packs, and publishes to NuGet automatically
+
+Do **not** use `git push --tags` (pushes all local tags at once). NuGet packages are immutable —
+mistakes require a new patch release, not a re-push.
 
 ## CI
 
