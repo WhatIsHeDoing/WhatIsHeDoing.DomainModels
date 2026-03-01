@@ -44,7 +44,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="RoslynSecurityGuard" />
     <PackageReference Include="StyleCop.Analyzers" />
     <PackageReference Include="WhatIsHeDoing.Core" />
   </ItemGroup>

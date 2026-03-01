@@ -8,7 +8,7 @@
   <PropertyGroup>
     <DocumentationFile>bin\net5.0\WhatIsHeDoing.DomainModels.APITest.xml</DocumentationFile>
     <OutputPath>bin\</OutputPath>
-    <NoWarn>1591;1701;1702;1705;AD0001;SG0016;SA1200;CA1014;CA1017;CA1062</NoWarn>
+    <NoWarn>1591;1701;1702;1705;AD0001;SA1200;CA1014;CA1017;CA1062</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <CodeAnalysisRuleSet>..\WhatIsHeDoing.ruleset</CodeAnalysisRuleSet>
@@ -22,7 +22,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
-    <PackageReference Include="RoslynSecurityGuard" />
     <PackageReference Include="StyleCop.Analyzers" />
     <PackageReference Include="Microsoft.OpenApi" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
