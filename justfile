@@ -9,6 +9,10 @@ ci: build_release test_release pack
 restore:
     dotnet restore && dotnet tool restore
 
+# 🧹 Cleans all build artifacts.
+clean:
+    dotnet clean
+
 # 🔨 Builds the library in debug.
 [group("Debug")]
 build:
@@ -44,12 +48,10 @@ api:
     dotnet run --project WhatIsHeDoing.DomainModels.APITest
 
 # 🎨 Fixes code style issues automatically.
-[group("Debug")]
 format:
     dotnet format style
 
 # 🔍 Checks for code style issues without making changes.
-[group("Debug")]
 check-format:
     dotnet format style --verify-no-changes
 

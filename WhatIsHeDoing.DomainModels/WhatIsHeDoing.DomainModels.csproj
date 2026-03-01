@@ -44,7 +44,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="StyleCop.Analyzers" />
     <PackageReference Include="WhatIsHeDoing.Core" />
   </ItemGroup>
   <!-- https://devblogs.microsoft.com/dotnet/add-a-readme-to-your-nuget-package/ -->
