@@ -43,6 +43,16 @@ pack:
 api:
     dotnet run --project WhatIsHeDoing.DomainModels.APITest
 
+# 🎨 Fixes code style issues automatically.
+[group("Debug")]
+format:
+    dotnet format style
+
+# 🔍 Checks for code style issues without making changes.
+[group("Debug")]
+check-format:
+    dotnet format style --verify-no-changes
+
 # ⬆️ Upgrades all library dependencies.
 outdated:
     dotnet outdated --upgrade

@@ -15,6 +15,7 @@ on:
 
 jobs:
     build:
+        if: github.actor != 'dependabot[bot]'
         runs-on: ubuntu-24.04
         steps:
             - name: Check out the repo
@@ -40,14 +41,17 @@ jobs:
             - name: Run the build
               run: dotnet build --configuration Release
 
+            - name: Check code formatting
+              run: dotnet format style --verify-no-changes
+
             - name: Run tests with coverage
               run: dotnet tool run dotnet-coverage collect "dotnet test" --output ./coverage.xml --output-format cobertura
 
-            - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v5
-              with:
-                  files: ./coverage.xml
-                  token: ${{ secrets.CODECOV_TOKEN }}
+            # - name: Upload coverage to Codecov
+            #   uses: codecov/codecov-action@v5
+            #   with:
+            #       files: ./coverage.xml
+            #       token: ${{ secrets.CODECOV_TOKEN }}
 
             - name: Pack the project
               run: dotnet pack --configuration Release --no-restore --output ${{ github.workspace }}/nuget
