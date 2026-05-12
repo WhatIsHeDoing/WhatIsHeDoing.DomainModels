@@ -59,8 +59,10 @@ just upgrade      # interactive framework upgrade via upgrade-assistant
 ## Dependencies
 
 - **Central Package Management**: all versions in `Directory.Packages.props` — never set a version directly in a `.csproj`
+- **Transitive pinning**: `CentralPackageTransitivePinningEnabled` forces every transitive to a known version
+- **Lock files**: `RestorePackagesWithLockFile=true` generates a `packages.lock.json` per project (committed). CI restores run with `--locked-mode` so any drift between the lock file and the resolved graph fails the build. After a manual version bump, refresh the lock with `dotnet restore --force-evaluate` — a plain `dotnet restore` will fail in locked mode if versions changed. Build/test/pack steps in CI pass `--no-restore` so they cannot bypass the locked restore.
 - **Dotnet tools**: all pinned in `.config/dotnet-tools.json` — run `dotnet tool restore` after cloning
-- **Dependabot**: configured for NuGet (monthly) and GitHub Actions (monthly) with auto-approve + squash merge on green builds
+- **Dependabot**: configured for NuGet (monthly) and GitHub Actions (monthly) with auto-approve + squash merge on green builds. Dependabot updates `packages.lock.json` automatically as part of each version-bump PR.
 
 ## Versioning and publishing
 

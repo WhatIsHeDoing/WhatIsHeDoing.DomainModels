@@ -19,33 +19,33 @@ jobs:
         runs-on: ubuntu-24.04
         steps:
             - name: Check out the repo
-              uses: actions/checkout@v6
+              uses: actions/checkout@v6.0.2
               with:
                   fetch-depth: 0
 
             - name: Set up .NET
-              uses: actions/setup-dotnet@v5
+              uses: actions/setup-dotnet@v5.2.0
               with:
                   dotnet-version: "10.0.x"
 
             - name: Cache NuGet packages
-              uses: actions/cache@v5
+              uses: actions/cache@v5.0.5
               with:
                   path: ~/.nuget/packages
                   key: ${{ runner.os }}-nuget-${{ hashFiles('**/Directory.Packages.props', '**/*.csproj') }}
                   restore-keys: ${{ runner.os }}-nuget-
 
             - name: Restore dependencies
-              run: dotnet restore && dotnet tool restore
+              run: dotnet restore --locked-mode && dotnet tool restore
 
             - name: Run the build
-              run: dotnet build --configuration Release
+              run: dotnet build --configuration Release --no-restore
 
             - name: Check code formatting
               run: dotnet format style --verify-no-changes
 
             - name: Run tests with coverage
-              run: dotnet tool run dotnet-coverage collect "dotnet test" --output ./coverage.xml --output-format cobertura
+              run: dotnet tool run dotnet-coverage collect "dotnet test --no-restore" --output ./coverage.xml --output-format cobertura
 
             # - name: Upload coverage to Codecov
             #   uses: codecov/codecov-action@v5

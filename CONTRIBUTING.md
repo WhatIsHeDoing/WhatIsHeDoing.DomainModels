@@ -8,6 +8,7 @@ Changes are welcome! Please read the following advice before submitting a new pu
 * Take a look through the source code and try and match its coding style to your submission.
 * Add unit tests where possible, and run them before submitting :)
 * Update the Web API serialisation project, `WhatIsHeDoing.DomainModels.APITests`.
+* If your change adds, removes, or upgrades a NuGet dependency, include the updated `packages.lock.json` files in your PR. Refresh them locally with `dotnet restore --force-evaluate` — CI runs `dotnet restore --locked-mode` and will fail if the lock files and `Directory.Packages.props` disagree.
 * Update the `README.md` where necessary.
 * Consider how the project version should be bumped: it currently follows the [SemVer][semver] scheme.
 * Finally: let's try and keep this professional, and fun if possible! For more information,
